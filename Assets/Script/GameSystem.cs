@@ -25,6 +25,7 @@ public class GameSystem : MonoBehaviour
 
     private JokeManager jokeManager;
     private DayManager dayManager;
+    private JesterFactory jesterFactory;
 
     void Start()
     {
@@ -34,6 +35,7 @@ public class GameSystem : MonoBehaviour
 
         jokeManager = FindObjectOfType<JokeManager>();
         dayManager = FindObjectOfType<DayManager>();
+        jesterFactory = FindObjectOfType<JesterFactory>();
 
         foreach (Jester item in m_JesterQueue)
             Debug.Log(item);
@@ -61,7 +63,7 @@ public class GameSystem : MonoBehaviour
         foreach (var joke in jokeQueue)
         {
             // create jesters, set jokes
-            var jester = GameObject.Instantiate(jesterPrefab).GetComponent<Jester>();
+            var jester = jesterFactory.CreateJester(joke);
             Debug.Assert(jester, "Jester Prefab should contain Jester component");
             m_JesterQueue.Enqueue(jester);
         }

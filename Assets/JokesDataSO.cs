@@ -43,7 +43,7 @@ public class JokesDataSO : ScriptableObject
     public string m_GoogleSheetsSheetName = "Sheet1";
     public int m_GoogleSheetsOffsetRows = 0;
     public int m_GoogleSheetsOffsetCols = 0;
-    
+
     /**
      * UPDATE THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
      */

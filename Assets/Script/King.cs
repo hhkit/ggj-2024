@@ -15,7 +15,7 @@ public class King : MonoBehaviour
 {
     public string m_JokePreference;
     public bool m_EnablePreferenceCheck = false;
-    private HashSet<Joke> m_PreviousJokes = new(); 
+    private HashSet<Joke> m_PreviousJokes = new();
 
     void Start()
     {

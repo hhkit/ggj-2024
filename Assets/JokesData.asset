@@ -72,16 +72,46 @@ MonoBehaviour:
     - A jester, a Minister and a King walk in to a bar.
     - It hurt.
     m_Tags:
-    - 
+    - bar
     m_IsLame: 0
   - m_Lines:
     - Why did the king go to the dentist?
     - To get his crown fixed.
     m_Tags:
-    - 
+    - royalty
     m_IsLame: 0
   - m_Lines:
     - '"test"'
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - What do bees use to groom themselves with?
+    - Honeycombs!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - How do birds learn to fly?
+    - By winging it.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - What do you call a dog out in the cold?
+    - A Chili dog.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - How much do roofs cost?
+    - Nothing! They're on the house!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - Why shouldn't you trust atoms?
+    - They make up everything!
     m_Tags:
     - 
     m_IsLame: 0

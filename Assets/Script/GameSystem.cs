@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +14,7 @@ public class GameSystem : MonoBehaviour
     public UnityEvent<Jester, RejectionReason> OnJesterFailure;
     public UnityEvent OnLevelWin;
     public UnityEvent OnLevelLose;
+    public UnityEvent<Jester[]> MoveQueueForward;
 
     public Queue<Jester> m_JesterQueue { get; private set; }
     public King m_King { get; private set; }
@@ -24,12 +26,13 @@ public class GameSystem : MonoBehaviour
 
     public static GameSystem instance;
 
-    private JokeManager jokeManager;
+    public JokeManager jokeManager;
     private DayManager dayManager;
     private JesterFactory jesterFactory;
 
-    void Start()
+    private void Awake()
     {
+        instance = this;
         jokeManager = FindObjectOfType<JokeManager>();
         dayManager = FindObjectOfType<DayManager>();
         jesterFactory = FindObjectOfType<JesterFactory>();
@@ -40,11 +43,20 @@ public class GameSystem : MonoBehaviour
         InitializeKing();
         PopulateJesters();
         m_Lives = m_InitialLives;
+        m_JesterQueue = new Queue<Jester>();
+
+    }
+
+    void Start()
+    {
+        m_Lives = 3;
+        PopulateJesters();
 
         foreach (Jester item in m_JesterQueue)
             Debug.Log(item);
 
         AdvanceJesterQueue();
+        
     }
 
   
@@ -61,16 +73,20 @@ public class GameSystem : MonoBehaviour
     private void InitializeKing()
     {
         m_King = FindObjectOfType<King>();
+        
 
+        //kingPreference is null pls fix
+        /*
         var preference = dayManager.currentDay.kingPreference.Trim();
         if (preference != "")
             m_King.SetJokePreference(preference);
+        */
     }
 
     private void PopulateJesters()
     {
         var jokeQueue = jokeManager.CreateJokeQueue(m_King, dayManager.currentDay.jesters);
-
+        
         foreach (var joke in jokeQueue)
         {
             // create jesters, set jokes
@@ -105,6 +121,7 @@ public class GameSystem : MonoBehaviour
             m_CurrentJester = null;
         }
         m_CurrentJester = m_JesterQueue.Dequeue();
+        MoveQueueForward?.Invoke(m_JesterQueue.ToArray());
     }
 
     void AddScore()
@@ -146,5 +163,15 @@ public class GameSystem : MonoBehaviour
     private void Lose()
     {
         OnLevelLose.Invoke();
+    }
+
+    public void ApproveJester()
+    {
+        CharacterSystem.instance.SendJesterToKing(m_CurrentJester);
+    }
+
+    public void DeclineJester()
+    {
+
     }
 }

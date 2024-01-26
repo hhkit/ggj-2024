@@ -8,6 +8,11 @@ public class UISystem : MonoBehaviour
     public static UISystem instance;
 
     public GameObject m_JokeWindow;
+    private void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
 

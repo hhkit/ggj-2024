@@ -40,26 +40,14 @@ public class GameSystem : MonoBehaviour
 
         AdvanceJesterQueue();
     }
-	
+
     void Update()
     {
-        
-    }
-
-
-    public void AddScore()
-    {
-
-    }
-    public void DeductScore()
-    {
 
     }
 
-    public void DeductLife()
-    {
 
-    }
+
 
     public void ToggleJokesWindow()
     {
@@ -67,7 +55,7 @@ public class GameSystem : MonoBehaviour
     }
     public void PopulateJesters()
     {
-
+        // todo
     }
 
     public void CheckJoke()
@@ -101,20 +89,35 @@ public class GameSystem : MonoBehaviour
         m_CurrentJester = m_JesterQueue.Dequeue();
     }
 
-    private void JesterSuccess(Jester jester)
+    void AddScore()
     {
         m_Points++;
+
+    }
+    void DeductScore()
+    {
+
+        m_Points--;
+    }
+
+    void DeductLife()
+    {
+        m_Lives--;
+        if (m_Lives <= 0)
+            Lose();
+    }
+
+    void JesterSuccess(Jester jester)
+    {
+        AddScore();
         OnJesterSuccess.Invoke(jester);
     }
 
-    private void JesterFail(Jester jester)
+    void JesterFail(Jester jester)
     {
-        m_Points--;
-        m_Lives--;
+        DeductScore();
+        DeductLife();
         OnJesterFailure.Invoke(jester);
-
-        if (m_Lives <= 0)
-            Lose();
     }
 
     private void EndDay()

@@ -10,12 +10,12 @@ public class UISystem : MonoBehaviour
     public GameObject m_JokeWindow;
     void Start()
     {
-        
+
     }
-	
+
     void Update()
     {
-        
+
     }
 
     public void DisplayJokeWindow(bool _value)
@@ -25,6 +25,6 @@ public class UISystem : MonoBehaviour
     public void ToggleJokeWindow()
     {
         DisplayJokeWindow(!m_JokeWindow.gameObject.activeSelf);
-        
+
     }
 }

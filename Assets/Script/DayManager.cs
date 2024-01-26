@@ -19,7 +19,7 @@ public class DayManager : MonoBehaviour
         var deserializer = new DeserializerBuilder().Build();
         var level = deserializer.Deserialize<LevelConfig>(new StringReader(firstDay.text));
 
-        foreach (var line  in level.intro)
+        foreach (var line in level.intro)
         {
             Debug.Log(line);
         }

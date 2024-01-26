@@ -8,12 +8,12 @@ public class King : MonoBehaviour
     public string m_JokePreference;
     void Start()
     {
-        
+
     }
-	
+
     void Update()
     {
-        
+
     }
 
     public void SetJokePreference(string tag)

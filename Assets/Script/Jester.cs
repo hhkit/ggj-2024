@@ -8,11 +8,11 @@ public class Jester : MonoBehaviour
     public JesterRace m_JokerRace;
     void Start()
     {
-        
+
     }
-	
+
     void Update()
     {
-        
+
     }
 }

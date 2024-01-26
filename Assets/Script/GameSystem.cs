@@ -19,8 +19,6 @@ public class GameSystem : MonoBehaviour
     public int m_Points;
     public int m_Lives = 3;
 
-    public GameObject jesterPrefab;
-
     public static GameSystem instance;
 
     private JokeManager jokeManager;
@@ -59,7 +57,6 @@ public class GameSystem : MonoBehaviour
     {
         var jokeQueue = jokeManager?.CreateJokeQueue(dayManager.currentDay.jesters);
 
-        Debug.Assert(jesterPrefab != null, "JesterPrefab not set");
         foreach (var joke in jokeQueue)
         {
             // create jesters, set jokes

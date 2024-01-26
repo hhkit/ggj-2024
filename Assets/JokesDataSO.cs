@@ -27,6 +27,7 @@ public class Joke
     [SerializeField]
     bool m_IsLame;
     public bool IsLame => m_IsLame;
+    public bool IsFunny => !m_IsLame;
 }
 
 [CreateAssetMenu(fileName = "JokesData", menuName = "JokesData")]

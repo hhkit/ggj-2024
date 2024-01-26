@@ -9,32 +9,32 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private int m_FailCount;
 
     public UnityEvent<Jester> OnJesterSuccess;
-    public UnityEvent<Jester> OnJesterFailure;
+    public UnityEvent<Jester, RejectionReason> OnJesterFailure;
     public UnityEvent OnLevelWin;
     public UnityEvent OnLevelLose;
 
-    public List<Jester> m_InitialList;
     public Queue<Jester> m_JesterQueue;
     public King m_King;
     public Jester m_CurrentJester;
     public int m_Points;
     public int m_Lives = 3;
 
+    public GameObject jesterPrefab;
 
     public static GameSystem instance;
 
     private JokeManager jokeManager;
+    private DayManager dayManager;
 
     void Start()
     {
-        m_JesterQueue = new Queue<Jester>();
-        foreach (Jester item in m_InitialList)
-            m_JesterQueue.Enqueue(item);
+        PopulateJesters();
 
-        m_InitialList.Clear();
         m_Lives = 3;
 
         jokeManager = FindObjectOfType<JokeManager>();
+        dayManager = FindObjectOfType<DayManager>();
+
         foreach (Jester item in m_JesterQueue)
             Debug.Log(item);
 
@@ -55,7 +55,16 @@ public class GameSystem : MonoBehaviour
     }
     public void PopulateJesters()
     {
-        // todo
+        var jokeQueue = jokeManager?.CreateJokeQueue(dayManager.currentDay.jesters);
+
+        Debug.Assert(jesterPrefab != null, "JesterPrefab not set");
+        foreach (var joke in jokeQueue)
+        {
+            // create jesters, set jokes
+            var jester = GameObject.Instantiate(jesterPrefab).GetComponent<Jester>();
+            Debug.Assert(jester, "Jester Prefab should contain Jester component");
+            m_JesterQueue.Enqueue(jester);
+        }
     }
 
     public void CheckJoke()
@@ -67,13 +76,13 @@ public class GameSystem : MonoBehaviour
             return;
         }
 
-        if (m_King.ApproveJester(_jester))
+        if (m_King.ApproveJester(_jester, out RejectionReason reason))
         {
             JesterSuccess(_jester);
         }
         else
         {
-            JesterFail(_jester);
+            JesterFail(_jester, reason);
         }
 
         AdvanceJesterQueue();
@@ -113,11 +122,11 @@ public class GameSystem : MonoBehaviour
         OnJesterSuccess.Invoke(jester);
     }
 
-    void JesterFail(Jester jester)
+    void JesterFail(Jester jester, RejectionReason reason)
     {
         DeductScore();
         DeductLife();
-        OnJesterFailure.Invoke(jester);
+        OnJesterFailure.Invoke(jester, reason);
     }
 
     private void EndDay()

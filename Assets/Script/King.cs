@@ -3,9 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum RejectionReason
+{
+    None,
+    NotFunny,
+    Repeat,
+    NotPreferred,
+}
+
 public class King : MonoBehaviour
 {
     public string m_JokePreference;
+    public bool m_EnablePreferenceCheck = false;
+    private HashSet<Joke> m_PreviousJokes = new(); 
+
     void Start()
     {
 
@@ -21,18 +32,34 @@ public class King : MonoBehaviour
         m_JokePreference = tag;
     }
 
-    public bool ApproveJester(Jester _jester)
+    public bool ApproveJester(Jester _jester, out RejectionReason rejectReason)
     {
-        if (_jester == null)
-            return false;
+        Debug.Assert(_jester != null);
 
-        if (_jester.m_Joke.Tags.Contains(m_JokePreference))
+
+        if (m_PreviousJokes.Contains(_jester.m_Joke))
         {
-            Debug.Log("Joker successful");
-            return true;
+            Debug.Log("Joker failed");
+            rejectReason = RejectionReason.Repeat;
+            return false;
         }
 
-        Debug.Log("Joker failed");
-        return false;
+        if (m_EnablePreferenceCheck && _jester.m_Joke.Tags.Contains(m_JokePreference) == false)
+        {
+            Debug.Log("Joker failed");
+            rejectReason = RejectionReason.NotPreferred;
+            return false;
+        }
+
+        if (_jester.m_Joke.IsLame)
+        {
+            Debug.Log("Joker failed");
+            rejectReason = RejectionReason.NotFunny;
+            return false;
+        }
+
+        Debug.Log("Joker successful");
+        rejectReason = RejectionReason.None;
+        return true;
     }
 }

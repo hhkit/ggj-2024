@@ -5,5 +5,6 @@ using UnityEngine;
 public enum JesterRace
 {
     Human,
-    Chicken
+    Chicken,
+    Assassin,
 }

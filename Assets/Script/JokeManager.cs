@@ -28,7 +28,7 @@ public class JokeManager : MonoBehaviour
         var unfunnies = unfunnyJokes;
         var repeats = corrects.OrderBy(a => Guid.NewGuid());
 
-        var incorrects = unrelated.Concat(unfunnies).Concat(repeats).Take(config.lame);
+        var incorrects = unrelated.Concat(unfunnies).Concat(repeats).OrderBy(a => Guid.NewGuid()).Take(config.lame);
 
         return corrects.Concat(incorrects).OrderBy(a => Guid.NewGuid()).ToArray();
     }

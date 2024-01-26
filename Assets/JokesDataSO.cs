@@ -1,9 +1,11 @@
-using System;
-using System.Collections;
+using UnityEngine;
+
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using UnityEngine;
+using UnityEditor;
 using UnityEngine.Networking;
+#endif // UNITY_EDITOR
 
 [System.Serializable]
 public class Joke
@@ -82,13 +84,17 @@ public class JokesDataSO : ScriptableObject
                 break;
 
             Joke joke = new Joke(
-                matches[i].Groups[1].Value.Split('\n'),
+                matches[i].Groups[1].Value.Replace("\"\"", "\"").Split('\n'),
                 tagDelimiterRegex.Split(matches[i + 1].Groups[1].Value),
                 matches[i + 2].Groups[1].Value == "TRUE");
             m_Jokes.Add(joke);
 
             ++r;
         }
+
+        EditorUtility.SetDirty(this);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 #endif // UNITY_EDITOR
 }

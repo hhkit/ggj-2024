@@ -8,14 +8,23 @@ using UnityEngine.Networking;
 [System.Serializable]
 public class Joke
 {
-    public Joke(string[] lines, string[] tags)
+    public Joke(string[] lines, string[] tags, bool isLame)
     {
-        Lines = lines;
-        Tags = tags;
+        m_Lines = lines;
+        m_Tags = tags;
+        m_IsLame = isLame;
     }
 
-    public string[] Lines { get; private set; }
-    public string[] Tags { get; private set; }
+    [SerializeField]
+    string[] m_Lines;
+    public string[] Lines => m_Lines;
+
+    [SerializeField]
+    string[] m_Tags;
+    public string[] Tags => m_Tags;
+    [SerializeField]
+    bool m_IsLame;
+    public bool IsLame => m_IsLame;
 }
 
 [CreateAssetMenu(fileName = "JokesData", menuName = "JokesData")]
@@ -31,11 +40,16 @@ public class JokesDataSO : ScriptableObject
     public string m_GoogleSheetsSheetName = "Sheet1";
     public int m_GoogleSheetsOffsetRows = 0;
     public int m_GoogleSheetsOffsetCols = 0;
+    
+    /**
+     * UPDATE THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     */
+    const int GoogleSheetsNumCols = 3;
 
     [EasyButtons.Button]
     void RefreshSheet()
     {
-        string url = $"https://docs.google.com/spreadsheets/d/{m_GoogleSheetsID}/gviz/tq?tqx=out:csv&sheet={m_GoogleSheetsSheetName}";
+        string url = $"https://docs.google.com/spreadsheets/d/{m_GoogleSheetsID}/gviz/tq?tqx=out:csv&sheet={m_GoogleSheetsSheetName}&range={(char)('A' + m_GoogleSheetsOffsetCols)}:{(char)('A' + m_GoogleSheetsOffsetCols + GoogleSheetsNumCols - 1)}";
         var req = UnityWebRequest.Get(url);
         var op = req.SendWebRequest();
         op.completed += OnGetSheet;
@@ -55,19 +69,25 @@ public class JokesDataSO : ScriptableObject
     {
         m_Jokes.Clear();
 
-        Regex lineRegex = new Regex(@"(?<=^|,)""(.*?)""(?=$|,)");
+        Regex cellRegex = new Regex(@"(?<=^|,)""(.*?)""(?=$|,)", RegexOptions.Multiline | RegexOptions.Singleline);
         Regex tagDelimiterRegex = new Regex(@",\s*");
 
-        string[] lines = csv.Split("\n");
-        for (int r = m_GoogleSheetsOffsetRows; r < lines.Length; r++)
+        var matches = cellRegex.Matches(csv);
+        int r = m_GoogleSheetsOffsetRows;
+        while (true)
         {
-            string line = lines[r];
-            var matches = lineRegex.Matches(line);
+            int i = r * GoogleSheetsNumCols;
+
+            if (i >= matches.Count)
+                break;
 
             Joke joke = new Joke(
-                matches[m_GoogleSheetsOffsetCols].Value.Split(Environment.NewLine),
-                tagDelimiterRegex.Split(matches[m_GoogleSheetsOffsetCols + 1].Value));
+                matches[i].Groups[1].Value.Split('\n'),
+                tagDelimiterRegex.Split(matches[i + 1].Groups[1].Value),
+                matches[i + 2].Groups[1].Value == "TRUE");
             m_Jokes.Add(joke);
+
+            ++r;
         }
     }
 #endif // UNITY_EDITOR

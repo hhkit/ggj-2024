@@ -1,12 +1,11 @@
 intro:
-- player: first day on the job
-- player: joke audit
-- player: what has this country come to
-- player: glory to arstotzka
+- "player: first day on the job"
+- "player: joke audit"
+- "player: what has this country come to"
+- "player: glory to arstotzka"
 orders: The King will only listen to funny jokes! Let no one else in!
 jesters:
   # this ensures the player is always guaranteed an amount of money
   funny: 4
   lame: 2
-config:
   assassin: true

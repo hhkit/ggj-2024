@@ -23,6 +23,7 @@ public class JokeManager : MonoBehaviour
         // OrderBy(a=>Guid.NewGuid) randomizes the list
         var corrects = funnyJokes.Where(joke => king.PrefersJoke(joke)).OrderBy(a => Guid.NewGuid()).Take(config.funny);
 
+        // todo: weight the incorrect choices
         var unrelated = funnyJokes.Where(joke => !king.PrefersJoke(joke));
         var unfunnies = unfunnyJokes;
         var repeats = corrects.OrderBy(a => Guid.NewGuid());

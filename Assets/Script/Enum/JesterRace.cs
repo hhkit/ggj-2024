@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum JokerRace
+public enum JesterRace
 {
     Human,
-    Dog
+    Chicken
 }

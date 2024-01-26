@@ -5,7 +5,7 @@ using UnityEngine;
 public class Jester : MonoBehaviour
 {
     public Joke m_Joke;
-    public JokerRace m_JokerRace;
+    public JesterRace m_JokerRace;
     void Start()
     {
         

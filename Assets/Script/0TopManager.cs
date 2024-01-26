@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 /// <summary>
 /// This class will grab all other managers and initialize them at the beginning of the program

@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,7 +13,7 @@ public class GameSystem : MonoBehaviour
     public UnityEvent OnLevelLose;
     public UnityEvent<Jester[]> MoveQueueForward;
 
-    public Queue<Jester> m_JesterQueue { get; private set; }
+    public Queue<Jester> m_JesterQueue { get; private set; } = new();
     public King m_King { get; private set; }
     public Jester m_CurrentJester { get; private set; }
 
@@ -74,24 +71,16 @@ public class GameSystem : MonoBehaviour
     private void PopulateJesters()
     {
         var jokeQueue = jokeManager.CreateJokeQueue(m_King, dayManager.currentDay.jesters);
-        m_JesterQueue = new(jokeQueue.Select(joke => jesterFactory.CreateJester(joke)));
+        m_JesterQueue = new(jokeQueue.Select(jesterFactory.CreateJester));
     }
 
-    public void CheckJoke()
+    void CheckJoke(Jester jester)
     {
-        var _jester = m_CurrentJester;
-        Debug.Assert(_jester == null, "No jester in queue");
-
-        if (m_King.ApproveJester(_jester, out RejectionReason reason))
-        {
-            JesterSuccess(_jester);
-        }
+        Debug.Assert(jester != null, "Invalid jester");
+        if (m_King.ApproveJester(jester, out RejectionReason reason))
+            JesterSuccess(jester);
         else
-        {
-            JesterFail(_jester, reason);
-        }
-
-        AdvanceJesterQueue();
+            JesterFail(jester, reason);
     }
 
     private void AdvanceJesterQueue()
@@ -100,6 +89,7 @@ public class GameSystem : MonoBehaviour
         {
             EndDay();
             m_CurrentJester = null;
+            return;
         }
         m_CurrentJester = m_JesterQueue.Dequeue();
         MoveQueueForward?.Invoke(m_JesterQueue.ToArray());
@@ -146,16 +136,25 @@ public class GameSystem : MonoBehaviour
         OnLevelLose.Invoke();
     }
 
-    // Player sends the Jester to the King
+    // Player sends the Jester at the front of the line to the King
     public void AcceptJester()
     {
-        CharacterSystem.instance.SendJesterToKing(m_CurrentJester);
-        CheckJoke();
+        /* TODO:
+         * jester being approved should be separate from jester at front of queue
+         * because as jester walks off, the next jester should move forward to take his place
+         * simple solution is line waits until king approves the jester, ofc
+         */
+        var jester = m_CurrentJester;
+        CharacterSystem.instance.SendJesterToKing(jester);
+        AdvanceJesterQueue();
+        CheckJoke(jester);
     }
 
     // Player refuses the Jester as audience to the King
     public void RejectJester()
     {
-
+        //var jester = m_CurrentJester;
+        //CharacterSystem.instance.YeetJester(jester);
+        AdvanceJesterQueue();
     }
 }

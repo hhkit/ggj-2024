@@ -13,7 +13,7 @@ public class Joke
         Lines = lines;
         Tags = tags;
     }
-
+    // public JokeLevel jokeLevel;
     public string[] Lines { get; private set; }
     public string[] Tags { get; private set; }
 }

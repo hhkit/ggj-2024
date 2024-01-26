@@ -4,6 +4,7 @@ intro:
 - "player: what has this country come to"
 - "player: glory to arstotzka"
 orders: The King will only listen to funny jokes! Let no one else in!
+kingPreference: ""
 jesters:
   # this ensures the player is always guaranteed an amount of money
   funny: 4

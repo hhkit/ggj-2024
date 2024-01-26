@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Schema;
@@ -13,11 +14,13 @@ public class GameSystem : MonoBehaviour
     public UnityEvent OnLevelWin;
     public UnityEvent OnLevelLose;
 
-    public Queue<Jester> m_JesterQueue;
-    public King m_King;
-    public Jester m_CurrentJester;
-    public int m_Points;
-    public int m_Lives = 3;
+    public Queue<Jester> m_JesterQueue { get; private set; }
+    public King m_King { get; private set; }
+    public Jester m_CurrentJester { get; private set; }
+
+    public int m_InitialLives = 3;
+    public int m_Points { get; private set; }
+    public int m_Lives { get; private set; }
 
     public static GameSystem instance;
 
@@ -27,13 +30,16 @@ public class GameSystem : MonoBehaviour
 
     void Start()
     {
-        PopulateJesters();
-
-        m_Lives = 3;
-
         jokeManager = FindObjectOfType<JokeManager>();
         dayManager = FindObjectOfType<DayManager>();
         jesterFactory = FindObjectOfType<JesterFactory>();
+        Debug.Assert(jokeManager != null, "No JokeManager in scene");
+        Debug.Assert(dayManager != null, "No DayManager in scene");
+        Debug.Assert(jesterFactory != null, "No JesterFactory in scene");
+
+        InitializeKing();
+        PopulateJesters();
+        m_Lives = m_InitialLives;
 
         foreach (Jester item in m_JesterQueue)
             Debug.Log(item);
@@ -41,21 +47,29 @@ public class GameSystem : MonoBehaviour
         AdvanceJesterQueue();
     }
 
+  
+
     void Update()
     {
 
     }
 
-
-
-
     public void ToggleJokesWindow()
     {
         UISystem.instance.ToggleJokeWindow();
     }
-    public void PopulateJesters()
+    private void InitializeKing()
     {
-        var jokeQueue = jokeManager?.CreateJokeQueue(dayManager.currentDay.jesters);
+        m_King = FindObjectOfType<King>();
+
+        var preference = dayManager.currentDay.kingPreference.Trim();
+        if (preference != "")
+            m_King.SetJokePreference(preference);
+    }
+
+    private void PopulateJesters()
+    {
+        var jokeQueue = jokeManager.CreateJokeQueue(dayManager.currentDay.jesters);
 
         foreach (var joke in jokeQueue)
         {
@@ -69,11 +83,7 @@ public class GameSystem : MonoBehaviour
     public void CheckJoke()
     {
         var _jester = m_CurrentJester;
-        if (_jester == null)
-        {
-            Debug.LogError("No jester in queue");
-            return;
-        }
+        Debug.Assert(_jester == null, "No jester in queue");
 
         if (m_King.ApproveJester(_jester, out RejectionReason reason))
         {

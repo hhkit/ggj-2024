@@ -30,6 +30,7 @@ public class King : MonoBehaviour
     public void SetJokePreference(string tag)
     {
         m_JokePreference = tag;
+        m_EnablePreferenceCheck = tag != "";
     }
 
     public bool ApproveJester(Jester _jester, out RejectionReason rejectReason)

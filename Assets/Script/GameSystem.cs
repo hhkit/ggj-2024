@@ -69,7 +69,7 @@ public class GameSystem : MonoBehaviour
 
     private void PopulateJesters()
     {
-        var jokeQueue = jokeManager.CreateJokeQueue(dayManager.currentDay.jesters);
+        var jokeQueue = jokeManager.CreateJokeQueue(m_King, dayManager.currentDay.jesters);
 
         foreach (var joke in jokeQueue)
         {

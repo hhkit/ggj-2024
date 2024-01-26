@@ -18,17 +18,17 @@ public class JokeManager : MonoBehaviour
         unfunnyJokes = jokeData.Jokes.Where(a => a.IsLame).ToArray();
     }
 
-    public Joke[] CreateJokeQueue(JesterConfig config)
+    public Joke[] CreateJokeQueue(King king, JesterConfig config)
     {
-        var repeatCount = UnityEngine.Random.Range(0, config.lame);
-        var unfunnyCount = config.lame - repeatCount;
-
         // OrderBy(a=>Guid.NewGuid) randomizes the list
-        var funnies = funnyJokes.OrderBy(a => Guid.NewGuid()).Take(config.funny);
-        var repeats = funnies.OrderBy(a => Guid.NewGuid()).Take(repeatCount);
-        var unfunnies = unfunnyJokes.OrderBy(a => Guid.NewGuid()).Take(unfunnyCount);
+        var corrects = funnyJokes.Where(joke => king.PrefersJoke(joke)).OrderBy(a => Guid.NewGuid()).Take(config.funny);
 
-        var unorderedQueue = funnies.Concat(repeats).Concat(unfunnies);
-        return unorderedQueue.OrderBy(a => Guid.NewGuid()).ToArray();
+        var unrelated = funnyJokes.Where(joke => !king.PrefersJoke(joke));
+        var unfunnies = unfunnyJokes;
+        var repeats = corrects.OrderBy(a => Guid.NewGuid());
+
+        var incorrects = unrelated.Concat(unfunnies).Concat(repeats).Take(config.lame);
+
+        return corrects.Concat(incorrects).OrderBy(a => Guid.NewGuid()).ToArray();
     }
 }

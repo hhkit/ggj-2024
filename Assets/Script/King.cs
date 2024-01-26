@@ -27,6 +27,11 @@ public class King : MonoBehaviour
 
     }
 
+    public bool PrefersJoke(Joke joke)
+    {
+        return m_EnablePreferenceCheck && joke.Tags.Contains(m_JokePreference) == false;
+    }
+
     public void SetJokePreference(string tag)
     {
         m_JokePreference = tag;
@@ -45,7 +50,7 @@ public class King : MonoBehaviour
             return false;
         }
 
-        if (m_EnablePreferenceCheck && _jester.m_Joke.Tags.Contains(m_JokePreference) == false)
+        if (PrefersJoke(_jester.m_Joke))
         {
             Debug.Log("Joker failed");
             rejectReason = RejectionReason.NotPreferred;

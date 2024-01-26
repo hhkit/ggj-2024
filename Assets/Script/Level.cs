@@ -12,6 +12,6 @@ public struct LevelConfig
 {
     public List<string> intro;
     public string orders;
-    public JesterConfig jesters;
     public string kingPreference;
+    public JesterConfig jesters;
 }

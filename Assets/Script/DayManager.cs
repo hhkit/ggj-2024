@@ -1,36 +1,33 @@
 using System.Linq;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Windows;
-using YamlDotNet.RepresentationModel;
+using UnityEngine.Events;
 using YamlDotNet.Serialization;
 
 
-public class DayManager : MonoBehaviour
+public class DayManager : Manager
 {
     public TextAsset[] days;
-    // Start is called before the first frame update
-
     public LevelConfig currentDay { get; private set; }
-    void Start()
+
+    public override void ManagerInit()
     {
-        var firstDay = days.First();
-        if (firstDay == null)
+        DeserializeDayData(0);
+    }
+
+    void DeserializeDayData(int index)
+    {
+        var day = days.ElementAt(index);
+        if (day == null)
             return;
 
         var deserializer = new DeserializerBuilder().Build();
-        var level = deserializer.Deserialize<LevelConfig>(new StringReader(firstDay.text));
+        var level = deserializer.Deserialize<LevelConfig>(new StringReader(day.text));
         currentDay = level;
 
         foreach (var line in level.intro)
         {
             Debug.Log(line);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

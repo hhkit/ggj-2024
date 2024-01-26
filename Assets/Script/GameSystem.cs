@@ -26,7 +26,7 @@ public class GameSystem : MonoBehaviour
 
     public static GameSystem instance;
 
-    public JokeManager jokeManager;
+    private JokeManager jokeManager;
     private DayManager dayManager;
     private JesterFactory jesterFactory;
 
@@ -43,28 +43,18 @@ public class GameSystem : MonoBehaviour
         InitializeKing();
         PopulateJesters();
         m_Lives = m_InitialLives;
-        m_JesterQueue = new Queue<Jester>();
 
     }
 
     void Start()
     {
-        m_Lives = 3;
-        PopulateJesters();
-
         foreach (Jester item in m_JesterQueue)
             Debug.Log(item);
 
         AdvanceJesterQueue();
-        
     }
 
-  
 
-    void Update()
-    {
-
-    }
 
     public void ToggleJokesWindow()
     {
@@ -73,27 +63,18 @@ public class GameSystem : MonoBehaviour
     private void InitializeKing()
     {
         m_King = FindObjectOfType<King>();
-        
+        Debug.Assert(m_King != null);
 
-        //kingPreference is null pls fix
-        /*
         var preference = dayManager.currentDay.kingPreference.Trim();
+        Debug.Log($"King prefers {preference}");
         if (preference != "")
             m_King.SetJokePreference(preference);
-        */
     }
 
     private void PopulateJesters()
     {
         var jokeQueue = jokeManager.CreateJokeQueue(m_King, dayManager.currentDay.jesters);
-        
-        foreach (var joke in jokeQueue)
-        {
-            // create jesters, set jokes
-            var jester = jesterFactory.CreateJester(joke);
-            Debug.Assert(jester, "Jester Prefab should contain Jester component");
-            m_JesterQueue.Enqueue(jester);
-        }
+        m_JesterQueue = new(jokeQueue.Select(joke =>jesterFactory.CreateJester(joke)));
     }
 
     public void CheckJoke()
@@ -165,12 +146,15 @@ public class GameSystem : MonoBehaviour
         OnLevelLose.Invoke();
     }
 
-    public void ApproveJester()
+    // Player sends the Jester to the King
+    public void AcceptJester()
     {
         CharacterSystem.instance.SendJesterToKing(m_CurrentJester);
+        CheckJoke();
     }
 
-    public void DeclineJester()
+    // Player refuses the Jester as audience to the King
+    public void RejectJester()
     {
 
     }

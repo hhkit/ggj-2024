@@ -4,15 +4,14 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class JokeManager : MonoBehaviour
+public class JokeManager : Manager
 {
     public JokesDataSO jokeData;
-    public GameObject jesterPrefab;
 
     private Joke[] funnyJokes;
     private Joke[] unfunnyJokes;
 
-    public void Awake()
+    public override void ManagerInit()
     {
         funnyJokes = jokeData.Jokes.Where(a => a.IsFunny).ToArray();
         unfunnyJokes = jokeData.Jokes.Where(a => a.IsLame).ToArray();
@@ -24,6 +23,7 @@ public class JokeManager : MonoBehaviour
         var corrects = funnyJokes.Where(joke => king.PrefersJoke(joke)).OrderBy(a => Guid.NewGuid()).Take(config.funny);
 
         // todo: weight the incorrect choices
+        var unrelatedCount = UnityEngine.Random.Range(0, config.lame);
         var unrelated = funnyJokes.Where(joke => !king.PrefersJoke(joke));
         var unfunnies = unfunnyJokes;
         var repeats = corrects.OrderBy(a => Guid.NewGuid());

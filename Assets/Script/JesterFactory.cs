@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public class JesterFactory : MonoBehaviour
+public class JesterFactory : Manager
 {
     public GameObject jesterPrefab;
+    public override void ManagerInit() { 
+    // do nothing
+    }
 
     public Jester CreateJester(Joke joke)
     {

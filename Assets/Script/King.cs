@@ -6,6 +6,7 @@ using UnityEngine;
 public enum RejectionReason
 {
     None,
+    NotFunny,
     Repeat,
     NotPreferred,
 }
@@ -35,6 +36,7 @@ public class King : MonoBehaviour
     {
         Debug.Assert(_jester != null);
 
+
         if (m_PreviousJokes.Contains(_jester.m_Joke))
         {
             Debug.Log("Joker failed");
@@ -46,6 +48,13 @@ public class King : MonoBehaviour
         {
             Debug.Log("Joker failed");
             rejectReason = RejectionReason.NotPreferred;
+            return false;
+        }
+
+        if (_jester.m_Joke.IsLame)
+        {
+            Debug.Log("Joker failed");
+            rejectReason = RejectionReason.NotFunny;
             return false;
         }
 

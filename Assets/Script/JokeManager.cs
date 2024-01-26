@@ -20,7 +20,15 @@ public class JokeManager : MonoBehaviour
 
     public Joke[] CreateJokeQueue(JesterConfig config)
     {
-        // wtf why is my brain working not
-        return new Joke[0];
+        var repeatCount = UnityEngine.Random.Range(0, config.lame);
+        var unfunnyCount = config.lame - repeatCount;
+
+        // OrderBy(a=>Guid.NewGuid) randomizes the list
+        var funnies = funnyJokes.OrderBy(a => Guid.NewGuid()).Take(config.funny);
+        var repeats = funnies.OrderBy(a => Guid.NewGuid()).Take(repeatCount);
+        var unfunnies = unfunnyJokes.OrderBy(a => Guid.NewGuid()).Take(unfunnyCount);
+
+        var unorderedQueue = funnies.Concat(repeats).Concat(unfunnies);
+        return unorderedQueue.OrderBy(a => Guid.NewGuid()).ToArray();
     }
 }

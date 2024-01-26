@@ -48,8 +48,8 @@ public class CharacterSystem : MonoBehaviour
     {
         GameSystem.instance.m_CurrentJester.GoToPosition(m_WayPointList[0].transform.position);
         int count = 1;
-        foreach (Jester item in _jesters) 
-        { 
+        foreach (Jester item in _jesters)
+        {
             if (count > WAYPOINTCOUNT)
                 break;
 

@@ -6,8 +6,9 @@ using UnityEngine;
 public class JesterFactory : Manager
 {
     public GameObject jesterPrefab;
-    public override void ManagerInit() { 
-    // do nothing
+    public override void ManagerInit()
+    {
+        // do nothing
     }
 
     public Jester CreateJester(Joke joke)

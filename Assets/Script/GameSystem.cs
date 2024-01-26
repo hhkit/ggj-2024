@@ -74,7 +74,7 @@ public class GameSystem : MonoBehaviour
     private void PopulateJesters()
     {
         var jokeQueue = jokeManager.CreateJokeQueue(m_King, dayManager.currentDay.jesters);
-        m_JesterQueue = new(jokeQueue.Select(joke =>jesterFactory.CreateJester(joke)));
+        m_JesterQueue = new(jokeQueue.Select(joke => jesterFactory.CreateJester(joke)));
     }
 
     public void CheckJoke()

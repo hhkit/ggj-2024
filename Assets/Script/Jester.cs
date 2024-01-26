@@ -22,13 +22,13 @@ public class Jester : MonoBehaviour
     public void GoToPosition(Vector3 _targetPos)
     {
         float distance = Vector3.Distance(_targetPos, transform.position);
-        transform.DOMove(_targetPos, distance/JESTERSPEED);
+        transform.DOMove(_targetPos, distance / JESTERSPEED);
 
     }
 
     public void GoToKing(Path _path)
     {
-        transform.DOPath(_path,1);
+        transform.DOPath(_path, 1);
     }
 
 }

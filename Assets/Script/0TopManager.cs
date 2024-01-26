@@ -9,7 +9,7 @@ using UnityEngine.Events;
 /// This class will grab all other managers and initialize them at the beginning of the program
 /// </summary>
 public class ManagerManager : MonoBehaviour
-    {
+{
     void Awake()
     {
         foreach (var manager in FindObjectsOfType<Manager>())

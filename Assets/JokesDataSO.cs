@@ -14,7 +14,7 @@ public class Joke
         m_Tags = tags;
         m_IsLame = isLame;
     }
-
+    // public JokeLevel jokeLevel;
     [SerializeField]
     string[] m_Lines;
     public string[] Lines => m_Lines;

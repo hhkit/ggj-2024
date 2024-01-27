@@ -94,7 +94,7 @@ public class DialogueSystem : MonoBehaviour
         List<QuoteData> tmp = new List<QuoteData>();
         foreach (var item in jokeManager.jokeData.PlayerLines)
         {
-            if (item.Context.Equals("SendToKing"))
+            if (item.Context.Contains("SendToKing"))
                 tmp.Add(item);
         }
         m_ConvoOngoing = true;
@@ -140,10 +140,11 @@ public class DialogueSystem : MonoBehaviour
     {
         if (m_DialogQueue.Count == 0)
         {
+            m_ConvoOngoing = false;
+            GameSystem.instance.WaitingForPlayerChoice();
         }
         else
         {
-            m_ConvoOngoing = false;
             var tmp = m_DialogQueue.Dequeue();
             StartCoroutine(DialogPlaying(tmp));
         }

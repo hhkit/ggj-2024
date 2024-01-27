@@ -8,6 +8,7 @@ public class DayManager : Manager
 {
     public TextAsset[] days;
     public LevelConfig currentDay { get; private set; }
+    public int currentDayIndex { get; private set; }
 
     public override void ManagerInit()
     {
@@ -19,6 +20,8 @@ public class DayManager : Manager
         var day = days.ElementAt(index);
         if (day == null)
             return;
+
+        currentDayIndex = index;
 
         var deserializer = new DeserializerBuilder().Build();
         var level = deserializer.Deserialize<LevelConfig>(new StringReader(day.text));

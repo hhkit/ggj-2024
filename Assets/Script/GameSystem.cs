@@ -11,6 +11,7 @@ using UnityEngine.Events;
 public class GameSystem : MonoBehaviour
 {
     [SerializeField] private int m_FailCount;
+    [SerializeField] private bool m_AfterFirstConvo;
 
     public UnityEvent<Jester> OnJesterSuccess;
     public UnityEvent<Jester, RejectionReason> OnJesterFailure;
@@ -20,7 +21,6 @@ public class GameSystem : MonoBehaviour
     public Queue<Jester> m_JesterQueue { get; private set; } = new();
     public King m_King { get; private set; }
     public Jester m_CurrentJester { get; private set; }
-    public GameObject m_Player;
 
     public int m_Points { get; private set; }
     public int m_Quota { get; private set; }
@@ -121,12 +121,14 @@ public class GameSystem : MonoBehaviour
         AddScore();
         WaypointManager.instance.PlayKingAcceptJester(jester);
         OnJesterSuccess.Invoke(jester);
+        DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
     }
 
     void JesterFail(Jester jester, RejectionReason reason)
     {
         DeductScore();
         OnJesterFailure.Invoke(jester, reason);
+        DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
     }
 
     void EndDay()
@@ -174,6 +176,15 @@ public class GameSystem : MonoBehaviour
 
     public void StartJesterConversation()
     {
-        DialogueSystem.instance.StartJokeDialog(m_CurrentJester, m_Player);
+        if (!m_AfterFirstConvo)
+        {
+            m_AfterFirstConvo = true;
+            DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
+        }
+    }
+
+    public void ReplayJesterConversation()
+    {
+        DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
     }
 }

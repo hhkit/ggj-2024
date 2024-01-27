@@ -339,19 +339,55 @@ MonoBehaviour:
     - AH HA HA HA HA HA. AH HA HA HA HA HA HA.
     m_Context: Approve
   - m_Lines:
+    - AH HA HA! GOOD ONE!
+    m_Context: Approve
+  - m_Lines:
+    - 'WA HA HA HA HA!! '
+    m_Context: Approve
+  - m_Lines:
     - Lame.
     - To the dungeon with you!
     m_Context: Deny
+  - m_Lines:
+    - Booooring.. Off to the dungeon.
+    m_Context: Deny
+  - m_Lines:
+    - Is that supposed to be funny?
+    m_Context: Deny
   m_PlayerLines:
   - m_Lines:
-    - NEXT
+    - NEXT!
     m_Context: CallNext
   - m_Lines:
-    - Go on
+    - Next, please!
+    m_Context: CallNext
+  - m_Lines:
+    - Go on.
     m_Context: SendToKing
   - m_Lines:
-    - Nope
+    - Go ahead.
+    m_Context: SendToKing
+  - m_Lines:
+    - The King awaits.
+    m_Context: SendToKing
+  - m_Lines:
+    - Nope.
     m_Context: DenyAudience
+  - m_Lines:
+    - Try again next time.
+    m_Context: DenyAudience
+  - m_Lines:
+    - Find a better joke.
+    m_Context: DenyAudience
+  - m_Lines:
+    - Punchlines, Please.
+    m_Context: PunchlinesPlease
+  - m_Lines:
+    - Hit me with your best joke.
+    m_Context: PunchlinesPlease
+  - m_Lines:
+    - This better make me laugh.
+    m_Context: PunchlinesPlease
   m_JokeRequest:
     GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk
     GoogleSheetsSheetName: Jokes

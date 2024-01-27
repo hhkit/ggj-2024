@@ -11,7 +11,8 @@ using UnityEngine.Events;
 public class GameSystem : MonoBehaviour
 {
     [SerializeField] private int m_FailCount;
-    [SerializeField] private bool m_AfterFirstConvo;
+    [SerializeField] private bool m_StartJesterConvoOnArrival;
+    [SerializeField] private bool m_WaitingForPlayerChoice;
 
     public UnityEvent<Jester> OnJesterSuccess;
     public UnityEvent<Jester, RejectionReason> OnJesterFailure;
@@ -45,6 +46,7 @@ public class GameSystem : MonoBehaviour
         PopulateJesters();
         m_Points = 0;
         m_Quota = dayManager.currentDay.quota;
+        m_StartJesterConvoOnArrival = true;
     }
 
     void Start()
@@ -154,6 +156,7 @@ public class GameSystem : MonoBehaviour
                 .OnComplete(() => CheckJoke(jester));
 
         var queueMoveTween = AdvanceJesterQueue();
+        m_StartJesterConvoOnArrival = true;
         return DOTween.Sequence()
             .Join(jesterMoveTween)
             .Join(queueMoveTween)
@@ -174,17 +177,45 @@ public class GameSystem : MonoBehaviour
                 Destroy(jester.gameObject);
             });
         var queueMoveTween = AdvanceJesterQueue();
+        m_StartJesterConvoOnArrival = true;
         return queueMoveTween
             .OnComplete(StartJesterConversation);
     }
 
+    public void OnAcceptClick()
+    {
+        if (m_WaitingForPlayerChoice)
+        {
+            AcceptJester();
+            m_WaitingForPlayerChoice = false;
+        }
+    }
+
+    public void OnDeclineClick()
+    {
+        if (m_WaitingForPlayerChoice)
+        {
+            RejectJester();
+            m_WaitingForPlayerChoice = false;
+        }
+    }
+
     public void StartJesterConversation()
     {
-        DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
+        if (m_StartJesterConvoOnArrival)
+        {
+            m_StartJesterConvoOnArrival = false;
+            DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
+        }
     }
 
     public void ReplayJesterConversation()
     {
         DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
+    }
+
+    public void WaitingForPlayerChoice()
+    {
+        m_WaitingForPlayerChoice = true;
     }
 }

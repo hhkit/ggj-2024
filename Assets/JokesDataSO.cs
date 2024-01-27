@@ -67,6 +67,13 @@ public struct SheetRequest
         GoogleSheetsNumCols = 3;
     }
 }
+public static class ListExt
+{
+    public static T GetRandomWhere<T>(this List<T> list, Func<T, bool> pred)
+    {
+        return list.Where(pred).OrderBy(s => Guid.NewGuid()).First();
+    }
+} 
 
 [CreateAssetMenu(fileName = "JokesData", menuName = "JokesData")]
 public class JokesDataSO : ScriptableObject
@@ -81,6 +88,8 @@ public class JokesDataSO : ScriptableObject
     public List<Joke> Jokes => m_Jokes;
     public List<QuoteData> KingLines => m_KingLines;
     public List<QuoteData> PlayerLines => m_PlayerLines;
+
+    
 
 #if UNITY_EDITOR
     public SheetRequest m_JokeRequest;

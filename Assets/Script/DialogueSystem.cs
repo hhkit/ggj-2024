@@ -8,6 +8,13 @@ using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
 using UnityEngine;
 using static Unity.Burst.Intrinsics.X86.Avx;
 
+public enum SpeechBubbleId
+{
+    Player,
+    Jester,
+    King,
+}
+
 public class DialogueSystem : MonoBehaviour
 {
     public static DialogueSystem instance;
@@ -26,7 +33,6 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private SpeechBubble m_JesterBubble;
     [SerializeField] private SpeechBubble m_JesterBubble2;
     [SerializeField] private SpeechBubble m_Kingbubble;
-    private int bubbleIndex = 0;
     private Queue<DialogAction> m_DialogQueue;
 
     private JokeManager jokeManager;
@@ -35,23 +41,26 @@ public class DialogueSystem : MonoBehaviour
 
     public struct DialogAction
     {
-        public DialogAction(SpeechBubble _bubble, String _text, float _timeToShow, Vector3 _position)
+        public DialogAction(SpeechBubbleId _id, String _text, float _timeToShow)
         {
-            bubble = _bubble;
+            id = _id;
             
             timeToShow = _timeToShow;
-            position = _position;
 
             if (_text.StartsWith(">"))
                 text = _text.TrimStart('>');
             else
                 text = _text;
+            myIndex = bubbleIndex++ % 2;
         }
          
-        public SpeechBubble bubble;
+        public SpeechBubbleId id;
         public String text;
         public float timeToShow;
-        public Vector3 position;
+
+        public int myIndex { get; private set; }
+
+        private static int bubbleIndex;
     }
         
     private void Awake()
@@ -65,20 +74,11 @@ public class DialogueSystem : MonoBehaviour
         HideDialogBox(m_JesterBubble2);
     }
 
-    void Start()
-    {
-
-    }
-	
-    void Update()
-    {
-        
-    }
-
     public void ShowDialogBox(DialogAction _action)
     {
-        _action.bubble.SetText(_action.text);
-        _action.bubble.gameObject.SetActive(true);
+        var bubble = GetConvoSpeechBubble(_action);
+        bubble.SetText(_action.text);
+        bubble.gameObject.SetActive(true);
     }
 
     public void HideDialogBox(SpeechBubble _bubble)
@@ -91,49 +91,54 @@ public class DialogueSystem : MonoBehaviour
     {
         if (m_ConvoOngoing)
             return;
-        List<QuoteData> tmp = new List<QuoteData>();
-        foreach (var item in jokeManager.jokeData.PlayerLines)
-        {
-            if (item.Context.Contains("SendToKing"))
-                tmp.Add(item);
-        }
-        m_ConvoOngoing = true;
-        var randPunchLine = tmp[UnityEngine.Random.Range(0, tmp.Count - 1)];
 
-        m_DialogQueue.Enqueue(new DialogAction(m_PlayerBubble, randPunchLine.Lines[0], TIME_TO_DISPLAY_DIALOG, m_PlayerBubblePosition.position));
+        var invitationLine = jokeManager.jokeData.PlayerLines.GetRandomWhere(line => line.Context == "PunchlinesPlease");
+        m_ConvoOngoing = true;
+
+        m_DialogQueue.Enqueue(new DialogAction(SpeechBubbleId.Player, string.Join(" ", invitationLine.Lines), TIME_TO_DISPLAY_DIALOG));
 
         foreach (var item in _jester.m_Joke.Lines)
         {
-            m_DialogQueue.Enqueue(new DialogAction(GetConvoSpeechBubble(item), item, TIME_TO_DISPLAY_DIALOG, GetConvoSpeechPosition(item)));
+            var id = IsPlayerDialog(item) ? SpeechBubbleId.Player : SpeechBubbleId.Jester; 
+            m_DialogQueue.Enqueue(new DialogAction(id, item, TIME_TO_DISPLAY_DIALOG));
         }
 
         PlayNextDialog(_jester);
     }
 
-    public SpeechBubble GetConvoSpeechBubble(String _text)
+    private bool IsPlayerDialog(string text)
     {
-        if (_text.StartsWith(">"))
-            return m_PlayerBubble;
-        else
-        {
-            if (bubbleIndex++ == 0)
-            {
-                return m_JesterBubble;
-            }
-            else
-            {
-                bubbleIndex = 0;
-                return m_JesterBubble2;
-            }
-        }
+        return text.StartsWith(">");
     }
 
-    public Vector3 GetConvoSpeechPosition(String _text)
+    public SpeechBubble GetConvoSpeechBubble(DialogAction action)
     {
-        if (_text.StartsWith(">"))
-            return m_PlayerBubblePosition.position;
-        
-        return m_JesterBubblePosition.position;
+        switch (action.id)
+        {
+            case SpeechBubbleId.Player:
+                return m_PlayerBubble;
+            case SpeechBubbleId.Jester:
+                return action.myIndex == 0 ? m_JesterBubble : m_JesterBubble2;
+            case SpeechBubbleId.King:
+                return m_Kingbubble;
+        }
+        Debug.Assert(false, "unreachable code");
+        return null;
+    }
+
+    public Vector3 GetConvoSpeechPosition(SpeechBubbleId id)
+    {
+        switch (id)
+        {
+            case SpeechBubbleId.Player: 
+                return m_PlayerBubblePosition.position;
+            case SpeechBubbleId.Jester:
+                return m_JesterBubblePosition.position;
+            case SpeechBubbleId.King:
+                return Vector3.zero;
+        }
+        Debug.Assert(false, "unreachable code");
+        return Vector3.zero;
     }
 
     public void PlayNextDialog(Jester _jester)
@@ -154,10 +159,11 @@ public class DialogueSystem : MonoBehaviour
     {
         float timer = _action.timeToShow;
         ShowDialogBox(_action);
-        if (_action.bubble.m_IsPlayerBubble)
-            _action.bubble.SetPosition(m_PlayerBubblePosition.position);
-        else
-            _action.bubble.SetPosition(m_JesterBubblePosition.position);
+
+        var bubble = GetConvoSpeechBubble(_action);
+        var position = GetConvoSpeechPosition(_action.id);
+
+        bubble.SetPosition(position);
 
         bool hasStartFade = false;
         while (timer > 0)
@@ -167,36 +173,45 @@ public class DialogueSystem : MonoBehaviour
             if (!hasStartFade && timer < 0.5f)
             {
                 hasStartFade = true;
-                _action.bubble.MoveToPosition(_action.bubble.transform.position + Vector3.up, 0.5f);
-                _action.bubble.FadeAway(0.5f);
+                bubble.MoveToPosition(bubble.transform.position + Vector3.up, 0.5f);
+                bubble.FadeAway(0.5f);
             }
         }
-        _action.bubble.ResetAlpha();
+        bubble.ResetAlpha();
 
-        HideDialogBox(_action.bubble);
+        HideDialogBox(bubble);
 
         PlayNextDialog(_jester);
     }
 
-    public void PlayKingDialog(bool _jokefunny)
+    public void PlayKingDialog(bool _jokefunny, RejectionReason reason)
     {
-        String kingContext = "Deny";
-        if (_jokefunny) 
-            kingContext = "Approve";
-
-        List<QuoteData> list = new List<QuoteData>();
-        foreach (var item in jokeManager.jokeData.KingLines)
+        string context;
+        if (_jokefunny)
+            context = "Approve";
+        else
         {
-            Debug.Log(item.Lines);
-            if (item.Context.Contains(kingContext))
-                list.Add(item);
+            switch (reason) {
+                default:
+                case RejectionReason.None:
+                case RejectionReason.NotFunny:
+                case RejectionReason.NotPreferred:
+                    context = "RejectUnfunny";
+                    break;
+                case RejectionReason.Repeat:
+                    context = "RejectRepeat";
+                    break;
+            }
         }
-        var tmp = list[UnityEngine.Random.Range(0, list.Count - 1)];
-        StartCoroutine(KingDialogPlaying(new DialogAction(m_Kingbubble, tmp.Lines[0], TIME_TO_DISPLAY_DIALOG, Vector3.zero)));
+
+        var line = jokeManager.jokeData.KingLines.GetRandomWhere(qd => qd.Context == context);
+
+        StartCoroutine(KingDialogPlaying(new DialogAction(SpeechBubbleId.King, line.Lines[0], TIME_TO_DISPLAY_DIALOG)));
     }
 
     IEnumerator KingDialogPlaying(DialogAction _action)
     {
+        var bubble = GetConvoSpeechBubble(_action);
         float timer = _action.timeToShow;
         ShowDialogBox(_action);
 
@@ -208,12 +223,12 @@ public class DialogueSystem : MonoBehaviour
             if (!hasStartFade && timer < 0.5f)
             {
                 hasStartFade = true;
-                _action.bubble.FadeAway(0.5f);
+                bubble.FadeAway(0.5f);
             }
         }
-        _action.bubble.ResetAlpha();
+        bubble.ResetAlpha();
 
-        HideDialogBox(_action.bubble);
+        HideDialogBox(bubble);
 
     }
 

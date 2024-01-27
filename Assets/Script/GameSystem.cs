@@ -30,6 +30,9 @@ public class GameSystem : MonoBehaviour
     private JokeManager jokeManager;
     private DayManager dayManager;
     private JesterFactory jesterFactory;
+
+    private StartDayController startDayController;
+    public Canvas gameUI;
     private EndDayController endDayController;
 
     void Awake()
@@ -42,20 +45,26 @@ public class GameSystem : MonoBehaviour
         Debug.Assert(dayManager != null, "No DayManager in scene");
         Debug.Assert(jesterFactory != null, "No JesterFactory in scene");
 
+        startDayController  = FindObjectOfType<StartDayController>(true);
+        startDayController.LetterClosed.AddListener(StartGame);
+
         endDayController = FindObjectOfType<EndDayController>(true);
 
+        OnJesterFailure.AddListener((jester, reason) => DialogueSystem.instance.PlayKingDialog(false, reason));
+        OnJesterSuccess.AddListener((jester) => DialogueSystem.instance.PlayKingDialog(true, RejectionReason.None));
+
+    }
+
+    void StartGame()
+    {
         InitializeKing();
         PopulateJesters();
         m_Points = 0;
         m_Submitted = 0;
         m_Quota = dayManager.currentDay.quota;
         m_StartJesterConvoOnArrival = true;
-    }
 
-    void Start()
-    {
-        foreach (Jester item in m_JesterQueue)
-            Debug.Log(item);
+        gameUI.gameObject.SetActive(true);
 
         AdvanceJesterQueue()
             .OnComplete(StartJesterConversation);
@@ -149,12 +158,13 @@ public class GameSystem : MonoBehaviour
         var jester = m_CurrentJester;
         var jesterMoveTween = 
             WaypointManager.instance.SendJesterToKing(jester)
-                .OnComplete(() => CheckJoke(jester));
+                .OnComplete(() => {
+                    CheckJoke(jester);
+                    });
 
         var queueMoveTween = AdvanceJesterQueue();
         m_StartJesterConvoOnArrival = true;
 
-        DialogueSystem.instance.PlayKingDialog(true);
         return DOTween.Sequence()
             .Join(jesterMoveTween)
             .Join(queueMoveTween)
@@ -173,7 +183,6 @@ public class GameSystem : MonoBehaviour
             .OnKill(() => Destroy(jester.gameObject));
         var queueMoveTween = AdvanceJesterQueue();
         m_StartJesterConvoOnArrival = true;
-        DialogueSystem.instance.PlayKingDialog(false);
         return queueMoveTween
             .OnComplete(StartJesterConversation);
     }

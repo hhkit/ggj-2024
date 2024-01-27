@@ -1,9 +1,10 @@
 intro:
-- "His Majesty seems... different somehow"
-- "Its.. A little worrisome.. I suppose."
-- "But hey, on to business"
-- ""
-orders: 
+- "preTtY sure something great's about to haPpEn."
+- "pay close attention to this oRder, it might jUst chaNge your life forever"
+- "seems like his majesty is in the mood for.. dark humour."
+- "follow the orders."
+- "-your guiding light, palace guy"
+orders: Remember, Understand, Never look back.
 kingPreference: "dark"
 quota: 6
 jesters:

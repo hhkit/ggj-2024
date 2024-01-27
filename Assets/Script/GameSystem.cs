@@ -102,7 +102,7 @@ public class GameSystem : MonoBehaviour
         if (m_CurrentJester != null)
             m_JesterQueue.Dequeue();
 
-        m_CurrentJester = m_JesterQueue.First();
+        m_CurrentJester = m_JesterQueue.FirstOrDefault();
         CharacterSystem.instance.MoveJesters(new(m_JesterQueue))
             .OnComplete(() =>
             {

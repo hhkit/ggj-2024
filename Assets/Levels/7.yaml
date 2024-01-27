@@ -1,0 +1,13 @@
+intro:
+- "His Majesty seems... different somehow"
+- "Its.. A little worrisome.. I suppose."
+- "But hey, on to business"
+- ""
+orders: 
+kingPreference: "dark"
+quota: 6
+jesters:
+  # this ensures the player is always guaranteed an amount of money
+  funny: 7
+  lame: 7
+  assassin: true

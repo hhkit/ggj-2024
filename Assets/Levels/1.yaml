@@ -1,13 +1,13 @@
 intro:
-- "player: first day on the job"
-- "player: joke audit"
-- "player: what has this country come to"
-- "player: glory to arstotzka"
-orders: The King will only listen to funny jokes! Let no one else in!
+- "Welcome to your first day on the job!"
+- "Your job's to bring in jesters that have funny jokes and to KEEP THE REST OUT."
+- "The King happens to be a good mood today, any joke is fine, as long as it's a joke."
+- "-Your Guiding Light, Palace Guy"
+orders: The King is okay with any jokes today 
 kingPreference: ''
-quota: 4
+quota: 2
 jesters:
   # this ensures the player is always guaranteed an amount of money
   funny: 4
   lame: 2
-  assassin: true
+  assassin: false

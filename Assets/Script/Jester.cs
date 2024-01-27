@@ -11,9 +11,8 @@ public class Jester : MonoBehaviour
     public Joke m_Joke;
     public JesterRace m_JokerRace;
     public static float JESTERSPEED = 2;
-    [SerializeField] private GameObject m_Sprite;
-
-    public Action m_HasReachedTarget;
+    private static float KINGSIDE_SCALE = 0.5f;
+    private static float HALLWAY_SCALE = 1.0f;
 
     private Tweener currentTween;
     private int newAnimState;
@@ -24,9 +23,11 @@ public class Jester : MonoBehaviour
     //2 - Talking
     //3 - Move to King
 
+    private SpriteRenderer m_Sprite;
 
-    void Start()
+    void Awake()
     {
+        m_Sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
@@ -34,23 +35,31 @@ public class Jester : MonoBehaviour
         PlayAnimation();
     }
 
-    public void GoToPosition(Vector3 _targetPos)
+    public Tween GoToPosition(Vector3 _targetPos)
     {
         float distance = Vector3.Distance(_targetPos, transform.position);
-        transform.DOMove(_targetPos, distance / JESTERSPEED).onComplete = ReachDestination;
+        var tween = transform.DOMove(_targetPos, distance / JESTERSPEED);
         ChangeAnimation(1);
+        return tween;
     }
 
-    public void ReachDestination()
-    {
-        m_HasReachedTarget?.Invoke();
-    }
-
-    public void GoToKing(Vector3[] _path)
+    public Tween GoToKing(Vector3[] _path, float duration)
     {
         DG.Tweening.Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(_path[0], 1))
-            .Append(transform.DOMove(_path[1], 1)).Join(transform.DOScale(m_Sprite.transform.localScale/2,0.5f));
+        sequence
+            .Append(transform.DOMove(_path[0], duration))
+            .Append(transform.DOMove(_path[1], duration))
+            .Join(m_Sprite.transform.DOScale(KINGSIDE_SCALE, duration));
+        return sequence;
+    }
+
+    public Tween ResetSprite(float duration)
+    {
+        var seq = DOTween.Sequence();
+        seq.Append(m_Sprite.transform.DORotate(Vector3.zero, duration))
+            .Join(m_Sprite.transform.DOScale(HALLWAY_SCALE, duration))
+            .Join(m_Sprite.transform.DOLocalMove(Vector3.zero, duration));
+        return seq;
     }
 
     void PlayAnimation()
@@ -65,10 +74,6 @@ public class Jester : MonoBehaviour
                 break;
             default:
                 break;
-
-
-
-
         }
     }
 
@@ -88,9 +93,8 @@ public class Jester : MonoBehaviour
         if (currentTween.IsActive())
             currentTween.Kill();
 
-        m_Sprite.transform.DORotate(Vector3.zero, 0.1f);
-        m_Sprite.transform.DOScale(Vector3.one, 0.1f);
-        m_Sprite.transform.DOLocalMove(Vector3.zero, 0.1f).onComplete = SetAnimationState; 
+        ResetSprite(0.1f)
+            .OnComplete(SetAnimationState);
     }
 
     //Play new animation after sprite reset

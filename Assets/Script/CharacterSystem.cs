@@ -1,21 +1,25 @@
 using DG.Tweening;
 using DG.Tweening.Plugins.Core.PathCore;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
-public class CharacterSystem : MonoBehaviour
+public class CharacterSystem : Manager
 {
     public static CharacterSystem instance;
 
     [SerializeField] private GameObject m_mainWaypoint;
     [SerializeField] private GameObject m_WaypointHolder;
+    [SerializeField] private GameObject m_OffscreenWaypoint;
+    [SerializeField] private GameObject m_ThroneRoomExitWaypoint;
     [SerializeField] private List<GameObject> m_WayPointList;
     [SerializeField] private List<GameObject> m_KingPath;
     private List<Vector3> m_KingPathVector;
 
     private static int WAYPOINTCOUNT = 20;
 
-    private void Awake()
+    public override void ManagerInit()
     {
         instance = this;
         Vector3 currentPos = m_mainWaypoint.transform.position;
@@ -24,11 +28,14 @@ public class CharacterSystem : MonoBehaviour
         for (int i = 0; i < WAYPOINTCOUNT; ++i)
         {
             GameObject tmp = new GameObject();
+            tmp.name = $"{i}";
             tmp.transform.SetParent(m_WaypointHolder.transform);
             currentPos -= new Vector3(dist, 0, 0);
             tmp.transform.position += currentPos;
             m_WayPointList.Add(tmp);
         }
+
+        // Debug.Log("waypoints: " + string.Join(',', m_WayPointList.Select(wp => wp.transform.position)));
     }
 
     void Start()
@@ -44,26 +51,43 @@ public class CharacterSystem : MonoBehaviour
     
     }
 
-    public void MoveJesters(Jester[] _jesters)
+    public Tween MoveJesters(Queue<Jester> _jesters)
     {
-        GameSystem.instance.m_CurrentJester.GoToPosition(m_WayPointList[0].transform.position);
-        int count = 1;
-        foreach (Jester item in _jesters)
+        var tween = DOTween.Sequence();
+        Debug.Log($"queue {_jesters.Count} wps: {m_WayPointList.Count} ");
+        _jesters.Zip(m_WayPointList, (jester, waypoint) =>
         {
-            if (count > WAYPOINTCOUNT)
-                break;
+            tween.Join(jester.GoToPosition(waypoint.transform.position));
+            return jester;
+        }).ToArray();
 
-            item.GoToPosition(m_WayPointList[count].transform.position);
-
-            count++;
-        }
+        return tween;
     }
 
-    public void SendJesterToKing(Jester _jester)
+    public Tween SendJesterToKing(Jester _jester)
     {
-       // Path path = new Path(DG.Tweening.PathType.CatmullRom, m_KingPathVector.ToArray(), 1);
-        _jester.GoToKing(m_KingPathVector.ToArray());
+       return _jester.GoToKing(m_KingPathVector.ToArray(), 1.0f);
     }
 
+    public Tween RefuseJester(Jester _jester)
+    {
+       return _jester.GoToPosition(m_OffscreenWaypoint.transform.position);
+    }
+
+    public Tween PlayKingAcceptJester(Jester _jester)
+    {
+        var seq = DOTween.Sequence();
+        seq.AppendInterval(0.5f);
+        seq.Append(_jester.GoToPosition(m_ThroneRoomExitWaypoint.transform.position))
+           .Join(_jester.ResetSprite(1.0f));
+        seq.Append(_jester.GoToPosition(m_OffscreenWaypoint.transform.position));
+        return seq;
+    }
+
+    public Tween PlayKingRefuseJester(Jester _jester)
+    {
+        return null;
+        return _jester.GoToPosition(m_ThroneRoomExitWaypoint.transform.position);
+    }
 }
 

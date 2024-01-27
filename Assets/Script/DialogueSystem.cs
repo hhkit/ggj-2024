@@ -47,6 +47,7 @@ public class DialogueSystem : MonoBehaviour
 
     public void StartJokeDialog(Jester _jester, GameObject _player)
     {
+        return;
         SpeechBubble playerBubble = m_Player_Jester_Convo[0];
         SpeechBubble jesterBubble = m_Player_Jester_Convo[1];
 

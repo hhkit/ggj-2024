@@ -1,6 +1,7 @@
 
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 public class JokeManager : Manager
@@ -20,14 +21,19 @@ public class JokeManager : Manager
     {
         // OrderBy(a=>Guid.NewGuid) randomizes the list
         var corrects = funnyJokes.Where(joke => king.PrefersJoke(joke)).OrderBy(a => Guid.NewGuid()).Take(config.funny);
+        // Debug.Assert(corrects.Count() > 0, "no correct jokes?");
+        var unrelatedJokes = funnyJokes.Where(joke => !king.PrefersJoke(joke));
 
         // todo: weight the incorrect choices
-        var unrelatedCount = UnityEngine.Random.Range(0, config.lame);
-        var unrelated = funnyJokes.Where(joke => !king.PrefersJoke(joke));
-        var unfunnies = unfunnyJokes;
-        var repeats = corrects.OrderBy(a => Guid.NewGuid());
+        var unrelatedCount = UnityEngine.Random.Range(0, Math.Min(config.lame, unrelatedJokes.Count()));
+        var unfunnyCount = UnityEngine.Random.Range(0, Math.Min(config.lame - unrelatedCount, unfunnyJokes.Count()));
+        var repeatCount = Math.Min(config.lame - unrelatedCount - unfunnyCount, corrects.Count());
 
-        var incorrects = unrelated.Concat(unfunnies).Concat(repeats).OrderBy(a => Guid.NewGuid()).Take(config.lame);
+        var unrelated = unrelatedJokes.OrderBy(a => Guid.NewGuid()).Take(unrelatedCount);
+        var unfunnies = unfunnyJokes.OrderBy(a => Guid.NewGuid()).Take(unfunnyCount);
+        var repeats = corrects.OrderBy(a => Guid.NewGuid()).OrderBy(a => Guid.NewGuid()).Take(repeatCount);
+
+        var incorrects = unrelated.Concat(unfunnies).Concat(repeats);
 
         return corrects.Concat(incorrects).OrderBy(a => Guid.NewGuid()).ToArray();
     }

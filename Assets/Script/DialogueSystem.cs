@@ -6,6 +6,7 @@ using System.Threading;
 using UnityEditor.Search;
 using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class DialogueSystem : MonoBehaviour
 {
@@ -24,10 +25,10 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private SpeechBubble m_PlayerBubble;
     [SerializeField] private SpeechBubble m_JesterBubble;
     [SerializeField] private SpeechBubble m_JesterBubble2;
+    [SerializeField] private SpeechBubble m_Kingbubble;
     private int bubbleIndex = 0;
     private Queue<DialogAction> m_DialogQueue;
 
-    public Action OnCurrentDialogDone;
     private JokeManager jokeManager;
 
     private static float TIME_TO_DISPLAY_DIALOG = 2f;
@@ -62,7 +63,6 @@ public class DialogueSystem : MonoBehaviour
         HideDialogBox(m_PlayerBubble);
         HideDialogBox(m_JesterBubble);
         HideDialogBox(m_JesterBubble2);
-        OnCurrentDialogDone += PlayNextDialog;
     }
 
     void Start()
@@ -107,7 +107,7 @@ public class DialogueSystem : MonoBehaviour
             m_DialogQueue.Enqueue(new DialogAction(GetConvoSpeechBubble(item), item, TIME_TO_DISPLAY_DIALOG, GetConvoSpeechPosition(item)));
         }
 
-        PlayNextDialog();
+        PlayNextDialog(_jester);
     }
 
     public SpeechBubble GetConvoSpeechBubble(String _text)
@@ -136,7 +136,7 @@ public class DialogueSystem : MonoBehaviour
         return m_JesterBubblePosition.position;
     }
 
-    public void PlayNextDialog()
+    public void PlayNextDialog(Jester _jester)
     {
         if (m_DialogQueue.Count == 0)
         {
@@ -146,11 +146,11 @@ public class DialogueSystem : MonoBehaviour
         else
         {
             var tmp = m_DialogQueue.Dequeue();
-            StartCoroutine(DialogPlaying(tmp));
+            StartCoroutine(DialogPlaying(tmp, _jester));
         }
     }
 
-    IEnumerator DialogPlaying(DialogAction _action)
+    IEnumerator DialogPlaying(DialogAction _action, Jester _jester)
     {
         float timer = _action.timeToShow;
         ShowDialogBox(_action);
@@ -175,7 +175,46 @@ public class DialogueSystem : MonoBehaviour
 
         HideDialogBox(_action.bubble);
 
-        PlayNextDialog();
+        PlayNextDialog(_jester);
+    }
+
+    public void PlayKingDialog(bool _jokefunny)
+    {
+        String kingContext = "Deny";
+        if (_jokefunny) 
+            kingContext = "Approve";
+
+        List<QuoteData> list = new List<QuoteData>();
+        foreach (var item in jokeManager.jokeData.KingLines)
+        {
+            Debug.Log(item.Lines);
+            if (item.Context.Contains(kingContext))
+                list.Add(item);
+        }
+        var tmp = list[UnityEngine.Random.Range(0, list.Count - 1)];
+        StartCoroutine(KingDialogPlaying(new DialogAction(m_Kingbubble, tmp.Lines[0], TIME_TO_DISPLAY_DIALOG, Vector3.zero)));
+    }
+
+    IEnumerator KingDialogPlaying(DialogAction _action)
+    {
+        float timer = _action.timeToShow;
+        ShowDialogBox(_action);
+
+        bool hasStartFade = false;
+        while (timer > 0)
+        {
+            yield return null;
+            timer -= Time.deltaTime;
+            if (!hasStartFade && timer < 0.5f)
+            {
+                hasStartFade = true;
+                _action.bubble.FadeAway(0.5f);
+            }
+        }
+        _action.bubble.ResetAlpha();
+
+        HideDialogBox(_action.bubble);
+
     }
 
 }

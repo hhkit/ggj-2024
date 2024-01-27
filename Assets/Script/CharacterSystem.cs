@@ -1,3 +1,4 @@
+using DG.Tweening;
 using DG.Tweening.Plugins.Core.PathCore;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,7 +41,7 @@ public class CharacterSystem : MonoBehaviour
 
     void Update()
     {
-
+    
     }
 
     public void MoveJesters(Jester[] _jesters)
@@ -60,6 +61,7 @@ public class CharacterSystem : MonoBehaviour
 
     public void SendJesterToKing(Jester _jester)
     {
+        
         Path path = new Path(DG.Tweening.PathType.CatmullRom, m_KingPathVector.ToArray(), 1);
         _jester.GoToKing(path);
     }

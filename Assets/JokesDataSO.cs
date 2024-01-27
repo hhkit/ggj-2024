@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Linq;
+using System;
 
 #if UNITY_EDITOR
 using System.Collections.Generic;
@@ -30,69 +32,152 @@ public class Joke
     public bool IsFunny => !m_IsLame;
 }
 
+[Serializable]
+public class QuoteData
+{
+    [SerializeField]
+    string[] m_Lines;
+    public string[] Lines => m_Lines;
+
+    [SerializeField]
+    string m_Context;
+    public string Context => m_Context;
+    public QuoteData(string[] lines, string context)
+    {
+        m_Lines = lines;
+        m_Context = context;
+    }
+}
+
+[Serializable()]
+public struct SheetRequest
+{
+    public string GoogleSheetsID;
+    public string GoogleSheetsSheetName;
+    public int GoogleSheetsOffsetRows;
+    public int GoogleSheetsOffsetCols;
+    public int GoogleSheetsNumCols;
+
+    public SheetRequest(string id)
+    {
+        GoogleSheetsID = id;
+        GoogleSheetsSheetName = "Sheet1";
+        GoogleSheetsOffsetRows = 0;
+        GoogleSheetsOffsetCols = 0;
+        GoogleSheetsNumCols = 3;
+    }
+}
+
 [CreateAssetMenu(fileName = "JokesData", menuName = "JokesData")]
 public class JokesDataSO : ScriptableObject
 {
     [SerializeField]
     List<Joke> m_Jokes;
+    [SerializeField]
+    List<QuoteData> m_KingLines;
+    [SerializeField]
+    List<QuoteData> m_PlayerLines;
 
     public List<Joke> Jokes => m_Jokes;
+    public List<QuoteData> KingLines => m_KingLines;
+    public List<QuoteData> PlayerLines => m_PlayerLines;
 
 #if UNITY_EDITOR
-    public string m_GoogleSheetsID;
-    public string m_GoogleSheetsSheetName = "Sheet1";
-    public int m_GoogleSheetsOffsetRows = 0;
-    public int m_GoogleSheetsOffsetCols = 0;
-
-    /**
-     * UPDATE THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-     */
-    const int GoogleSheetsNumCols = 3;
+    public SheetRequest m_JokeRequest;
+    public SheetRequest m_KingLineRequest;
+    public SheetRequest m_PlayerLineRequest;
 
     [EasyButtons.Button]
     void RefreshSheet()
     {
-        string url = $"https://docs.google.com/spreadsheets/d/{m_GoogleSheetsID}/gviz/tq?tqx=out:csv&sheet={m_GoogleSheetsSheetName}&range={(char)('A' + m_GoogleSheetsOffsetCols)}:{(char)('A' + m_GoogleSheetsOffsetCols + GoogleSheetsNumCols - 1)}";
+        GetSheet(m_JokeRequest, (string csv) => {
+            m_Jokes = ParseCsvAsJokes(csv, m_JokeRequest);
+            SubmitAssetChanges();
+        });
+        GetSheet(m_KingLineRequest, (string csv) =>
+        {
+            m_KingLines = ParseCsvAsQuotes(csv, m_KingLineRequest);
+            SubmitAssetChanges();
+        });
+        GetSheet(m_PlayerLineRequest, (string csv) =>
+        {
+            m_PlayerLines = ParseCsvAsQuotes(csv, m_PlayerLineRequest);
+            SubmitAssetChanges();
+        });
+    }
+
+    void GetSheet(SheetRequest request, Action<string> OnCsvLoaded)
+    {
+        string url = $"https://docs.google.com/spreadsheets/d/{request.GoogleSheetsID}/gviz/tq?tqx=out:csv&sheet={request.GoogleSheetsSheetName}&range={(char)('A' + request.GoogleSheetsOffsetCols)}:{(char)('A' + request.GoogleSheetsOffsetCols + request.GoogleSheetsNumCols - 1)}";
         var req = UnityWebRequest.Get(url);
         var op = req.SendWebRequest();
-        op.completed += OnGetSheet;
-    }
-
-    void OnGetSheet(AsyncOperation op)
-    {
-        var req = (op as UnityWebRequestAsyncOperation).webRequest;
-        if (req.result == UnityWebRequest.Result.Success)
+        op.completed += (AsyncOperation op) =>
         {
-            string csv = req.downloadHandler.text;
-            ParseCSV(csv);
-        }
+            var req = (op as UnityWebRequestAsyncOperation).webRequest;
+            if (req.result == UnityWebRequest.Result.Success)
+            {
+                string csv = req.downloadHandler.text;
+                OnCsvLoaded(csv);
+            }
+        };
     }
 
-    void ParseCSV(string csv)
+    List<Joke> ParseCsvAsJokes(string csv, SheetRequest requestData)
     {
-        m_Jokes.Clear();
+        var jokes = new List<Joke>();
 
         Regex cellRegex = new Regex(@"(?<=^|,)""(.*?)""(?=$|,)", RegexOptions.Multiline | RegexOptions.Singleline);
         Regex tagDelimiterRegex = new Regex(@",\s*");
 
         var matches = cellRegex.Matches(csv);
-        int r = m_GoogleSheetsOffsetRows;
+        int r = requestData.GoogleSheetsOffsetRows;
         while (true)
         {
-            int i = r * GoogleSheetsNumCols;
+            int i = r * requestData.GoogleSheetsNumCols;
 
             if (i >= matches.Count)
                 break;
 
-            Joke joke = new Joke(
-                matches[i].Groups[1].Value.Replace("\"\"", "\"").Split('\n'),
-                tagDelimiterRegex.Split(matches[i + 1].Groups[1].Value),
-                matches[i + 2].Groups[1].Value == "TRUE");
-            m_Jokes.Add(joke);
+            var lines = matches[i].Groups[1].Value.Replace("\"\"", "\"").Split('\n');
+            var tags = tagDelimiterRegex.Split(matches[i + 1].Groups[1].Value);
+            var isLame = matches[i + 2].Groups[1].Value == "TRUE";
+
+            jokes.Add(new(lines, tags, isLame));
 
             ++r;
         }
 
+        return jokes;
+    }
+
+    List<QuoteData> ParseCsvAsQuotes(string csv, SheetRequest requestData)
+    {
+        var list = new List<QuoteData>();
+
+        Regex cellRegex = new Regex(@"(?<=^|,)""(.*?)""(?=$|,)", RegexOptions.Multiline | RegexOptions.Singleline);
+
+        var matches = cellRegex.Matches(csv);
+        int r = requestData.GoogleSheetsOffsetRows;
+        while (true)
+        {
+            int i = r * requestData.GoogleSheetsNumCols;
+
+            if (i >= matches.Count)
+                break;
+
+            var lines = matches[i].Groups[1].Value.Replace("\"\"", "\"").Split('\n');
+            var tag = matches[i + 1].Groups[1].Value.Trim();
+
+            list.Add(new(lines, tag));
+
+            ++r;
+        }
+
+        return list;
+    }
+
+    void SubmitAssetChanges()
+    {
         EditorUtility.SetDirty(this);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();

@@ -63,6 +63,7 @@ public class DialogueSystem : MonoBehaviour
         HideDialogBox(m_PlayerBubble);
         HideDialogBox(m_JesterBubble);
         HideDialogBox(m_JesterBubble2);
+        HideDialogBox(m_Kingbubble);
     }
 
     void Start()
@@ -99,7 +100,7 @@ public class DialogueSystem : MonoBehaviour
         }
         m_ConvoOngoing = true;
         var randPunchLine = tmp[UnityEngine.Random.Range(0, tmp.Count - 1)];
-
+        
         m_DialogQueue.Enqueue(new DialogAction(m_PlayerBubble, randPunchLine.Lines[0], TIME_TO_DISPLAY_DIALOG, m_PlayerBubblePosition.position));
 
         foreach (var item in _jester.m_Joke.Lines)
@@ -157,13 +158,22 @@ public class DialogueSystem : MonoBehaviour
         if (_action.bubble.m_IsPlayerBubble)
             _action.bubble.SetPosition(m_PlayerBubblePosition.position);
         else
+        {
             _action.bubble.SetPosition(m_JesterBubblePosition.position);
+            _jester.PlayTalkAnimation();
+        }
 
+        
         bool hasStartFade = false;
         while (timer > 0)
         {
             yield return null;
             timer -= Time.deltaTime;
+            if (timer > 1 && m_DialogQueue.Count == 0)
+            {
+                _jester.PlayPunchlineAnimation();
+            }
+
             if (!hasStartFade && timer < 0.5f)
             {
                 hasStartFade = true;

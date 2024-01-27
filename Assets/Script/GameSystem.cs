@@ -15,8 +15,6 @@ public class GameSystem : MonoBehaviour
 
     public UnityEvent<Jester> OnJesterSuccess;
     public UnityEvent<Jester, RejectionReason> OnJesterFailure;
-    public UnityEvent OnLevelWin;
-    public UnityEvent OnLevelLose;
 
     public Queue<Jester> m_JesterQueue { get; private set; } = new();
     public King m_King { get; private set; }
@@ -129,12 +127,14 @@ public class GameSystem : MonoBehaviour
         OnJesterFailure.Invoke(jester, reason);
     }
 
-    void EndDay()
+    // This begins the end of day sequence
+    Tween EndDay()
     {
-        if (m_Points >= m_Quota)
-            OnLevelWin.Invoke();
-        else
-            OnLevelLose.Invoke();
+        var winFlag = m_Points >= m_Quota;
+
+        var seq = DOTween.Sequence();
+
+        return null;
     }
 
 #if UNITY_EDITOR
@@ -143,11 +143,6 @@ public class GameSystem : MonoBehaviour
     // Player sends the Jester at the front of the line to the King
     public Tween AcceptJester()
     {
-        /* TODO:
-         * jester being approved should be separate from jester at front of queue
-         * because as jester walks off, the next jester should move forward to take his place
-         * simple solution is line waits until king approves the jester, ofc
-         */
         var jester = m_CurrentJester;
         var jesterMoveTween = 
             WaypointManager.instance.SendJesterToKing(jester)
@@ -169,10 +164,7 @@ public class GameSystem : MonoBehaviour
     {
         var jester = m_CurrentJester;
         var jesterMoveTween = WaypointManager.instance.RefuseJester(jester)
-            .OnKill(() =>
-            {
-                Destroy(jester.gameObject);
-            });
+            .OnKill(() => Destroy(jester.gameObject));
         var queueMoveTween = AdvanceJesterQueue();
         return queueMoveTween
             .OnComplete(StartJesterConversation);

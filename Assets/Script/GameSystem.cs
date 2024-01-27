@@ -153,6 +153,8 @@ public class GameSystem : MonoBehaviour
 
         var queueMoveTween = AdvanceJesterQueue();
         m_StartJesterConvoOnArrival = true;
+
+        DialogueSystem.instance.PlayKingDialog(true);
         return DOTween.Sequence()
             .Join(jesterMoveTween)
             .Join(queueMoveTween)
@@ -171,6 +173,7 @@ public class GameSystem : MonoBehaviour
             .OnKill(() => Destroy(jester.gameObject));
         var queueMoveTween = AdvanceJesterQueue();
         m_StartJesterConvoOnArrival = true;
+        DialogueSystem.instance.PlayKingDialog(false);
         return queueMoveTween
             .OnComplete(StartJesterConversation);
     }

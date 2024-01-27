@@ -1,0 +1,14 @@
+intro:
+- "I have good news and bad news. I would ask which you would like to hear about first but.. heh"
+- "Bad news: Assassins. Yeah those guys that kill people. They're targetting His Majesty."
+- "Good news: They're stupid. They have black clothes and a dagger. Can't miss 'em"
+- "I don't really have to say this.. but don't let the bad ones in."
+- "-Light Your Guy, Guiding Palace"
+orders: The King only wants Food Jokes, Food for thought.
+kingPreference: "food"
+quota: 5
+jesters:
+  # this ensures the player is always guaranteed an amount of money
+  funny: 7
+  lame: 5
+  assassin: true

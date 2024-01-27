@@ -1,0 +1,14 @@
+intro:
+- "You seem to be on a roll! Well let's skip the small talk."
+- "His Majesty seems to be extremely invested in jokes that are "out of this world""
+- "Any idea what that means? Maybe jokes that are AHEAD OF OUR TIME?"
+- "I'll leave you to it."
+- "- Palace Guiding Guy, Your Light"
+orders: The King wants jokes that are "out of this world", talk about needy.
+kingPreference: "anachronistic"
+quota: 6
+jesters:
+  # this ensures the player is always guaranteed an amount of money
+  funny: 7
+  lame: 7
+  assassin: true

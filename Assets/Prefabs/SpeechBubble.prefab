@@ -268,6 +268,8 @@ MonoBehaviour:
   m_Text: 
   m_TextUI: {fileID: 6323589791633452108}
   m_Panel: {fileID: 7305869623122353329}
+  layoutGroupUI: {fileID: 5378969818348042022}
+  rectUI: {fileID: 3439065123978304655}
   m_IsPlayerBubble: 0
 --- !u!1 &7070810908980841962
 GameObject:
@@ -304,8 +306,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 165, y: 0}
-  m_SizeDelta: {x: 320, y: 0}
+  m_AnchoredPosition: {x: 140, y: 0}
+  m_SizeDelta: {x: 270, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7766859112824377464
 CanvasRenderer:

@@ -10,6 +10,8 @@ public class SpeechBubble : MonoBehaviour
     public string m_Text;
     [SerializeField] private TextMeshProUGUI m_TextUI;
     [SerializeField] private Image m_Panel;
+    [SerializeField] private HorizontalLayoutGroup layoutGroupUI;
+    [SerializeField] private RectTransform rectUI;
     public bool m_IsPlayerBubble;
     static float m_TextAlpha;
     static float m_PanelAlpha;
@@ -30,6 +32,10 @@ public class SpeechBubble : MonoBehaviour
         if (_text == null)
             return;
         m_TextUI.SetText(_text);
+        //Canvas.ForceUpdateCanvases();
+        //layoutGroupUI.enabled = false;
+        //layoutGroupUI.enabled = true;
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(rectUI);
     }
 
     public void ResetAlpha()

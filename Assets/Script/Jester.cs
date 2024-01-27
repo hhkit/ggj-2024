@@ -13,6 +13,7 @@ public class Jester : MonoBehaviour
     public static float JESTERSPEED = 2;
     private static float KINGSIDE_SCALE = 0.5f;
     private static float HALLWAY_SCALE = 1.0f;
+    public Transform spritePuppet;
 
     private Tweener currentTween;
     private int newAnimState;
@@ -23,12 +24,7 @@ public class Jester : MonoBehaviour
     //2 - Talking
     //3 - Move to King
 
-    private SpriteRenderer m_Sprite;
-
-    void Awake()
-    {
-        m_Sprite = GetComponentInChildren<SpriteRenderer>();
-    }
+    
 
     void Update()
     {
@@ -49,16 +45,16 @@ public class Jester : MonoBehaviour
         sequence
             .Append(transform.DOMove(_path[0], duration))
             .Append(transform.DOMove(_path[1], duration))
-            .Join(m_Sprite.transform.DOScale(KINGSIDE_SCALE, duration));
+            .Join(spritePuppet.DOScale(KINGSIDE_SCALE, duration));
         return sequence;
     }
 
     public Tween ResetSprite(float duration)
     {
         var seq = DOTween.Sequence();
-        seq.Append(m_Sprite.transform.DORotate(Vector3.zero, duration))
-            .Join(m_Sprite.transform.DOScale(HALLWAY_SCALE, duration))
-            .Join(m_Sprite.transform.DOLocalMove(Vector3.zero, duration));
+        seq.Append(spritePuppet.DORotate(Vector3.zero, duration))
+            .Join(spritePuppet.DOScale(HALLWAY_SCALE, duration))
+            .Join(spritePuppet.DOLocalMove(Vector3.zero, duration));
         return seq;
     }
 
@@ -113,7 +109,7 @@ public class Jester : MonoBehaviour
             {
                 idleTimer = UnityEngine.Random.Range(0, 0.2f);
                 Vector3 rotate = new Vector3(0, 0, UnityEngine.Random.Range(-5, 5));
-                currentTween = m_Sprite.transform.DOPunchRotation(rotate, 0.5f, 1, 1).OnKill(() => currentTween = null);
+                currentTween = spritePuppet.DOPunchRotation(rotate, 0.5f, 1, 1).OnKill(() => currentTween = null);
             }
         }
     }
@@ -124,7 +120,7 @@ public class Jester : MonoBehaviour
         if (currentTween != null && !currentTween.IsActive() || currentTween == null)
         {
             Vector3 jumpLoc = new Vector3(0, 0.1f, 0);
-            currentTween = m_Sprite.transform.DOPunchPosition(jumpLoc, 0.5f, 1, 1);
+            currentTween = spritePuppet.DOPunchPosition(jumpLoc, 0.5f, 1, 1);
         }
     }
 

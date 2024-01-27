@@ -101,7 +101,7 @@ public class GameSystem : MonoBehaviour
             m_JesterQueue.Dequeue();
 
         m_CurrentJester = m_JesterQueue.FirstOrDefault();
-        CharacterSystem.instance.MoveJesters(new(m_JesterQueue))
+        WaypointManager.instance.MoveJesters(new(m_JesterQueue))
             .OnComplete(StartJesterConversation);
     }
 
@@ -119,7 +119,7 @@ public class GameSystem : MonoBehaviour
     void JesterSuccess(Jester jester)
     {
         AddScore();
-        CharacterSystem.instance.PlayKingAcceptJester(jester);
+        WaypointManager.instance.PlayKingAcceptJester(jester);
         OnJesterSuccess.Invoke(jester);
     }
 
@@ -150,7 +150,7 @@ public class GameSystem : MonoBehaviour
          */
         var jester = m_CurrentJester;
         var tween = 
-            CharacterSystem.instance.SendJesterToKing(jester)
+            WaypointManager.instance.SendJesterToKing(jester)
                 .OnComplete(() => CheckJoke(jester));
 
         AdvanceJesterQueue();
@@ -164,7 +164,7 @@ public class GameSystem : MonoBehaviour
     public void RejectJester()
     {
         var jester = m_CurrentJester;
-        CharacterSystem.instance.RefuseJester(jester)
+        WaypointManager.instance.RefuseJester(jester)
             .OnComplete(() =>
             {
                 Destroy(jester);

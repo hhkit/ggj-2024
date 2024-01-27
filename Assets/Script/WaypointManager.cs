@@ -5,15 +5,15 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class CharacterSystem : Manager
+public class WaypointManager : Manager
 {
-    public static CharacterSystem instance;
+    public static WaypointManager instance;
 
     [SerializeField] private GameObject m_mainWaypoint;
     [SerializeField] private GameObject m_WaypointHolder;
     [SerializeField] private GameObject m_OffscreenWaypoint;
     [SerializeField] private GameObject m_ThroneRoomExitWaypoint;
-    [SerializeField] private List<GameObject> m_WayPointList;
+    private List<GameObject> m_WayPointList;
     [SerializeField] private List<GameObject> m_KingPath;
     private List<Vector3> m_KingPathVector;
 
@@ -40,16 +40,9 @@ public class CharacterSystem : Manager
 
     void Start()
     {
-        m_KingPathVector = new List<Vector3>();
-        foreach (var item in m_KingPath)
-            m_KingPathVector.Add(item.transform.position);
+        m_KingPathVector = new(m_KingPath.Select(wp => wp.transform.position));
     }
 
-
-    void Update()
-    {
-    
-    }
 
     public Tween MoveJesters(Queue<Jester> _jesters)
     {

@@ -3,6 +3,7 @@
 public class JesterFactory : Manager
 {
     public GameObject jesterPrefab;
+    public Transform jesterStartWaypoint;
     public override void ManagerInit()
     {
         // do nothing
@@ -10,8 +11,9 @@ public class JesterFactory : Manager
 
     public Jester CreateJester(Joke joke)
     {
-        var jester = Instantiate(jesterPrefab).GetComponent<Jester>();
+        var jester = Instantiate(jesterPrefab, jesterStartWaypoint.position, jesterStartWaypoint.rotation).GetComponent<Jester>();
         jester.m_Joke = joke;
+        // do randomization here
         return jester;
     }
 }

@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Jokes:
   - m_Lines:
+    - Jokes (formatting undecided)
+    m_Tags:
+    - Tags (comma-delimited)
+    m_IsLame: 0
+  - m_Lines:
     - Why did the chicken cross the road?
+    - '>Why did it?'
     - To get to the other side.
     m_Tags:
     - animal
@@ -22,6 +28,7 @@ MonoBehaviour:
     m_IsLame: 0
   - m_Lines:
     - How many babies does it take to paint a wall?
+    - '>..How many?'
     - Depends on how hard you throw them.
     m_Tags:
     - dark
@@ -29,12 +36,14 @@ MonoBehaviour:
     m_IsLame: 0
   - m_Lines:
     - What's the hardest part of a vegetable to eat?
+    - '>.. I don''t know, what?'
     - The Wheelchair.
     m_Tags:
     - dark
     m_IsLame: 0
   - m_Lines:
     - Cluck Cluck Cluck
+    - '>...Huh?'
     m_Tags:
     - nonsensical
     - animal
@@ -51,6 +60,7 @@ MonoBehaviour:
     m_IsLame: 0
   - m_Lines:
     - How do you make holy water?
+    - '>How?'
     - By boiling the hell out of it.
     m_Tags:
     - water
@@ -58,12 +68,14 @@ MonoBehaviour:
     m_IsLame: 0
   - m_Lines:
     - What's a fire's favourite food?
+    - '>What?'
     - Firecrackers. (What the hell's a firecracker?)
     m_Tags:
     - anachronistic
     m_IsLame: 0
   - m_Lines:
     - What's brown, long and sticky?
+    - '>.. What?'
     - A brown stick!
     m_Tags:
     - toilet
@@ -89,19 +101,19 @@ MonoBehaviour:
     - What do bees use to groom themselves with?
     - Honeycombs!
     m_Tags:
-    - 
+    - animal
     m_IsLame: 0
   - m_Lines:
     - How do birds learn to fly?
     - By winging it.
     m_Tags:
-    - 
+    - animal
     m_IsLame: 0
   - m_Lines:
     - What do you call a dog out in the cold?
     - A Chili dog.
     m_Tags:
-    - 
+    - animal
     m_IsLame: 0
   - m_Lines:
     - How much do roofs cost?
@@ -115,7 +127,246 @@ MonoBehaviour:
     m_Tags:
     - 
     m_IsLame: 0
-  m_GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk
-  m_GoogleSheetsSheetName: Sheet1
-  m_GoogleSheetsOffsetRows: 1
-  m_GoogleSheetsOffsetCols: 0
+  - m_Lines:
+    - I'm really good at sleeping!
+    - ...I can do it even with my eyes closed!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - What do you call a deer with no eyes?
+    - No-Eye-Deer!
+    m_Tags:
+    - animal
+    m_IsLame: 0
+  - m_Lines:
+    - What do you call a fish with no eyes?
+    - A Fsh.
+    m_Tags:
+    - animal
+    m_IsLame: 0
+  - m_Lines:
+    - Did you hear about the Italian who died recently?
+    - He Pasta-away.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - What animal is the best?
+    - The Elephant.
+    - Everything else is irrelephant!
+    m_Tags:
+    - animal
+    m_IsLame: 0
+  - m_Lines:
+    - What do you call a fake noodle?
+    - An Im-pasta.
+    m_Tags:
+    - food
+    m_IsLame: 0
+  - m_Lines:
+    - What did the buffalo say to it's son before leaving?
+    - Bison!
+    m_Tags:
+    - animal
+    - dad
+    m_IsLame: 0
+  - m_Lines:
+    - What would bears be without bees?
+    - Ears.
+    m_Tags:
+    - animal
+    m_IsLame: 0
+  - m_Lines:
+    - Why are pirates called pirates?
+    - Don't question it, they just ARRR!
+    m_Tags:
+    - jobs
+    m_IsLame: 0
+  - m_Lines:
+    - What do cows love reading?
+    - The cattle-log.
+    m_Tags:
+    - animal
+    m_IsLame: 0
+  - m_Lines:
+    - How many tickles does it take to make an octopus laugh?
+    - Ten-tickles.
+    m_Tags:
+    - animal
+    m_IsLame: 0
+  - m_Lines:
+    - Why do mushrooms always get invited to the party?
+    - They're always the fun-guys.
+    m_Tags:
+    - food
+    m_IsLame: 0
+  - m_Lines:
+    - Why didn't the fungi want to get into the carriage?
+    - There wasn't much-room left.
+    m_Tags:
+    - food
+    m_IsLame: 0
+  - m_Lines:
+    - How did the barber win the race?
+    - He knew the shortcut.
+    m_Tags:
+    - jobs
+    m_IsLame: 0
+  - m_Lines:
+    - Why is Peter Pan always flying?
+    - Because he neverlands.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - Why do cows have hooves and not feet?
+    - Because they lactose!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - I'm afraid for the calendar.
+    - '>Why?'
+    - It's days are numbered.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - I don't trust stairs.
+    - They're always up to something.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - Did you hear the rumor about butter?
+    - Well, I'm not going to spread it!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - Why couldn't the bicycle stand up by itself?
+    - It was two tired.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - I have a joke about chemistry!
+    - ..But I don't think it will get a reaction.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - I had a joke about boxing!
+    - ..But I forgot the punchline.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - Did you hear about the kidnapping at school?
+    - It's okay, he woke up.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - When I was a kid, I used to hate facial hair.
+    - But then it grew on me.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - What do lawyers wear to court?
+    - Lawsuits.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - Why don't crabs donate?
+    - They are shellfish.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - Don't ever try to eat a clock.
+    - It's incredibly time-consuming!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - What do you call a fly with no wings?
+    - A walk.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - "What did the clock do when it was hungry?\r"
+    - It went back four seconds.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - "Why did the golfer change his pants?\r"
+    - Because he got a hole in one!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - When is your door not actually a door?
+    - When its ajar!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - What did one toilet say to the other?
+    - Are you okay? You look flushed.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - "What do sprinters eat before they race?\r"
+    - Nothing. They fast.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - Why is it difficult to keep track of electrons?
+    - Because you have to keep an ion them!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  m_KingLines:
+  - m_Lines:
+    - AH HA HA HA HA HA. AH HA HA HA HA HA HA.
+    m_Context: Approve
+  - m_Lines:
+    - Lame.
+    - To the dungeon with you!
+    m_Context: Deny
+  m_PlayerLines:
+  - m_Lines:
+    - NEXT
+    m_Context: CallNext
+  - m_Lines:
+    - Go on
+    m_Context: SendToKing
+  - m_Lines:
+    - Nope
+    m_Context: DenyAudience
+  m_JokeRequest:
+    GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk
+    GoogleSheetsSheetName: Jokes
+    GoogleSheetsOffsetRows: 0
+    GoogleSheetsOffsetCols: 0
+    GoogleSheetsNumCols: 3
+  m_KingLineRequest:
+    GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk
+    GoogleSheetsSheetName: King Lines
+    GoogleSheetsOffsetRows: 1
+    GoogleSheetsOffsetCols: 0
+    GoogleSheetsNumCols: 2
+  m_PlayerLineRequest:
+    GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk
+    GoogleSheetsSheetName: Player Lines
+    GoogleSheetsOffsetRows: 1
+    GoogleSheetsOffsetCols: 0
+    GoogleSheetsNumCols: 2

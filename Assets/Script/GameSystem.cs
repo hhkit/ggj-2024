@@ -52,7 +52,8 @@ public class GameSystem : MonoBehaviour
         foreach (Jester item in m_JesterQueue)
             Debug.Log(item);
 
-        AdvanceJesterQueue();
+        AdvanceJesterQueue()
+            .OnComplete(StartJesterConversation);
     }
 
     public void ToggleJokesWindow()
@@ -87,13 +88,13 @@ public class GameSystem : MonoBehaviour
             JesterFail(jester, reason);
     }
 
-    void AdvanceJesterQueue()
+    Tween AdvanceJesterQueue()
     {
         if (m_JesterQueue.Count == 0)
         {
             m_CurrentJester = null;
             EndDay();
-            return;
+            return null;
         }
 
         // TODO: potential atom bomb waiting to go off
@@ -101,8 +102,7 @@ public class GameSystem : MonoBehaviour
             m_JesterQueue.Dequeue();
 
         m_CurrentJester = m_JesterQueue.FirstOrDefault();
-        WaypointManager.instance.MoveJesters(new(m_JesterQueue))
-            .OnComplete(StartJesterConversation);
+        return WaypointManager.instance.MoveJesters(new(m_JesterQueue));
     }
 
     void AddScore()
@@ -121,14 +121,12 @@ public class GameSystem : MonoBehaviour
         AddScore();
         WaypointManager.instance.PlayKingAcceptJester(jester);
         OnJesterSuccess.Invoke(jester);
-        DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
     }
 
     void JesterFail(Jester jester, RejectionReason reason)
     {
         DeductScore();
         OnJesterFailure.Invoke(jester, reason);
-        DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
     }
 
     void EndDay()
@@ -143,7 +141,7 @@ public class GameSystem : MonoBehaviour
     [Button]
 #endif
     // Player sends the Jester at the front of the line to the King
-    public void AcceptJester()
+    public Tween AcceptJester()
     {
         /* TODO:
          * jester being approved should be separate from jester at front of queue
@@ -151,11 +149,15 @@ public class GameSystem : MonoBehaviour
          * simple solution is line waits until king approves the jester, ofc
          */
         var jester = m_CurrentJester;
-        var tween = 
+        var jesterMoveTween = 
             WaypointManager.instance.SendJesterToKing(jester)
                 .OnComplete(() => CheckJoke(jester));
 
-        AdvanceJesterQueue();
+        var queueMoveTween = AdvanceJesterQueue();
+        return DOTween.Sequence()
+            .Join(jesterMoveTween)
+            .Join(queueMoveTween)
+            .OnComplete(StartJesterConversation);
     }
 
 #if UNITY_EDITOR
@@ -163,24 +165,22 @@ public class GameSystem : MonoBehaviour
 #endif
 
     // Player refuses the Jester as audience to the King
-    public void RejectJester()
+    public Tween RejectJester()
     {
         var jester = m_CurrentJester;
-        WaypointManager.instance.RefuseJester(jester)
-            .OnComplete(() =>
+        var jesterMoveTween = WaypointManager.instance.RefuseJester(jester)
+            .OnKill(() =>
             {
-                Destroy(jester);
+                Destroy(jester.gameObject);
             });
-        AdvanceJesterQueue();
+        var queueMoveTween = AdvanceJesterQueue();
+        return queueMoveTween
+            .OnComplete(StartJesterConversation);
     }
 
     public void StartJesterConversation()
     {
-        if (!m_AfterFirstConvo)
-        {
-            m_AfterFirstConvo = true;
-            DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
-        }
+        DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
     }
 
     public void ReplayJesterConversation()

@@ -14,11 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Jokes:
   - m_Lines:
-    - Jokes (formatting undecided)
-    m_Tags:
-    - Tags (comma-delimited)
-    m_IsLame: 0
-  - m_Lines:
     - Why did the chicken cross the road?
     - '>Why did it?'
     - To get to the other side.
@@ -75,97 +70,107 @@ MonoBehaviour:
     m_IsLame: 0
   - m_Lines:
     - What's brown, long and sticky?
-    - '>.. What?'
+    - '>..What?'
     - A brown stick!
     m_Tags:
     - toilet
     m_IsLame: 0
   - m_Lines:
     - A jester, a Minister and a King walk in to a bar.
+    - '>Uh.. huh?'
     - It hurt.
     m_Tags:
     - bar
     m_IsLame: 0
   - m_Lines:
     - Why did the king go to the dentist?
+    - '>Why?'
     - To get his crown fixed.
     m_Tags:
     - royalty
     m_IsLame: 0
   - m_Lines:
-    - '"test"'
-    m_Tags:
-    - 
-    m_IsLame: 0
-  - m_Lines:
     - What do bees use to groom themselves with?
+    - '>What?'
     - Honeycombs!
     m_Tags:
     - animal
     m_IsLame: 0
   - m_Lines:
     - How do birds learn to fly?
+    - '>Hmm.. How?'
     - By winging it.
     m_Tags:
     - animal
     m_IsLame: 0
   - m_Lines:
     - What do you call a dog out in the cold?
-    - A Chili dog.
+    - '>A cold dog?'
+    - No, silly, a chili dog!
     m_Tags:
     - animal
     m_IsLame: 0
   - m_Lines:
     - How much do roofs cost?
+    - '>According to today''s reports, around 5 gold per tile'
     - Nothing! They're on the house!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - Why shouldn't you trust atoms?
+    - '>Why?'
     - They make up everything!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - I'm really good at sleeping!
+    - '>So..?'
     - ...I can do it even with my eyes closed!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - What do you call a deer with no eyes?
+    - '>What?'
     - No-Eye-Deer!
     m_Tags:
     - animal
     m_IsLame: 0
   - m_Lines:
     - What do you call a fish with no eyes?
-    - A Fsh.
+    - '>Wh-'
+    - A Fsh!
     m_Tags:
     - animal
     m_IsLame: 0
   - m_Lines:
     - Did you hear about the Italian who died recently?
-    - He Pasta-away.
+    - '>What about him?'
+    - He "Pasta"way!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - What animal is the best?
+    - '>What?'
     - The Elephant.
+    - '>Huh?'
     - Everything else is irrelephant!
     m_Tags:
     - animal
     m_IsLame: 0
   - m_Lines:
     - What do you call a fake noodle?
-    - An Im-pasta.
+    - '>A crime against humanity.'
+    - (Whispers) An Im-pasta!
     m_Tags:
     - food
     m_IsLame: 0
   - m_Lines:
     - What did the buffalo say to it's son before leaving?
+    - '>What?'
     - Bison!
     m_Tags:
     - animal
@@ -173,54 +178,63 @@ MonoBehaviour:
     m_IsLame: 0
   - m_Lines:
     - What would bears be without bees?
+    - '>Hungry?'
     - Ears.
     m_Tags:
     - animal
     m_IsLame: 0
   - m_Lines:
     - Why are pirates called pirates?
+    - '>Why?'
     - Don't question it, they just ARRR!
     m_Tags:
-    - jobs
+    - job
     m_IsLame: 0
   - m_Lines:
     - What do cows love reading?
+    - '>The weather?'
     - The cattle-log.
     m_Tags:
     - animal
     m_IsLame: 0
   - m_Lines:
     - How many tickles does it take to make an octopus laugh?
+    - '>Uhh... Eight?'
     - Ten-tickles.
     m_Tags:
     - animal
     m_IsLame: 0
   - m_Lines:
     - Why do mushrooms always get invited to the party?
-    - They're always the fun-guys.
+    - '>I remember this, something about bein-'
+    - They're always the fun-guys!
     m_Tags:
     - food
     m_IsLame: 0
   - m_Lines:
     - Why didn't the fungi want to get into the carriage?
+    - '>Why?'
     - There wasn't much-room left.
     m_Tags:
     - food
     m_IsLame: 0
   - m_Lines:
     - How did the barber win the race?
+    - '>How?'
     - He knew the shortcut.
     m_Tags:
-    - jobs
+    - job
     m_IsLame: 0
   - m_Lines:
     - Why is Peter Pan always flying?
+    - '>Who''s Peter Pan?'
     - Because he neverlands.
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - Why do cows have hooves and not feet?
+    - '>Why?'
     - Because they lactose!
     m_Tags:
     - 
@@ -234,106 +248,151 @@ MonoBehaviour:
     m_IsLame: 0
   - m_Lines:
     - I don't trust stairs.
+    - '>Why not?'
     - They're always up to something.
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - Did you hear the rumor about butter?
+    - '>Nope, what?'
     - Well, I'm not going to spread it!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - Why couldn't the bicycle stand up by itself?
-    - It was two tired.
+    - '>What''s a bicycle?'
+    - It was two tired!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - I have a joke about chemistry!
+    - '>Hit me with your best shot.'
     - ..But I don't think it will get a reaction.
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - I had a joke about boxing!
+    - '>Had?'
     - ..But I forgot the punchline.
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - Did you hear about the kidnapping at school?
+    - '>Oh no, what happened?'
     - It's okay, he woke up.
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - When I was a kid, I used to hate facial hair.
+    - '>Same here.'
     - But then it grew on me.
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - What do lawyers wear to court?
+    - '>What?'
     - Lawsuits.
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - Why don't crabs donate?
-    - They are shellfish.
+    - '>Why?'
+    - They're shellfish!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - Don't ever try to eat a clock.
+    - '>Why not?'
     - It's incredibly time-consuming!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - What do you call a fly with no wings?
-    - A walk.
+    - '>A land?'
+    - Wrong! A walk!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
-    - "What did the clock do when it was hungry?\r"
+    - What did the clock do when it was hungry?
+    - '>What?'
     - It went back four seconds.
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
-    - "Why did the golfer change his pants?\r"
+    - Why did the golfer change his pants?
+    - '>Golfer?'
     - Because he got a hole in one!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - When is your door not actually a door?
+    - '>Huh?'
     - When its ajar!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - What did one toilet say to the other?
-    - Are you okay? You look flushed.
+    - '>What?'
+    - Are you okay? You look flushed!
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
-    - "What do sprinters eat before they race?\r"
+    - What do sprinters eat before they race?
+    - '>Bananas?'
     - Nothing. They fast.
     m_Tags:
     - 
     m_IsLame: 0
   - m_Lines:
     - Why is it difficult to keep track of electrons?
+    - '>What are these.. electrons?'
     - Because you have to keep an ion them!
     m_Tags:
     - 
     m_IsLame: 0
+  - m_Lines:
+    - I'm sorry, but as an AI language model, I don't have the ability to come up
+      with jokes that humans would understand.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - I need to speak to the king. My son is starving and he needs medical assistance.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - Rumor has it that there is an assassin looking to murder the king.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - You're so fanum tax.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - You, you're finally awake.
+    - Walked right into that ambush
+    - Just like that thief over there.
+    m_Tags:
+    - 
+    m_IsLame: 1
   m_KingLines:
   - m_Lines:
     - AH HA HA HA HA HA. AH HA HA HA HA HA HA.
@@ -345,8 +404,7 @@ MonoBehaviour:
     - 'WA HA HA HA HA!! '
     m_Context: Approve
   - m_Lines:
-    - Lame.
-    - To the dungeon with you!
+    - Lame. To the dungeon with you!
     m_Context: Deny
   - m_Lines:
     - Booooring.. Off to the dungeon.
@@ -388,10 +446,19 @@ MonoBehaviour:
   - m_Lines:
     - This better make me laugh.
     m_Context: PunchlinesPlease
+  - m_Lines:
+    - Come again?
+    m_Context: RepeatJoke
+  - m_Lines:
+    - Could you repeat the joke?
+    m_Context: RepeatJoke
+  - m_Lines:
+    - I wasn't listening, what did you say?
+    m_Context: RepeatJoke
   m_JokeRequest:
     GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk
     GoogleSheetsSheetName: Jokes
-    GoogleSheetsOffsetRows: 0
+    GoogleSheetsOffsetRows: 1
     GoogleSheetsOffsetCols: 0
     GoogleSheetsNumCols: 3
   m_KingLineRequest:

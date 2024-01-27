@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8836765596824429259}
   - component: {fileID: 2741552758233670858}
+  - component: {fileID: 8169160599700098707}
   m_Layer: 0
   m_Name: Chara_LongJester_Hat
   m_TagString: Untagged
@@ -84,6 +85,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8169160599700098707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604200537574656925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edacc5a5eeca2d5419f1e6eadee61e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2788400866378766199
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +232,6 @@ MonoBehaviour:
     m_IsLame: 0
   m_JokerRace: 0
   spritePuppet: {fileID: 4339341734759192506}
-  m_AnimationState: 0
 --- !u!1 &6675626708910211736
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,6 +308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1537461418286225542}
   - component: {fileID: 9166406721404999695}
+  - component: {fileID: 886633122843339147}
   m_Layer: 0
   m_Name: Chara_LongJester_Body
   m_TagString: Untagged
@@ -370,3 +383,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &886633122843339147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7678957144581071371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edacc5a5eeca2d5419f1e6eadee61e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

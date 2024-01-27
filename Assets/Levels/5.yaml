@@ -1,0 +1,14 @@
+intro:
+- "Seems like His Majesty's still alive. Well done, I suppose."
+- "His Majesty seems to have a preference for puns today."
+- "As usual, avoid repeated jokes, give His Majesty what he wants."
+- "Oh don't forgot about those assassins while you're at it."
+- "-Your Guiding Light, Palace Guy"
+orders: The King wants puns, you know what to do.
+kingPreference: "animal"
+quota: 5
+jesters:
+  # this ensures the player is always guaranteed an amount of money
+  funny: 7
+  lame: 6
+  assassin: true

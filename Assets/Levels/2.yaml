@@ -1,11 +1,14 @@
 intro:
-- player: got to remember what jokes the king has heard
-- player: he's got short term memory, so yesterday's jokes should still be funny
+- "Good job! I have some bad news though.."
+- "Some jesters have been stealing each other's jokes"
+- "Take care not to send the same joke twice to His Majesty."
+- "Some good news though: The King has short-term memory, so yesterday's jokes should still be funny."
+- "-Your Guiding Light, Palace Guy"
 orders: The King will only listen to funny jokes! Don't repeat any jokes!
 kingPreference: ""
 quota: 4
 jesters:
   # this ensures the player is always guaranteed an amount of money
-  funny: 4
+  funny: 6
   lame: 2
-  assassin: true
+  assassin: false

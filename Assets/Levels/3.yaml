@@ -1,0 +1,14 @@
+intro:
+- "The King is starting to be a little.. feisty"
+- "He only wants to listen to Animal Jokes today."
+- "Remember: it's safe to repeat yesterday's jokes, but not ones already told today."
+- "Good luck, I have high hopes for you."
+- "-Your Guiding Light, Palace Guy"
+orders: The King only wants Animal Jokes, be careful.
+kingPreference: "animal"
+quota: 4
+jesters:
+  # this ensures the player is always guaranteed an amount of money
+  funny: 6
+  lame: 4
+  assassin: false

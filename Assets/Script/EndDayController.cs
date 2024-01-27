@@ -87,10 +87,13 @@ public class EndDayController : MonoBehaviour
             .AppendCallback(() =>
                 (success ? MoodYesDisplay : MoodNoDisplay).enabled = true
                 ).AppendInterval(PauseInSeconds)
-            .AppendCallback(() => AdvanceTitle())
-                .AppendInterval(PauseInSeconds);
+            .AppendCallback(() => AdvanceTitle());
+
         if (success)
+        {
+            seq.AppendInterval(PauseInSeconds * 3);
             seq.AppendCallback(() => SurvivalYesDisplay.enabled = true);
+        }
         else
         {
             // drop player char

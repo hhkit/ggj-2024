@@ -143,17 +143,25 @@ public class JokesDataSO : ScriptableObject
         while (true)
         {
             int i = r * requestData.GoogleSheetsNumCols;
+            ++r;
 
             if (i >= matches.Count)
                 break;
 
-            var lines = matches[i].Groups[1].Value.Replace("\"\"", "\"").Split('\n');
+            var lines = matches[i].Groups[1].Value.Replace("\"\"", "\"").Split('\n').ToList();
+            for (int l = 0; l < lines.Count; ++l)
+            {
+                lines[l] = lines[l].Trim();
+                if (lines[l].Length == 0)
+                    lines.RemoveAt(l--);
+            }
+            if (lines.Count == 0)
+                continue;
+
             var tags = tagDelimiterRegex.Split(matches[i + 1].Groups[1].Value);
             var isLame = matches[i + 2].Groups[1].Value == "TRUE";
 
-            jokes.Add(new(lines, tags, isLame));
-
-            ++r;
+            jokes.Add(new(lines.ToArray(), tags, isLame));
         }
 
         return jokes;

@@ -72,6 +72,7 @@ public class DialogueSystem : MonoBehaviour
         HideDialogBox(m_PlayerBubble);
         HideDialogBox(m_JesterBubble);
         HideDialogBox(m_JesterBubble2);
+        HideDialogBox(m_Kingbubble);
     }
 
     public void ShowDialogBox(DialogAction _action)
@@ -167,14 +168,21 @@ public class DialogueSystem : MonoBehaviour
 
         var bubble = GetConvoSpeechBubble(_action);
         var position = GetConvoSpeechPosition(_action.id);
+        // _jester.PlayTalkAnimation();
 
         bubble.SetPosition(position);
 
+        
         bool hasStartFade = false;
         while (timer > 0)
         {
             yield return null;
             timer -= Time.deltaTime;
+            if (timer > 1 && m_DialogQueue.Count == 0)
+            {
+                _jester.PlayPunchlineAnimation();
+            }
+
             if (!hasStartFade && timer < 0.5f)
             {
                 hasStartFade = true;

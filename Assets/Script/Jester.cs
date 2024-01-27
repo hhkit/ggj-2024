@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class Jester : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Jester : MonoBehaviour
     private static float HALLWAY_SCALE = 1.0f;
     public Transform spritePuppet;
 
-    private Tweener currentTween;
+    private Tween currentTween;
     float idleTimer = 0;
     private AnimationDelegate newAniDelegate;
     private AnimationDelegate animationStateDelegate;
@@ -32,8 +33,8 @@ public class Jester : MonoBehaviour
     {
         float distance = Vector3.Distance(_targetPos, transform.position);
         var tween = transform.DOMove(_targetPos, distance / JESTERSPEED);
-        ChangeAnimation(IdleAnimation);
-        tween.onComplete = StopMoveAnimation;
+        ChangeAnimation(MoveAnimation);
+        tween.onComplete = GoToIdleAnimation;
         return tween;
     }
 
@@ -45,7 +46,8 @@ public class Jester : MonoBehaviour
             .Append(transform.DOMove(_path[1], duration))
             .Join(spritePuppet.DOScale(KINGSIDE_SCALE, duration));
 
-        sequence.onComplete = StopMoveAnimation;
+        ChangeAnimation(MoveAnimation);
+        sequence.onComplete = GoToIdleAnimation;
         return sequence;
     }
 
@@ -58,8 +60,7 @@ public class Jester : MonoBehaviour
         return seq;
     }
 
-
-    public void StopMoveAnimation()
+    public void GoToIdleAnimation()
     {
         ChangeAnimation(IdleAnimation);
     }
@@ -73,9 +74,10 @@ public class Jester : MonoBehaviour
         if (currentTween.IsActive())
             currentTween.Kill();
 
+
         //Reset sprite transform
-        ResetSprite(0.02f)
-            .OnComplete(SetAnimationState);
+        currentTween = ResetSprite(0.01f);
+        currentTween.OnComplete(SetAnimationState);
     }
 
     //Play new animation after sprite reset
@@ -106,15 +108,21 @@ public class Jester : MonoBehaviour
             Vector3 jumpLoc = new Vector3(0, 0.1f, 0);
             currentTween = spritePuppet.DOPunchPosition(jumpLoc, 0.5f, 1, 1);
         }
+        
     }
 
     void PunchlineAnimation()
     {
         if ((currentTween != null && !currentTween.IsActive()) || currentTween == null)
         {
-            Vector3 rot = new Vector3(0, 180, 0);
-            currentTween = spritePuppet.DOPunchRotation(rot, 1, 1);
+            Vector3 rot = new Vector3(0, -180, 0);
+            var seq = DOTween.Sequence();
+            currentTween = seq.Append(spritePuppet.DOLocalRotate(rot, 0.2f))
+                .Append(spritePuppet.DOLocalRotate(rot, 0.5f))
+                .Append(spritePuppet.DOLocalRotate(Vector3.zero, 0.2f));
+             currentTween.onComplete = GoToIdleAnimation;
         }
+
     }
 
     void HopAnimation()
@@ -123,9 +131,28 @@ public class Jester : MonoBehaviour
         {
             Vector3 jumpLoc = new Vector3(0, 0.4f, 0);
             currentTween = spritePuppet.DOPunchPosition(jumpLoc, 0.5f, 1);
+            currentTween.onComplete = DoNothingForAnimation;
         }
     }
 
+    void DoNothingAnimation()
+    {
+
+    }
+
+    void DoNothingForAnimation()
+    {
+        ChangeAnimation(DoNothingAnimation);
+    }
     
+    public void PlayTalkAnimation()
+    {
+        ChangeAnimation(HopAnimation);
+    }
+
+    public void PlayPunchlineAnimation()
+    {
+        ChangeAnimation(PunchlineAnimation);
+    }
 
 }

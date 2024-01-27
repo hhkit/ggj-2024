@@ -3,6 +3,7 @@ intro:
 - player: he's got short term memory, so yesterday's jokes should still be funny
 orders: The King will only listen to funny jokes! Don't repeat any jokes!
 kingPreference: ""
+quota: 4
 jesters:
   # this ensures the player is always guaranteed an amount of money
   funny: 4

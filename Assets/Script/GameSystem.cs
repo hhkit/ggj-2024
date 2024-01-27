@@ -22,10 +22,8 @@ public class GameSystem : MonoBehaviour
     public Jester m_CurrentJester { get; private set; }
     public GameObject m_Player;
 
-
-    public int m_InitialLives = 3;
     public int m_Points { get; private set; }
-    public int m_Lives { get; private set; }
+    public int m_Quota { get; private set; }
 
     public static GameSystem instance;
 
@@ -33,7 +31,7 @@ public class GameSystem : MonoBehaviour
     private DayManager dayManager;
     private JesterFactory jesterFactory;
 
-    private void Awake()
+    void Awake()
     {
         instance = this;
         jokeManager = FindObjectOfType<JokeManager>();
@@ -45,8 +43,8 @@ public class GameSystem : MonoBehaviour
 
         InitializeKing();
         PopulateJesters();
-        m_Lives = m_InitialLives;
-
+        m_Points = 0;
+        m_Quota = dayManager.currentDay.quota;
     }
 
     void Start()
@@ -62,22 +60,22 @@ public class GameSystem : MonoBehaviour
         UISystem.instance.ToggleJokeWindow();
     }
 
-    private void InitializeKing()
+    void InitializeKing()
     {
         m_King = FindObjectOfType<King>();
         Debug.Assert(m_King != null);
 
         var preference = dayManager.currentDay.kingPreference.Trim();
-        Debug.Log($"King prefers {preference}");
+        Debug.Log($"King prefers {preference} today");
         if (preference != "")
             m_King.SetJokePreference(preference);
     }
 
-    private void PopulateJesters()
+    void PopulateJesters()
     {
         var jokeQueue = jokeManager.CreateJokeQueue(m_King, dayManager.currentDay.jesters);
-        Debug.Log($"JOKE QUEUE: {jokeQueue.Length}");
         m_JesterQueue = new(jokeQueue.Select(jesterFactory.CreateJester));
+        Debug.Log($"created {m_JesterQueue.Count()} jesters from {jokeQueue.Count()} jokes");
     }
 
     void CheckJoke(Jester jester)
@@ -89,7 +87,7 @@ public class GameSystem : MonoBehaviour
             JesterFail(jester, reason);
     }
 
-    private void AdvanceJesterQueue()
+    void AdvanceJesterQueue()
     {
         if (m_JesterQueue.Count == 0)
         {
@@ -104,10 +102,7 @@ public class GameSystem : MonoBehaviour
 
         m_CurrentJester = m_JesterQueue.FirstOrDefault();
         CharacterSystem.instance.MoveJesters(new(m_JesterQueue))
-            .OnComplete(() =>
-            {
-                StartJesterConversation();
-            });
+            .OnComplete(StartJesterConversation);
     }
 
     void AddScore()
@@ -121,35 +116,27 @@ public class GameSystem : MonoBehaviour
         m_Points--;
     }
 
-    void DeductLife()
-    {
-        m_Lives--;
-        if (m_Lives <= 0)
-            Lose();
-    }
-
     void JesterSuccess(Jester jester)
     {
         AddScore();
+        CharacterSystem.instance.PlayKingAcceptJester(jester);
         OnJesterSuccess.Invoke(jester);
     }
 
     void JesterFail(Jester jester, RejectionReason reason)
     {
         DeductScore();
-        DeductLife();
         OnJesterFailure.Invoke(jester, reason);
     }
 
-    private void EndDay()
+    void EndDay()
     {
-        OnLevelWin.Invoke();
+        if (m_Points >= m_Quota)
+            OnLevelWin.Invoke();
+        else
+            OnLevelLose.Invoke();
     }
 
-    private void Lose()
-    {
-        OnLevelLose.Invoke();
-    }
 #if UNITY_EDITOR
     [Button]
 #endif
@@ -162,9 +149,11 @@ public class GameSystem : MonoBehaviour
          * simple solution is line waits until king approves the jester, ofc
          */
         var jester = m_CurrentJester;
-        CharacterSystem.instance.SendJesterToKing(jester);
+        var tween = 
+            CharacterSystem.instance.SendJesterToKing(jester)
+                .OnComplete(() => CheckJoke(jester));
+
         AdvanceJesterQueue();
-        CheckJoke(jester);
     }
 
 #if UNITY_EDITOR

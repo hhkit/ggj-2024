@@ -2,6 +2,7 @@ using DG.Tweening;
 using DG.Tweening.Plugins.Core.PathCore;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class CharacterSystem : Manager
@@ -11,6 +12,7 @@ public class CharacterSystem : Manager
     [SerializeField] private GameObject m_mainWaypoint;
     [SerializeField] private GameObject m_WaypointHolder;
     [SerializeField] private GameObject m_OffscreenWaypoint;
+    [SerializeField] private GameObject m_ThroneRoomExitWaypoint;
     [SerializeField] private List<GameObject> m_WayPointList;
     [SerializeField] private List<GameObject> m_KingPath;
     private List<Vector3> m_KingPathVector;
@@ -33,7 +35,7 @@ public class CharacterSystem : Manager
             m_WayPointList.Add(tmp);
         }
 
-        Debug.Log("waypoints: " + string.Join(',', m_WayPointList.Select(wp => wp.transform.position)));
+        // Debug.Log("waypoints: " + string.Join(',', m_WayPointList.Select(wp => wp.transform.position)));
     }
 
     void Start()
@@ -48,7 +50,6 @@ public class CharacterSystem : Manager
     {
     
     }
-    static int count = 0;
 
     public Tween MoveJesters(Queue<Jester> _jesters)
     {
@@ -56,7 +57,6 @@ public class CharacterSystem : Manager
         Debug.Log($"queue {_jesters.Count} wps: {m_WayPointList.Count} ");
         _jesters.Zip(m_WayPointList, (jester, waypoint) =>
         {
-            Debug.Log($"{count}: {jester} -> {waypoint}");
             tween.Join(jester.GoToPosition(waypoint.transform.position));
             return jester;
         }).ToArray();
@@ -66,7 +66,7 @@ public class CharacterSystem : Manager
 
     public Tween SendJesterToKing(Jester _jester)
     {
-       return _jester.GoToKing(m_KingPathVector.ToArray());
+       return _jester.GoToKing(m_KingPathVector.ToArray(), 1.0f);
     }
 
     public Tween RefuseJester(Jester _jester)
@@ -74,5 +74,20 @@ public class CharacterSystem : Manager
        return _jester.GoToPosition(m_OffscreenWaypoint.transform.position);
     }
 
+    public Tween PlayKingAcceptJester(Jester _jester)
+    {
+        var seq = DOTween.Sequence();
+        seq.AppendInterval(0.5f);
+        seq.Append(_jester.GoToPosition(m_ThroneRoomExitWaypoint.transform.position))
+           .Join(_jester.ResetSprite(1.0f));
+        seq.Append(_jester.GoToPosition(m_OffscreenWaypoint.transform.position));
+        return seq;
+    }
+
+    public Tween PlayKingRefuseJester(Jester _jester)
+    {
+        return null;
+        return _jester.GoToPosition(m_ThroneRoomExitWaypoint.transform.position);
+    }
 }
 

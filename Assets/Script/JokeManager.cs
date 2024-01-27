@@ -1,6 +1,7 @@
 
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 public class JokeManager : Manager
@@ -20,6 +21,7 @@ public class JokeManager : Manager
     {
         // OrderBy(a=>Guid.NewGuid) randomizes the list
         var corrects = funnyJokes.Where(joke => king.PrefersJoke(joke)).OrderBy(a => Guid.NewGuid()).Take(config.funny);
+        // Debug.Assert(corrects.Count() > 0, "no correct jokes?");
         var unrelatedJokes = funnyJokes.Where(joke => !king.PrefersJoke(joke));
 
         // todo: weight the incorrect choices

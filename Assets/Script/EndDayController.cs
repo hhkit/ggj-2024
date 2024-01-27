@@ -16,6 +16,7 @@ public class EndDayController : MonoBehaviour
     public TMPro.TextMeshProUGUI MoodNoDisplay;
     public TMPro.TextMeshProUGUI SurvivalYesDisplay;
     public TMPro.TextMeshProUGUI SurvivalNoDisplay;
+    public Camera EndCamConfig;
 
     public float PauseInSeconds;
 
@@ -44,11 +45,10 @@ public class EndDayController : MonoBehaviour
 #if UNITY_EDITOR
     [Button]
 #endif
-    Tween PlayEndingSequence(int jesterCount, int jokeSuccess, bool success)
+    public Tween PlayEndingSequence(int jesterCount, int jokeSuccess, bool success)
     {
         Debug.Log("nani");
-
-
+        
         var titles = Title.text.Split('\n');
         Title.text = "";
 
@@ -58,7 +58,13 @@ public class EndDayController : MonoBehaviour
         JesterCountDisplay.text = $"{jesterCount}";
         JokeCountDisplay.text = $"{jokeSuccess}";
 
-
+        var camTween = DOTween.Sequence();
+        {
+            float camDur = 1.0f;
+            camTween.Join(Camera.main.transform.DOMove(EndCamConfig.transform.position, camDur));
+            camTween.Join(Camera.main.DOOrthoSize(EndCamConfig.orthographicSize, camDur));
+        };
+    
         var count = 0;
         Action AdvanceTitle = () =>
         {
@@ -72,6 +78,11 @@ public class EndDayController : MonoBehaviour
         };
 
         var seq = DOTween.Sequence();
+
+        seq.Append(camTween)
+            .AppendInterval(PauseInSeconds);
+        seq.AppendCallback(() => gameObject.SetActive(true))
+            .AppendInterval(PauseInSeconds);
         seq.AppendCallback(() => Prelude.enabled = true)
                 .AppendInterval(PauseInSeconds)
             .AppendCallback(() => AdvanceTitle())

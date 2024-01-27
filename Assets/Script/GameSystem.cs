@@ -21,6 +21,7 @@ public class GameSystem : MonoBehaviour
     public King m_King { get; private set; }
     public Jester m_CurrentJester { get; private set; }
 
+    public int m_Submitted { get; private set; }
     public int m_Points { get; private set; }
     public int m_Quota { get; private set; }
 
@@ -29,6 +30,7 @@ public class GameSystem : MonoBehaviour
     private JokeManager jokeManager;
     private DayManager dayManager;
     private JesterFactory jesterFactory;
+    private EndDayController endDayController;
 
     void Awake()
     {
@@ -40,9 +42,12 @@ public class GameSystem : MonoBehaviour
         Debug.Assert(dayManager != null, "No DayManager in scene");
         Debug.Assert(jesterFactory != null, "No JesterFactory in scene");
 
+        endDayController = FindObjectOfType<EndDayController>(true);
+
         InitializeKing();
         PopulateJesters();
         m_Points = 0;
+        m_Submitted = 0;
         m_Quota = dayManager.currentDay.quota;
         m_StartJesterConvoOnArrival = true;
     }
@@ -81,6 +86,7 @@ public class GameSystem : MonoBehaviour
 
     void CheckJoke(Jester jester)
     {
+        m_Submitted += 1;
         Debug.Assert(jester != null, "Invalid jester");
         if (m_King.ApproveJester(jester, out RejectionReason reason))
             JesterSuccess(jester);
@@ -93,7 +99,6 @@ public class GameSystem : MonoBehaviour
         if (m_JesterQueue.Count == 0)
         {
             m_CurrentJester = null;
-            EndDay();
             return null;
         }
 
@@ -108,7 +113,6 @@ public class GameSystem : MonoBehaviour
     void AddScore()
     {
         m_Points++;
-
     }
     void DeductScore()
     {
@@ -133,10 +137,7 @@ public class GameSystem : MonoBehaviour
     Tween EndDay()
     {
         var winFlag = m_Points >= m_Quota;
-
-        var seq = DOTween.Sequence();
-
-        return null;
+        return endDayController.PlayEndingSequence(m_Submitted, m_Quota, winFlag);
     }
 
 #if UNITY_EDITOR
@@ -194,6 +195,12 @@ public class GameSystem : MonoBehaviour
 
     public void StartJesterConversation()
     {
+        if (m_JesterQueue.Count() == 0)
+        {
+            EndDay();
+            return;
+        }
+
         if (m_StartJesterConvoOnArrival)
         {
             m_StartJesterConvoOnArrival = false;

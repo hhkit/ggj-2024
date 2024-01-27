@@ -86,6 +86,10 @@ public class DialogueSystem : MonoBehaviour
         _bubble.SetText(null);
         _bubble.gameObject.SetActive(false);
     }
+    public void PushDialog(SpeechBubbleId id, string line, float dur)
+    {
+        m_DialogQueue.Enqueue(new DialogAction(id, line, dur));
+    }
 
     public void StartJokeDialog(Jester _jester)
     {
@@ -95,23 +99,24 @@ public class DialogueSystem : MonoBehaviour
         var invitationLine = jokeManager.jokeData.PlayerLines.GetRandomWhere(line => line.Context == "PunchlinesPlease");
         m_ConvoOngoing = true;
 
-        m_DialogQueue.Enqueue(new DialogAction(SpeechBubbleId.Player, string.Join(" ", invitationLine.Lines), TIME_TO_DISPLAY_DIALOG));
+        PushDialog(SpeechBubbleId.Player, string.Join(" ", invitationLine.Lines), TIME_TO_DISPLAY_DIALOG);
 
         foreach (var item in _jester.m_Joke.Lines)
         {
             var id = IsPlayerDialog(item) ? SpeechBubbleId.Player : SpeechBubbleId.Jester; 
-            m_DialogQueue.Enqueue(new DialogAction(id, item, TIME_TO_DISPLAY_DIALOG));
+            PushDialog(id, item, TIME_TO_DISPLAY_DIALOG);
         }
 
         PlayNextDialog(_jester);
     }
+
 
     private bool IsPlayerDialog(string text)
     {
         return text.StartsWith(">");
     }
 
-    public SpeechBubble GetConvoSpeechBubble(DialogAction action)
+    private SpeechBubble GetConvoSpeechBubble(DialogAction action)
     {
         switch (action.id)
         {
@@ -126,7 +131,7 @@ public class DialogueSystem : MonoBehaviour
         return null;
     }
 
-    public Vector3 GetConvoSpeechPosition(SpeechBubbleId id)
+    private Vector3 GetConvoSpeechPosition(SpeechBubbleId id)
     {
         switch (id)
         {

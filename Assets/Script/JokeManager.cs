@@ -20,13 +20,14 @@ public class JokeManager : Manager
     {
         // OrderBy(a=>Guid.NewGuid) randomizes the list
         var corrects = funnyJokes.Where(joke => king.PrefersJoke(joke)).OrderBy(a => Guid.NewGuid()).Take(config.funny);
+        var unrelatedJokes = funnyJokes.Where(joke => !king.PrefersJoke(joke));
 
         // todo: weight the incorrect choices
-        var unrelatedCount = UnityEngine.Random.Range(0, config.lame);
-        var unfunnyCount = UnityEngine.Random.Range(0, config.lame - unrelatedCount);
-        var repeatCount = UnityEngine.Random.Range(0, config.lame - unrelatedCount - unfunnyCount);
+        var unrelatedCount = UnityEngine.Random.Range(0, Math.Min(config.lame, unrelatedJokes.Count()));
+        var unfunnyCount = UnityEngine.Random.Range(0, Math.Min(config.lame - unrelatedCount, unfunnyJokes.Count()));
+        var repeatCount = Math.Min(config.lame - unrelatedCount - unfunnyCount, corrects.Count());
 
-        var unrelated = funnyJokes.Where(joke => !king.PrefersJoke(joke)).OrderBy(a => Guid.NewGuid()).Take(unrelatedCount);
+        var unrelated = unrelatedJokes.OrderBy(a => Guid.NewGuid()).Take(unrelatedCount);
         var unfunnies = unfunnyJokes.OrderBy(a => Guid.NewGuid()).Take(unfunnyCount);
         var repeats = corrects.OrderBy(a => Guid.NewGuid()).OrderBy(a => Guid.NewGuid()).Take(repeatCount);
 

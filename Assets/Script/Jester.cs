@@ -13,8 +13,6 @@ public class Jester : MonoBehaviour
     public static float JESTERSPEED = 2;
     [SerializeField] private GameObject m_Sprite;
 
-    public Action m_HasReachedTarget;
-
     private Tweener currentTween;
     private int newAnimState;
     public int m_AnimationState;
@@ -34,25 +32,21 @@ public class Jester : MonoBehaviour
         PlayAnimation();
     }
 
-    public void GoToPosition(Vector3 _targetPos)
+    public Tween GoToPosition(Vector3 _targetPos)
     {
         float distance = Vector3.Distance(_targetPos, transform.position);
-        transform.DOMove(_targetPos, distance / JESTERSPEED)
-            .OnComplete(OnReachDestination);
+        var tween = transform.DOMove(_targetPos, distance / JESTERSPEED);
         ChangeAnimation(1);
+        return tween;
     }
 
-    public void OnReachDestination()
-    {
-        m_HasReachedTarget?.Invoke();
-    }
-
-    public void GoToKing(Vector3[] _path)
+    public Tween GoToKing(Vector3[] _path)
     {
         DG.Tweening.Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOMove(_path[0], 1))
             .Append(transform.DOMove(_path[1], 1))
             .Join(transform.DOScale(m_Sprite.transform.localScale/2,0.5f));
+        return sequence;
     }
 
     void PlayAnimation()

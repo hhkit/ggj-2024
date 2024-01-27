@@ -1,6 +1,10 @@
+using DG.Tweening;
+#if UNITY_EDITOR
 using EasyButtons;
+#endif
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,7 +16,6 @@ public class GameSystem : MonoBehaviour
     public UnityEvent<Jester, RejectionReason> OnJesterFailure;
     public UnityEvent OnLevelWin;
     public UnityEvent OnLevelLose;
-    public UnityEvent<Jester[]> MoveQueueForward;
 
     public Queue<Jester> m_JesterQueue { get; private set; } = new();
     public King m_King { get; private set; }
@@ -73,6 +76,7 @@ public class GameSystem : MonoBehaviour
     private void PopulateJesters()
     {
         var jokeQueue = jokeManager.CreateJokeQueue(m_King, dayManager.currentDay.jesters);
+        Debug.Log($"JOKE QUEUE: {jokeQueue.Length}");
         m_JesterQueue = new(jokeQueue.Select(jesterFactory.CreateJester));
     }
 
@@ -94,9 +98,16 @@ public class GameSystem : MonoBehaviour
             return;
         }
 
-        m_CurrentJester = m_JesterQueue.Dequeue();
-        m_CurrentJester.m_HasReachedTarget += StartJesterConversation;
-        MoveQueueForward?.Invoke(m_JesterQueue.ToArray());
+        // TODO: potential atom bomb waiting to go off
+        if (m_CurrentJester != null)
+            m_JesterQueue.Dequeue();
+
+        m_CurrentJester = m_JesterQueue.First();
+        CharacterSystem.instance.MoveJesters(new(m_JesterQueue))
+            .OnComplete(() =>
+            {
+                StartJesterConversation();
+            });
     }
 
     void AddScore()
@@ -139,8 +150,9 @@ public class GameSystem : MonoBehaviour
     {
         OnLevelLose.Invoke();
     }
-
+#if UNITY_EDITOR
     [Button]
+#endif
     // Player sends the Jester at the front of the line to the King
     public void AcceptJester()
     {
@@ -155,12 +167,19 @@ public class GameSystem : MonoBehaviour
         CheckJoke(jester);
     }
 
+#if UNITY_EDITOR
     [Button]
+#endif
+
     // Player refuses the Jester as audience to the King
     public void RejectJester()
     {
-        //var jester = m_CurrentJester;
-        //CharacterSystem.instance.YeetJester(jester);
+        var jester = m_CurrentJester;
+        CharacterSystem.instance.RefuseJester(jester)
+            .OnComplete(() =>
+            {
+                Destroy(jester);
+            });
         AdvanceJesterQueue();
     }
 

@@ -2,9 +2,9 @@ intro:
 - player: got to remember what jokes the king has heard
 - player: he's got short term memory, so yesterday's jokes should still be funny
 orders: The King will only listen to funny jokes! Don't repeat any jokes!
+kingPreference: ""
 jesters:
   # this ensures the player is always guaranteed an amount of money
   funny: 4
   lame: 2
-config:
   assassin: true

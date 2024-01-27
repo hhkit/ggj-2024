@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f253c6db964044a9f5c1e79b43930, type: 3}
+  m_Name: JokesData
+  m_EditorClassIdentifier: 
+  m_Jokes:
+  - m_Lines:
+    - Why did the chicken cross the road?
+    - To get to the other side.
+    m_Tags:
+    - animal
+    - traffic
+    m_IsLame: 0
+  - m_Lines:
+    - How many babies does it take to paint a wall?
+    - Depends on how hard you throw them.
+    m_Tags:
+    - dark
+    - violent
+    m_IsLame: 0
+  - m_Lines:
+    - What's the hardest part of a vegetable to eat?
+    - The Wheelchair.
+    m_Tags:
+    - dark
+    m_IsLame: 0
+  - m_Lines:
+    - Cluck Cluck Cluck
+    m_Tags:
+    - nonsensical
+    - animal
+    m_IsLame: 0
+  - m_Lines:
+    - Knock knock
+    - '>Who''s there?'
+    - Beets
+    - '>Beets who?'
+    - Beets me
+    m_Tags:
+    - food
+    - knock-knock
+    m_IsLame: 0
+  - m_Lines:
+    - How do you make holy water?
+    - By boiling the hell out of it.
+    m_Tags:
+    - water
+    - religious
+    m_IsLame: 0
+  - m_Lines:
+    - What's a fire's favourite food?
+    - Firecrackers. (What the hell's a firecracker?)
+    m_Tags:
+    - anachronistic
+    m_IsLame: 0
+  - m_Lines:
+    - What's brown, long and sticky?
+    - A brown stick!
+    m_Tags:
+    - toilet
+    m_IsLame: 0
+  - m_Lines:
+    - A jester, a Minister and a King walk in to a bar.
+    - It hurt.
+    m_Tags:
+    - bar
+    m_IsLame: 0
+  - m_Lines:
+    - Why did the king go to the dentist?
+    - To get his crown fixed.
+    m_Tags:
+    - royalty
+    m_IsLame: 0
+  - m_Lines:
+    - '"test"'
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - What do bees use to groom themselves with?
+    - Honeycombs!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - How do birds learn to fly?
+    - By winging it.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - What do you call a dog out in the cold?
+    - A Chili dog.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - How much do roofs cost?
+    - Nothing! They're on the house!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - Why shouldn't you trust atoms?
+    - They make up everything!
+    m_Tags:
+    - 
+    m_IsLame: 0
+  m_GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk
+  m_GoogleSheetsSheetName: Sheet1
+  m_GoogleSheetsOffsetRows: 1
+  m_GoogleSheetsOffsetCols: 0

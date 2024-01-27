@@ -37,11 +37,12 @@ public class Jester : MonoBehaviour
     public void GoToPosition(Vector3 _targetPos)
     {
         float distance = Vector3.Distance(_targetPos, transform.position);
-        transform.DOMove(_targetPos, distance / JESTERSPEED).onComplete = ReachDestination;
+        transform.DOMove(_targetPos, distance / JESTERSPEED)
+            .OnComplete(OnReachDestination);
         ChangeAnimation(1);
     }
 
-    public void ReachDestination()
+    public void OnReachDestination()
     {
         m_HasReachedTarget?.Invoke();
     }
@@ -50,7 +51,8 @@ public class Jester : MonoBehaviour
     {
         DG.Tweening.Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOMove(_path[0], 1))
-            .Append(transform.DOMove(_path[1], 1)).Join(transform.DOScale(m_Sprite.transform.localScale/2,0.5f));
+            .Append(transform.DOMove(_path[1], 1))
+            .Join(transform.DOScale(m_Sprite.transform.localScale/2,0.5f));
     }
 
     void PlayAnimation()

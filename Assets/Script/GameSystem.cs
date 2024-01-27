@@ -1,3 +1,4 @@
+using EasyButtons;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -88,8 +89,8 @@ public class GameSystem : MonoBehaviour
     {
         if (m_JesterQueue.Count == 0)
         {
-            EndDay();
             m_CurrentJester = null;
+            EndDay();
             return;
         }
 
@@ -139,6 +140,7 @@ public class GameSystem : MonoBehaviour
         OnLevelLose.Invoke();
     }
 
+    [Button]
     // Player sends the Jester at the front of the line to the King
     public void AcceptJester()
     {
@@ -153,6 +155,7 @@ public class GameSystem : MonoBehaviour
         CheckJoke(jester);
     }
 
+    [Button]
     // Player refuses the Jester as audience to the King
     public void RejectJester()
     {

@@ -65,5 +65,11 @@ public class CharacterSystem : MonoBehaviour
         _jester.GoToKing(m_KingPathVector.ToArray());
     }
 
+    public void RefuseJester(Jester _jester)
+    {
+        Path path = new Path(DG.Tweening.PathType.CatmullRom, m_KingPathVector.ToArray(), 1);
+        //_jester.GoToKing(path);
+    }
+
 }
 

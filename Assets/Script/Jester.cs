@@ -1,6 +1,7 @@
 using DG.Tweening;
 using DG.Tweening.Plugins.Core.PathCore;
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +13,8 @@ public class Jester : MonoBehaviour
     public static float JESTERSPEED = 2;
     [SerializeField] private GameObject m_Sprite;
 
+    public Action m_HasReachedTarget;
+
     private Tweener currentTween;
     private int newAnimState;
     public int m_AnimationState;
@@ -19,6 +22,8 @@ public class Jester : MonoBehaviour
     //0 - Idle
     //1 - Moving
     //2 - Talking
+    //3 - Move to King
+
 
     void Start()
     {
@@ -32,16 +37,21 @@ public class Jester : MonoBehaviour
     public void GoToPosition(Vector3 _targetPos)
     {
         float distance = Vector3.Distance(_targetPos, transform.position);
-        transform.DOMove(_targetPos, distance / JESTERSPEED);
+        transform.DOMove(_targetPos, distance / JESTERSPEED).onComplete = ReachDestination;
         ChangeAnimation(1);
     }
 
-
-    public void GoToKing(Path _path)
+    public void ReachDestination()
     {
-        transform.DOPath(_path, JESTERSPEED).SetSpeedBased();
+        m_HasReachedTarget?.Invoke();
     }
 
+    public void GoToKing(Vector3[] _path)
+    {
+        DG.Tweening.Sequence sequence = DOTween.Sequence();
+        sequence.Append(transform.DOMove(_path[0], 1))
+            .Append(transform.DOMove(_path[1], 1)).Join(transform.DOScale(m_Sprite.transform.localScale/2,0.5f));
+    }
 
     void PlayAnimation()
     {
@@ -83,7 +93,6 @@ public class Jester : MonoBehaviour
         m_Sprite.transform.DOLocalMove(Vector3.zero, 0.1f).onComplete = SetAnimationState; 
     }
 
-
     //Play new animation after sprite reset
     public void SetAnimationState()
     {
@@ -92,7 +101,6 @@ public class Jester : MonoBehaviour
 
     void IdleAnimation()
     {
-
         if ((currentTween != null && !currentTween.IsActive()) || currentTween == null)
         {
             if (idleTimer > 0)
@@ -105,6 +113,7 @@ public class Jester : MonoBehaviour
             }
         }
     }
+
     void MoveAnimation()
     {
 

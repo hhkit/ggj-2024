@@ -16,6 +16,8 @@ public class GameSystem : MonoBehaviour
     public Queue<Jester> m_JesterQueue { get; private set; } = new();
     public King m_King { get; private set; }
     public Jester m_CurrentJester { get; private set; }
+    public GameObject m_Player;
+
 
     public int m_InitialLives = 3;
     public int m_Points { get; private set; }
@@ -51,12 +53,11 @@ public class GameSystem : MonoBehaviour
         AdvanceJesterQueue();
     }
 
-
-
     public void ToggleJokesWindow()
     {
         UISystem.instance.ToggleJokeWindow();
     }
+
     private void InitializeKing()
     {
         m_King = FindObjectOfType<King>();
@@ -91,7 +92,9 @@ public class GameSystem : MonoBehaviour
             m_CurrentJester = null;
             return;
         }
+
         m_CurrentJester = m_JesterQueue.Dequeue();
+        m_CurrentJester.m_HasReachedTarget += StartJesterConversation;
         MoveQueueForward?.Invoke(m_JesterQueue.ToArray());
     }
 
@@ -156,5 +159,10 @@ public class GameSystem : MonoBehaviour
         //var jester = m_CurrentJester;
         //CharacterSystem.instance.YeetJester(jester);
         AdvanceJesterQueue();
+    }
+
+    public void StartJesterConversation()
+    {
+        DialogueSystem.instance.StartJokeDialog(m_CurrentJester, m_Player);
     }
 }

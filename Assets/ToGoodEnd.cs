@@ -10,14 +10,14 @@ public class ToGoodEnd : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyUp(KeyCode.R))
         {
             rCheck = true;
         }
 
         if(rCheck)
         {
-            if(Input.GetKeyDown(KeyCode.U))
+            if(Input.GetKeyUp(KeyCode.U))
             {
                 uCheck = true;
             }
@@ -25,7 +25,7 @@ public class ToGoodEnd : MonoBehaviour
 
         if(uCheck)
         {
-            if(Input.GetKeyDown(KeyCode.N))
+            if(Input.GetKeyUp(KeyCode.N))
             {
                 nCheck = true;
             }

@@ -50,7 +50,7 @@ public class GameSystem : MonoBehaviour
 
         endDayController = FindObjectOfType<EndDayController>(true);
 
-        AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
+       
     }
 
     bool hasStarted = false;
@@ -59,6 +59,7 @@ public class GameSystem : MonoBehaviour
         if (hasStarted)
             return;
 
+        AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
         AudioManager.PlayOneShot("DayStart");
         hasStarted = true;
 

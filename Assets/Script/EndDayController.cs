@@ -51,8 +51,10 @@ public class EndDayController : MonoBehaviour
                 JokeCountDisplay,
                 MoodYesDisplay,
                 MoodNoDisplay,
+                MoodDeathDisplay,
                 SurvivalYesDisplay,
                 SurvivalNoDisplay,
+                SurvivalDeathDisplay,
             };
 
         Reset();

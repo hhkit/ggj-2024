@@ -48,7 +48,7 @@ public class EndDayController : MonoBehaviour
     {
         foreach (var tmp in tmps)
             tmp.enabled = false;
-        NextDayButton.enabled = false;
+        NextDayButton.gameObject.SetActive(false);
     }
 
 #if UNITY_EDITOR
@@ -125,7 +125,7 @@ public class EndDayController : MonoBehaviour
             seq.AppendCallback(() => SurvivalYesDisplay.enabled = true);
         }
         seq.AppendInterval(PauseInSeconds);
-        seq.AppendCallback(() => NextDayButton.enabled = true);
+        seq.AppendCallback(() => NextDayButton.gameObject.SetActive(true));
 
         return seq;
     }
@@ -143,8 +143,7 @@ public class EndDayController : MonoBehaviour
             SceneManager.LoadScene(currScene.buildIndex);
         } else
         {
-            // TODO: load bad end scene
-            SceneManager.LoadScene(currScene.buildIndex + 1);
+            SceneManager.LoadScene("BadEnd");
         }
     }
 }

@@ -12,9 +12,22 @@ public class DayManager : Manager
 
     public static int CurrentLevel = 0;
 
+#if UNITY_EDITOR
+    static bool firstLoad = true;
+    public int DayOverride = 0;
+#endif
+
     public override void ManagerInit()
     {
-        DeserializeDayData(CurrentLevel);
+#if UNITY_EDITOR
+        if (firstLoad)
+        {
+            CurrentLevel = DayOverride;
+            firstLoad = false;
+        }
+#endif
+
+    DeserializeDayData(CurrentLevel);
     }
 
     void DeserializeDayData(int index)

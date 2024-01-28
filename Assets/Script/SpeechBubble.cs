@@ -57,7 +57,7 @@ public class SpeechBubble : MonoBehaviour
                     }
                     if (fade < 1.0f)
                         //text += $"<alpha=#{(int)(fade * 255):X2}>{c}"; // alpha has no closing tag
-                        text += $"<voffset={-fade * 4}><alpha=#{(int)(fade * 255):X2}>{c}</voffset>"; // alpha has no closing tag
+                        text += $"<voffset={-fade * 4:F6}><alpha=#{(int)(fade * 255):X2}>{c}</voffset>"; // alpha has no closing tag
                     else
                         text += c;
                 }
@@ -65,8 +65,27 @@ public class SpeechBubble : MonoBehaviour
                 m_TextUI.text = text;
             });
     }
+    Tween TweenPunchline(float exitDuration)
+    {
+        float t = m_Text.Length / CHARS_PER_SEC + CHAR_FADE_IN_TIME + 1.0f + exitDuration;
+        return DOTween.To(() => m_Timer, v => m_Timer = v, t, t)
+            .SetEase(Ease.Linear)
+            .OnUpdate(() =>
+            {
+                string text = $"<line-height=100%>";
 
-    public Sequence Play(float entryDuration, float exitDuration, float entryOffset, float exitOffset, Action PreExit = null)
+                for (int i = 0; i < m_Text.Length; ++i)
+                {
+                    char c = m_Text[i];
+                    float y = -2.0f + Mathf.Sin((i + m_Timer * 8) * Mathf.PI / 4);
+                    text += $"<voffset={y:F6}>{c}</voffset>";
+                }
+
+                m_TextUI.text = text;
+            });
+    }
+
+    public Sequence Play(float entryDuration, float exitDuration, float entryOffset, float exitOffset, bool isPunchline, Action PreExit = null)
     {
         float y = transform.position.y;
 
@@ -74,11 +93,9 @@ public class SpeechBubble : MonoBehaviour
             .Append(m_CanvasGroup.DOFade(0, entryDuration).From())
             .Join(transform.DOMoveY(y, entryDuration).From(y - entryOffset))
 
-            .Append(TweenText())
+            .Append(isPunchline ? TweenPunchline(exitDuration) : TweenText())
 
-            .AppendInterval(0.25f)
-
-            .AppendCallback(() => PreExit?.Invoke())
+            .InsertCallback(m_Text.Length / CHARS_PER_SEC + CHAR_FADE_IN_TIME + (isPunchline ? 1.0f : 0.25f), () => PreExit?.Invoke())
             .Join(m_CanvasGroup.DOFade(0, exitDuration))
             .Join(transform.DOMoveY(y + exitOffset, entryDuration));
         return seq;

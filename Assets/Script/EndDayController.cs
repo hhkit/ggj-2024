@@ -4,6 +4,7 @@ using EasyButtons;
 #endif
 using System;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -175,17 +176,23 @@ public class EndDayController : MonoBehaviour
     public void LoadNextScene()
     {
         var currScene = SceneManager.GetActiveScene();
+        var fade = FindObjectOfType<FadeOut>();
+        var img = fade.GetComponent<Image>();
         if (successFlag)
         {
             DayManager.CurrentLevel += 1;
         }
 
-        if (DayManager.CurrentLevel < dayManager.days.Length)
+        img.DOColor(img.color.WithAlpha(1f), 0.5f).OnComplete(() =>
         {
-            SceneManager.LoadScene(currScene.buildIndex);
-        } else
-        {
-            SceneManager.LoadScene("BadEnd");
-        }
+            if (DayManager.CurrentLevel < dayManager.days.Length)
+            {
+                SceneManager.LoadScene(currScene.buildIndex);
+            }
+            else
+            {
+                SceneManager.LoadScene("BadEnd");
+            }
+        });
     }
 }

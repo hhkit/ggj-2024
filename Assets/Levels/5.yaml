@@ -5,7 +5,7 @@ intro:
 - "Oh don't forgot about those assassins while you're at it."
 - "-Your Guiding Light, Palace Guy"
 orders: The King wants puns, you know what to do.
-kingPreference: "animal"
+kingPreference: "pun"
 quota: 5
 jesters:
   # this ensures the player is always guaranteed an amount of money

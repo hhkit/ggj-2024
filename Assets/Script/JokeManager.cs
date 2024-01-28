@@ -1,7 +1,5 @@
-
-
+using UnityEngine;
 using System;
-using System.Diagnostics;
 using System.Linq;
 
 public class JokeManager : Manager
@@ -35,6 +33,8 @@ public class JokeManager : Manager
 
         var incorrects = unrelated.Concat(unfunnies).Concat(repeats);
 
-        return corrects.Concat(incorrects).OrderBy(a => Guid.NewGuid()).ToArray();
+        var results = corrects.Concat(incorrects);
+
+        return results.OrderBy(a => Guid.NewGuid()).ToArray();
     }
 }

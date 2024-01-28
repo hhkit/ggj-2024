@@ -175,7 +175,7 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 923edeef1e7dbc84ca0563d15d99d3e3, type: 3}
   - {fileID: 4900000, guid: 9edd80d6caaa7bb45b5925b591a50e84, type: 3}
   - {fileID: 4900000, guid: b2fb8e5e8790f544b80fafccf0518bd2, type: 3}
-  DayOverride: 0
+  DayOverride: 4
 --- !u!1 &154068487
 GameObject:
   m_ObjectHideFlags: 0
@@ -3084,6 +3084,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 707120247}
     m_Modifications:
+    - target: {fileID: 3229372912724322197, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_Name
+      value: SurvivalDead
+      objectReference: {fileID: 0}
     - target: {fileID: 4229598406029934328, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: m_SortingOrder
       value: 2
@@ -3208,6 +3212,14 @@ PrefabInstance:
       propertyPath: trapDoorRenderer
       value: 
       objectReference: {fileID: 949928948}
+    - target: {fileID: 6343762626456720881, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_text
+      value: No
+      objectReference: {fileID: 0}
+    - target: {fileID: 8338911302021237240, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_text
+      value: Deceased
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

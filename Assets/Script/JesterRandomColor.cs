@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JesterRandomColor : MonoBehaviour
 {
@@ -22,7 +23,14 @@ public class JesterRandomColor : MonoBehaviour
             color[Random.Range(0, 3)] = randLow();
         }
             
-        GetComponent<SpriteRenderer>().color = new Color(color[0], color[1], color[2]);
+        var randomColor = new Color(color[0], color[1], color[2]);
+        var sprite = GetComponent<SpriteRenderer>();
+        if (sprite != null) sprite.color = randomColor;
+        else
+        {
+            var img = GetComponent<UnityEngine.UI.Image>();
+            if (img != null) img.color = randomColor;
+        }
     }
 
     // Update is called once per frame

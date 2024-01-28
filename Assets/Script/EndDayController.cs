@@ -8,16 +8,26 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public enum WinState
+{
+    Win,
+    Lose,
+    Death,
+}
+
 public class EndDayController : MonoBehaviour
 {
+
     public TMPro.TextMeshProUGUI Prelude;
     public TMPro.TextMeshProUGUI Title;
     public TMPro.TextMeshProUGUI JesterCountDisplay;
     public TMPro.TextMeshProUGUI JokeCountDisplay;
     public TMPro.TextMeshProUGUI MoodYesDisplay;
     public TMPro.TextMeshProUGUI MoodNoDisplay;
+    public TMPro.TextMeshProUGUI MoodDeathDisplay;
     public TMPro.TextMeshProUGUI SurvivalYesDisplay;
     public TMPro.TextMeshProUGUI SurvivalNoDisplay;
+    public TMPro.TextMeshProUGUI SurvivalDeathDisplay;
 
     public Button NextDayButton;
     public Camera EndCamConfig;
@@ -57,13 +67,31 @@ public class EndDayController : MonoBehaviour
 #if UNITY_EDITOR
     [Button]
 #endif
-    public Tween PlayEndingSequence(int jesterCount, int jokeSuccess, bool success)
+    public Tween PlayEndingSequence(int jesterCount, int jokeSuccess, WinState success)
     {
         AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
-        successFlag = success;
+        successFlag = success == WinState.Win;
+
+        TMPro.TextMeshProUGUI MoodDisplay = null;
+        TMPro.TextMeshProUGUI SurvivalDisplay = null;
+        switch (success)
+        {
+            case WinState.Win:
+                MoodDisplay = MoodYesDisplay;
+                SurvivalDisplay = SurvivalYesDisplay;
+                break;
+            case WinState.Lose:
+                MoodDisplay = MoodNoDisplay;
+                SurvivalDisplay = SurvivalNoDisplay;
+                break;
+            case WinState.Death:
+                MoodDisplay = MoodDeathDisplay;
+                SurvivalDisplay = SurvivalDeathDisplay;
+                break;
+        }
 
         NextDayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text =
-            success ? "Next Day" : "Try Again";
+            successFlag ? "Next Day" : "Try Again";
         
         var titles = Title.text.Split('\n');
         Title.text = "";
@@ -111,12 +139,10 @@ public class EndDayController : MonoBehaviour
                 .AppendInterval(PauseInSeconds)
             .AppendCallback(() => AdvanceTitle())
                 .AppendInterval(PauseInSeconds)
-            .AppendCallback(() =>
-                (success ? MoodYesDisplay : MoodNoDisplay).enabled = true
-                ).AppendInterval(PauseInSeconds)
+            .AppendCallback(() => MoodDisplay.enabled = true).AppendInterval(PauseInSeconds)
             .AppendCallback(() => AdvanceTitle());
 
-        if (success)
+        if (successFlag)
         {
             seq.AppendInterval(PauseInSeconds * 3);
             seq.AppendCallback(() => SurvivalYesDisplay.enabled = true);
@@ -136,7 +162,7 @@ public class EndDayController : MonoBehaviour
                 .Append(player.transform.DOScale(0.01f,0.1f));
 
             seq.AppendInterval(PauseInSeconds);
-            seq.AppendCallback(() => SurvivalYesDisplay.enabled = true);
+            seq.AppendCallback(() => SurvivalDisplay.enabled = true);
         }
         seq.AppendInterval(PauseInSeconds);
         seq.AppendCallback(() => NextDayButton.gameObject.SetActive(true));

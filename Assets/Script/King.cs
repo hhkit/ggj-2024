@@ -8,6 +8,7 @@ public enum RejectionReason
     NotFunny,
     Repeat,
     NotPreferred,
+    Death,
 }
 
 public class King : MonoBehaviour
@@ -42,6 +43,13 @@ public class King : MonoBehaviour
         Debug.Assert(_jester != null);
 
         string[] kingDenySounds = { "KingDenySound1", "KingDenySound2" };
+
+        if (_jester.isAssassin)
+        {
+            rejectReason = RejectionReason.Death;
+            Debug.Log("Death!");
+            return false;
+        }
 
         if (m_PreviousJokes.Contains(_jester.m_Joke))
         {

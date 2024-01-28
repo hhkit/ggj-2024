@@ -18,6 +18,7 @@ public class MainMenuSystem : MonoBehaviour
 
     public void StartGame()
     {
+        DayManager.CurrentLevel = 0;
         SceneManager.LoadScene(m_GameSceneName);
     }
 }

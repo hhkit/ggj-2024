@@ -180,7 +180,7 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 923edeef1e7dbc84ca0563d15d99d3e3, type: 3}
   - {fileID: 4900000, guid: 9edd80d6caaa7bb45b5925b591a50e84, type: 3}
   - {fileID: 4900000, guid: b2fb8e5e8790f544b80fafccf0518bd2, type: 3}
-  DayOverride: 4
+  DayOverride: 3
 --- !u!1 &154068487
 GameObject:
   m_ObjectHideFlags: 0

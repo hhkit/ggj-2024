@@ -464,6 +464,123 @@ MonoBehaviour:
     m_Tags:
     - dark
     m_IsLame: 0
+  - m_Lines:
+    - "Wife: \u201CI want another baby.\u201D"
+    - "Husband: \u201CThat\u2019s a relief, I also really don\u2019t like this one.\u201D"
+    m_Tags:
+    - dark
+    m_IsLame: 0
+  - m_Lines:
+    - My parents raised me as an only child
+    - '>So what?'
+    - Which really pissed off my sister.
+    m_Tags:
+    - dark
+    m_IsLame: 0
+  - m_Lines:
+    - "Why don\u2019t cannibals eat clowns?"
+    - '>Why?'
+    - Because they taste funny.
+    m_Tags:
+    - dark
+    m_IsLame: 0
+  - m_Lines:
+    - "My mother said one man\u2019s trash is another man\u2019s treasure."
+    - '>So?'
+    - "Turns out I\u2019m adopted."
+    m_Tags:
+    - dark
+    m_IsLame: 0
+  - m_Lines:
+    - Why can't orphans play baseball?
+    - '>Why?'
+    - They don't know where home is.
+    m_Tags:
+    - dark
+    - anachronistic
+    m_IsLame: 0
+  - m_Lines:
+    - LET ME SEE THE KING! NOW!!
+    - '>What the..'
+    - NOW!!
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    - '>Huh?'
+    - Fusce fermentum, sapien vitae eleifend tempo.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - Do you know where my mom is? I'm kinda lost.
+    - '>No'
+    - Bummer.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - I came here because there was a line.
+    - '>Leave. Now.'
+    - Wait I get nothing for waiting?!
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - What is hard and bad for you teeth?
+    - '>What?'
+    - My fist.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - Broken pencils are pointless.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - I used to work for a blacksmith.
+    - '>So?'
+    - It smelt.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - I ordered a chicken and an egg
+    - '>Uh huh?'
+    - I'll tell you which comes first.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - My dad went out to get milk and never came back.
+    - '>Okay..?'
+    - I'm sad.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - Why is 6 scared of 7?
+    - '>Why?'
+    - Because 7 8 9!
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - DOWN WITH THE KING!
+    - '>Please leave.'
+    - DOWN WITH THE KING!!
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - I told my mom the wrong thing while I was in the elevator.
+    - '>So?'
+    - I was wrong on so many levels.
+    m_Tags:
+    - anachronistic
+    m_IsLame: 0
   m_KingLines:
   - m_Lines:
     - AH HA HA HA HA HA. AH HA HA HA HA HA HA.

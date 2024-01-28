@@ -29,6 +29,7 @@ public class King : MonoBehaviour
 
     public bool PrefersJoke(Joke joke)
     {
+        Debug.Log($"Joke has {string.Join(",", joke.Tags)} today");
         return m_EnablePreferenceCheck == false || joke.Tags.Contains(m_JokePreference);
     }
 
@@ -36,6 +37,7 @@ public class King : MonoBehaviour
     {
         m_JokePreference = tag;
         m_EnablePreferenceCheck = tag != "";
+        Debug.Log($"King prefers {tag} today");
     }
 
     public bool ApproveJester(Jester _jester, out RejectionReason rejectReason)

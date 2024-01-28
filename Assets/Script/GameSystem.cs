@@ -94,7 +94,7 @@ public class GameSystem : MonoBehaviour
         float z = 0;
         foreach (var jester in jesters)
         {
-            z += 0.5f;
+            z -= 0.25f;
             jester.z = z;
         }
 

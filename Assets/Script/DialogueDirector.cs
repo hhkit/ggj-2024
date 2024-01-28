@@ -28,6 +28,7 @@ public class DialogueDirector : MonoBehaviour
         dialogManager.PushDialog(
                 who,
                 line,
+                false,
                 () => isDone = true);
         while (isDone == false)
             yield return 0;
@@ -36,7 +37,7 @@ public class DialogueDirector : MonoBehaviour
     public void StartJokeDialog(Jester _jester, Action OnShowLast = null)
     {
         var invitationLine = jokeManager.jokeData.PlayerLines.GetRandomWhere(line => line.Context == "PunchlinesPlease");
-        dialogManager.PushDialog(SpeakerId.Player, string.Join(" ", invitationLine.Lines));
+        dialogManager.PushDialog(SpeakerId.Player, string.Join(" ", invitationLine.Lines), false);
 
         int count = 0;
         foreach (var item in _jester.m_Joke.Lines)
@@ -45,7 +46,7 @@ public class DialogueDirector : MonoBehaviour
             var isFinal = count == _jester.m_Joke.Lines.Length;
 
             var id = IsPlayerDialog(item) ? SpeakerId.Player : SpeakerId.Jester;
-            dialogManager.PushDialog(id, item, isFinal ? OnShowLast : null);
+            dialogManager.PushDialog(id, item, isFinal, isFinal ? OnShowLast : null);
         }
     }
 

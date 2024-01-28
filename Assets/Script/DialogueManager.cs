@@ -33,15 +33,17 @@ public class DialogueManager : Manager
     public float exitOffset = 1f;
     private struct DialogAction
     {
-        public DialogAction(SpeakerId _id, string _text, Action _exitCallback)
+        public DialogAction(SpeakerId _id, string _text, bool _isPunchline, Action _exitCallback)
         {
             id = _id;
             text = _text.TrimStart('>');
+            isPunchline = _isPunchline;
             exitCallback = _exitCallback;
         }
 
         public SpeakerId id;
         public string text;
+        public bool isPunchline;
         public Action exitCallback;
     }
 
@@ -59,40 +61,15 @@ public class DialogueManager : Manager
         m_KingBubble.gameObject.SetActive(false);
     }
 
-#if UNITY_EDITOR
-    [Button]
-    public void Test(
-        SpeakerId who,
-        string text)
-    {
-        PushDialog(who, text);
-    }
-#endif
-
     public void PushDialog(
         SpeakerId who, 
         string text,
+        bool isPunchline,
         Action exitCallback = null
     )
     {
         m_DialogQueue.Enqueue(new DialogAction(
-            who, text, exitCallback));
-    }
-    public void PushDialog(
-        SpeakerId who,
-        string[] texts,
-        Action exitCallback = null
-    )
-    {
-        int count = 0;
-        foreach (var text in texts)
-        {
-            count++;
-            var final = count == texts.Length;
-
-            m_DialogQueue.Enqueue(new DialogAction(
-                who, text, final ? exitCallback : null));
-        }
+            who, text, isPunchline, exitCallback));
     }
 
     private bool ShowNextDialog()
@@ -130,9 +107,10 @@ public class DialogueManager : Manager
         newBubble.gameObject.SetActive(true);
         newBubble.SetText(top.text);
 
-        var seq = newBubble.Play(entryDur, exitDur, entryOffset, exitOffset, () => {
-            top.exitCallback?.Invoke();
-            isShowing = false;
+        var seq = newBubble.Play(entryDur, exitDur, entryOffset, exitOffset, top.isPunchline,
+            () => {
+                top.exitCallback?.Invoke();
+                isShowing = false;
             });
 
         isShowing = true;

@@ -245,6 +245,11 @@ MonoBehaviour:
   days:
   - {fileID: 4900000, guid: cf60ba90c9ab2fa4a818ecf193792023, type: 3}
   - {fileID: 4900000, guid: 01098468f62a805429e82eecb319438a, type: 3}
+  - {fileID: 4900000, guid: 9736696506fd5cf41a8e7072ee7bafe9, type: 3}
+  - {fileID: 4900000, guid: 1910c992052b360469fc1b07e90e2a9e, type: 3}
+  - {fileID: 4900000, guid: 923edeef1e7dbc84ca0563d15d99d3e3, type: 3}
+  - {fileID: 4900000, guid: 9edd80d6caaa7bb45b5925b591a50e84, type: 3}
+  - {fileID: 4900000, guid: b2fb8e5e8790f544b80fafccf0518bd2, type: 3}
 --- !u!1 &191242043
 GameObject:
   m_ObjectHideFlags: 0

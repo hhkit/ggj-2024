@@ -31,6 +31,8 @@ public class GameSystem : MonoBehaviour
     public GameUIController gameUI;
     private EndDayController endDayController;
 
+    public GameObject coinShower;
+
     void Awake()
     {
         instance = this;
@@ -152,6 +154,7 @@ public class GameSystem : MonoBehaviour
 
         if (CheckJoke(jester, out RejectionReason reason))
         {
+            Instantiate(coinShower);
             AddScore();
             yield return director.PlayKingDialog(true, reason);
             WaypointManager.instance.PlayKingAcceptJester(jester); // jester leave

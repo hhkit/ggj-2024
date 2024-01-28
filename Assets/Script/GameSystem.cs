@@ -103,13 +103,17 @@ public class GameSystem : MonoBehaviour
             return null;
         }
 
-        AudioManager.PlayOneShot("CallNextSound");
+        
         // TODO: potential atom bomb waiting to go off
         if (m_CurrentJester != null)
             m_JesterQueue.Dequeue();
 
         m_CurrentJester = m_JesterQueue.FirstOrDefault();
-        return WaypointManager.instance.MoveJesters(new(m_JesterQueue));
+        var seq = DOTween.Sequence();
+        seq.AppendCallback(() => AudioManager.PlayOneShot("CallNextSound"));
+        seq.AppendInterval(0.25f);
+        seq.Append(WaypointManager.instance.MoveJesters(new(m_JesterQueue)));
+        return seq;
     }
 
     void AddScore()

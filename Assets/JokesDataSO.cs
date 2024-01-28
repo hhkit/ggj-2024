@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine.Networking;

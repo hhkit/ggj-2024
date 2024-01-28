@@ -379,6 +379,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232934510}
   m_CullTransparentMesh: 1
+--- !u!1 &242949717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 242949719}
+  - component: {fileID: 242949718}
+  m_Layer: 0
+  m_Name: GoodEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &242949718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242949717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cddc77a22c897a4ab1bec3b0b9595d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: GoodEnd
+  rCheck: 0
+  uCheck: 0
+  nCheck: 0
+--- !u!4 &242949719
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242949717}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 64.595924, y: 227.17703, z: -4.0142035}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &252737686
 GameObject:
   m_ObjectHideFlags: 0
@@ -1859,7 +1907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3099201663178059120, guid: aba0af07caca2a348888c4af3794796a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 3099201663178059120, guid: aba0af07caca2a348888c4af3794796a, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3519,7 +3567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3099201663178059120, guid: aba0af07caca2a348888c4af3794796a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 3099201663178059120, guid: aba0af07caca2a348888c4af3794796a, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3899,3 +3947,4 @@ SceneRoots:
   - {fileID: 8202555212651277221}
   - {fileID: 400704777}
   - {fileID: 563872249}
+  - {fileID: 242949719}

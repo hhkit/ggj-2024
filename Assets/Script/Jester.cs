@@ -59,11 +59,15 @@ public class Jester : MonoBehaviour
         return sequence;
     }
 
-    public Tween ResetSprite(float duration)
+    public Tween ResetSprite(float duration, bool setScale = false)
     {
         var seq = DOTween.Sequence();
         seq.Append(spritePuppet.DORotate(Vector3.zero, duration))
             .Join(spritePuppet.DOLocalMove(Vector3.zero, duration));
+
+        if (setScale)
+            seq.Join(transform.DOScale(1, duration));
+
         return seq;
     }
 
@@ -160,6 +164,11 @@ public class Jester : MonoBehaviour
     public void PlayPunchlineAnimation()
     {
         ChangeAnimation(PunchlineAnimation);
+    }
+
+    public void FlipAround()
+    {
+        spritePuppet.DOScaleX(-1, 0.1f);
     }
 
 }

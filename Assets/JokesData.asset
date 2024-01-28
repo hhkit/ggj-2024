@@ -444,6 +444,26 @@ MonoBehaviour:
     m_Tags:
     - 
     m_IsLame: 1
+  - m_Lines:
+    - I have many jokes about unemployed people
+    - '>Tell me one.'
+    - Sadly they don't work.
+    m_Tags:
+    - dark
+    m_IsLame: 0
+  - m_Lines:
+    - I'm not completely useless.
+    - '>Huh?'
+    - I can always serve as a bad example.
+    m_Tags:
+    - 
+    m_IsLame: 0
+  - m_Lines:
+    - "Patient: Oh doctor, I\u2019m just so nervous. This is my first operation."
+    - "Doctor: Don\u2019t worry. Mine too."
+    m_Tags:
+    - dark
+    m_IsLame: 0
   m_KingLines:
   - m_Lines:
     - AH HA HA HA HA HA. AH HA HA HA HA HA HA.
@@ -480,7 +500,7 @@ MonoBehaviour:
     - Next, please!
     m_Context: CallNext
   - m_Lines:
-    - Go on.
+    - Eh, good enough.
     m_Context: SendToKing
   - m_Lines:
     - Go ahead.
@@ -498,7 +518,7 @@ MonoBehaviour:
     - Find a better joke.
     m_Context: DenyAudience
   - m_Lines:
-    - Punchlines, Please.
+    - Punchline, please.
     m_Context: PunchlinesPlease
   - m_Lines:
     - Hit me with your best joke.
@@ -527,6 +547,9 @@ MonoBehaviour:
     m_Context: Rejection
   - m_Lines:
     - Well that's just your opinion
+    m_Context: Rejection
+  - m_Lines:
+    - Everyone's a critic.
     m_Context: Rejection
   m_JokeRequest:
     GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk

@@ -71,6 +71,8 @@ public class King : MonoBehaviour
         AudioManager.PlayOneShot("CoinShower");
         Debug.Log("Joker successful");
         rejectReason = RejectionReason.None;
+        m_PreviousJokes.Add(_jester.m_Joke);
+
         return true;
     }
 }

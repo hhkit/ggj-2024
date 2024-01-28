@@ -4,7 +4,6 @@ using EasyButtons;
 #endif
 using System;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -183,7 +182,7 @@ public class EndDayController : MonoBehaviour
             DayManager.CurrentLevel += 1;
         }
 
-        img.DOColor(img.color.WithAlpha(1f), 0.5f).OnComplete(() =>
+        img.DOFade(1.0f, 0.5f).OnComplete(() =>
         {
             if (DayManager.CurrentLevel < dayManager.days.Length)
             {

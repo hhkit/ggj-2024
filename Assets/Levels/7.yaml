@@ -6,9 +6,9 @@ intro:
 - "-your guiding light, palace guy"
 orders: Remember, Understand, Never look back.
 kingPreference: "dark"
-quota: 6
+quota: 3
 jesters:
   # this ensures the player is always guaranteed an amount of money
-  funny: 7
-  lame: 7
+  funny: 5
+  lame: 3
   assassin: true

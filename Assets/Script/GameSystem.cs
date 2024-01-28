@@ -59,7 +59,7 @@ public class GameSystem : MonoBehaviour
         if (hasStarted)
             return;
 
-        AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
+        AudioManager.PlayBGM("Tax-Office-Day-PM-Music", 0.2f);
         AudioManager.PlayOneShot("DayStart");
         hasStarted = true;
 

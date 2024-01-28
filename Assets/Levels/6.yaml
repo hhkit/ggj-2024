@@ -6,9 +6,9 @@ intro:
 - "-Your Guiding Light, Palace Guy"
 orders: The King wants jokes that are "out of this world", talk about needy.
 kingPreference: "anachronistic"
-quota: 6
+quota: 3
 jesters:
   # this ensures the player is always guaranteed an amount of money
-  funny: 7
-  lame: 7
+  funny: 5
+  lame: 3
   assassin: true

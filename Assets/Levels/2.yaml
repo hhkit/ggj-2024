@@ -6,9 +6,9 @@ intro:
 - "-Your Guiding Light, Palace Guy"
 orders: The King will only listen to funny jokes! Don't repeat any jokes!
 kingPreference: ""
-quota: 4
+quota: 2
 jesters:
   # this ensures the player is always guaranteed an amount of money
-  funny: 6
-  lame: 2
+  funny: 4
+  lame: 3
   assassin: false

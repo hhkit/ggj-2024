@@ -6,9 +6,9 @@ intro:
 - "-Your Guiding Light, Palace Guy"
 orders: The King only wants Food Jokes, Food for thought.
 kingPreference: "food"
-quota: 5
+quota: 3
 jesters:
   # this ensures the player is always guaranteed an amount of money
-  funny: 7
-  lame: 5
+  funny: 5
+  lame: 3
   assassin: true

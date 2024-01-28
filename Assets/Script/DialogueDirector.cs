@@ -45,7 +45,7 @@ public class DialogueDirector : MonoBehaviour
             var isFinal = count == _jester.m_Joke.Lines.Length;
 
             var id = IsPlayerDialog(item) ? SpeakerId.Player : SpeakerId.Jester;
-            dialogManager.PushDialog(id, item, OnShowLast);
+            dialogManager.PushDialog(id, item, isFinal ? OnShowLast : null);
         }
     }
 

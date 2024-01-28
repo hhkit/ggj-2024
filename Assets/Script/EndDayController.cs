@@ -27,6 +27,9 @@ public class EndDayController : MonoBehaviour
     private TMPro.TextMeshProUGUI[] tmps;
     private bool successFlag;
     private DayManager dayManager;
+    [SerializeField] private SpriteRenderer trapDoorRenderer;
+    [SerializeField] private Sprite trapDoorOpen;
+    [SerializeField] private GameObject player;
 
     void Start()
     {
@@ -48,7 +51,7 @@ public class EndDayController : MonoBehaviour
     {
         foreach (var tmp in tmps)
             tmp.enabled = false;
-        NextDayButton.enabled = false;
+        NextDayButton.gameObject.SetActive(false);
     }
 
 #if UNITY_EDITOR
@@ -56,6 +59,7 @@ public class EndDayController : MonoBehaviour
 #endif
     public Tween PlayEndingSequence(int jesterCount, int jokeSuccess, bool success)
     {
+        AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
         successFlag = success;
 
         NextDayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text =
@@ -119,13 +123,23 @@ public class EndDayController : MonoBehaviour
         }
         else
         {
+
             // drop player char
-            //seq.AppendCallback(() => SurvivalYesDisplay.enabled = true);
+            seq.Append(player.transform.DORotate(new Vector3(0, 0, -30), 0.2f)
+                    .OnStart(() =>
+                    {
+                        trapDoorRenderer.sprite = trapDoorOpen;
+                        AudioManager.PlayOneShot("Trapdoor");
+                    }))
+                    .Join(player.transform.DOScale(0.02f, 0.8f))
+                    .Join(player.transform.DOMoveY(player.transform.position.y - 0.15f, 0.8f))
+                .Append(player.transform.DOScale(0.01f,0.1f));
+
             seq.AppendInterval(PauseInSeconds);
             seq.AppendCallback(() => SurvivalYesDisplay.enabled = true);
         }
         seq.AppendInterval(PauseInSeconds);
-        seq.AppendCallback(() => NextDayButton.enabled = true);
+        seq.AppendCallback(() => NextDayButton.gameObject.SetActive(true));
 
         return seq;
     }
@@ -143,8 +157,7 @@ public class EndDayController : MonoBehaviour
             SceneManager.LoadScene(currScene.buildIndex);
         } else
         {
-            // TODO: load bad end scene
-            SceneManager.LoadScene(currScene.buildIndex + 1);
+            SceneManager.LoadScene("BadEnd");
         }
     }
 }

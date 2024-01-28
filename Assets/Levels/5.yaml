@@ -9,6 +9,6 @@ kingPreference: "pun"
 quota: 3
 jesters:
   # this ensures the player is always guaranteed an amount of money
-  funny: 5
+  funny: 4
   lame: 3
   assassin: true

@@ -5,9 +5,9 @@ intro:
 - "-Your Guiding Light, Palace Guy"
 orders: The King is okay with any jokes today 
 kingPreference: ''
-quota: 2
+quota: 1
 jesters:
   # this ensures the player is always guaranteed an amount of money
-  funny: 4
-  lame: 2
+  funny: 2
+  lame: 1
   assassin: false

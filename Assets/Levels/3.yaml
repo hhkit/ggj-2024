@@ -6,9 +6,9 @@ intro:
 - "-Your Guiding Light, Palace Guy"
 orders: The King only wants Animal Jokes, be careful.
 kingPreference: "animal"
-quota: 3
+quota: 2
 jesters:
   # this ensures the player is always guaranteed an amount of money
-  funny: 5
+  funny: 3
   lame: 2
   assassin: false

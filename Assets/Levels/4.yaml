@@ -9,6 +9,6 @@ kingPreference: "food"
 quota: 3
 jesters:
   # this ensures the player is always guaranteed an amount of money
-  funny: 5
-  lame: 3
+  funny: 4
+  lame: 2
   assassin: true

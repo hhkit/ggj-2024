@@ -710,6 +710,63 @@ Transform:
   - {fileID: 1251633026}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &425781206
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3705397712614488122, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705397712614488122, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705397712614488122, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705397712614488122, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705397712614488122, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705397712614488122, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705397712614488122, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705397712614488122, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705397712614488122, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705397712614488122, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975380730168767329, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+      propertyPath: m_Name
+      value: Trapdoor
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
 --- !u!1 &450363376
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,6 +888,11 @@ MonoBehaviour:
   LetterClosed:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &471838747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1707443798832030863, guid: 542c6a852832d44428ae131b64d8ae99, type: 3}
+  m_PrefabInstance: {fileID: 6062734872926391956}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &477952881
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,6 +1840,11 @@ MonoBehaviour:
   exitDur: 0.5
   entryOffset: 0.5
   exitOffset: 1
+--- !u!212 &949928948 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7731860318647661196, guid: 9979ad78cf7f64f4eb91c6575155e755, type: 3}
+  m_PrefabInstance: {fileID: 425781206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &962461979 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 578726110663949108, guid: aba0af07caca2a348888c4af3794796a, type: 3}
@@ -4004,13 +4071,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5790122334203434064, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 471838747}
+    - target: {fileID: 5790122334203434064, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: EndCamConfig
       value: 
       objectReference: {fileID: 559726419}
     - target: {fileID: 5790122334203434064, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: trapDoorOpen
+      value: 
+      objectReference: {fileID: 21300000, guid: 17c818b3216a1d142a53ce43ca7daaff, type: 3}
+    - target: {fileID: 5790122334203434064, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: PauseInSeconds
       value: 0.7
       objectReference: {fileID: 0}
+    - target: {fileID: 5790122334203434064, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: trapDoorRenderer
+      value: 
+      objectReference: {fileID: 949928948}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4418,6 +4497,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1275240776}
+  - {fileID: 425781206}
   - {fileID: 694777770}
   - {fileID: 6073008120825073232}
   - {fileID: 707120247}

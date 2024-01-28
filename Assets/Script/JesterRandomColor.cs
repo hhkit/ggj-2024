@@ -7,6 +7,15 @@ public class JesterRandomColor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (gameObject.name.EndsWith("Hat"))
+        {
+            if (Random.Range(0.0f, 1.0f) < 0.05f)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+        }
+
         float randLow() => Random.Range(0.0f, 0.2f);
         float randHigh() => Random.Range(0.8f, 1.0f);
 

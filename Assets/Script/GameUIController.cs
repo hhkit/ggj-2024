@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,11 @@ public class GameUIController : MonoBehaviour
     bool isTransitioning = false;
     GameSystem gameSystem;
 
+    public Color disabledColour;
+    public Color enabledColour;
+
+    public List<GameObject> buttonObjs = new List<GameObject>();
+
     void Awake()
     {
         buttons = GetComponentsInChildren<Button>();
@@ -19,16 +25,28 @@ public class GameUIController : MonoBehaviour
 
         uiParentInitialPos = uiParent.transform.position;
         // move offscreen
+        Hide();
     }
 
     public void Show()
     {
-        canvas.gameObject.SetActive(true);
+        //canvas.gameObject.SetActive(true);
+        foreach(GameObject obj in buttonObjs)
+        {
+            obj.GetComponent<Image>().color = enabledColour;
+            obj.GetComponent<Button>().enabled = true;
+        }
     }
 
     public void Hide()
     {
-        canvas.gameObject.SetActive(false);
+        //Grey out, disable
+        //canvas.gameObject.SetActive(false);
+        foreach(GameObject obj in buttonObjs)
+        {
+            obj.GetComponent<Image>().color = disabledColour;
+            obj.GetComponent<Button>().enabled = false;
+        }
     }
 
     public void OnAcceptClick()

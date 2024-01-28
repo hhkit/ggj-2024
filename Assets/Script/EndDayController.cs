@@ -27,6 +27,9 @@ public class EndDayController : MonoBehaviour
     private TMPro.TextMeshProUGUI[] tmps;
     private bool successFlag;
     private DayManager dayManager;
+    [SerializeField] private SpriteRenderer trapDoorRenderer;
+    [SerializeField] private Sprite trapDoorOpen;
+    [SerializeField] private GameObject player;
 
     void Start()
     {
@@ -119,8 +122,18 @@ public class EndDayController : MonoBehaviour
         }
         else
         {
+
             // drop player char
-            //seq.AppendCallback(() => SurvivalYesDisplay.enabled = true);
+            seq.Append(player.transform.DORotate(new Vector3(0, 0, -30), 0.2f)
+                    .OnStart(() =>
+                    {
+                        trapDoorRenderer.sprite = trapDoorOpen;
+                        AudioManager.PlayOneShot("Trapdoor");
+                    }))
+                    .Join(player.transform.DOScale(0.02f, 0.8f))
+                    .Join(player.transform.DOMoveY(player.transform.position.y - 0.15f, 0.8f))
+                .Append(player.transform.DOScale(0.01f,0.1f));
+
             seq.AppendInterval(PauseInSeconds);
             seq.AppendCallback(() => SurvivalYesDisplay.enabled = true);
         }

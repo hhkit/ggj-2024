@@ -10,6 +10,7 @@ using static UnityEngine.Rendering.DebugUI.Table;
 public class Jester : MonoBehaviour
 {
     public Joke m_Joke;
+    public GameObject[] m_Skins;
     public JesterRace m_JokerRace;
     public static float JESTERSPEED = 2;
     private static float KINGSIDE_SCALE = 0.5f;
@@ -23,6 +24,13 @@ public class Jester : MonoBehaviour
 
     public delegate void AnimationDelegate();
 
+    void Start()
+    {
+        foreach (var skin in m_Skins)
+            skin.SetActive(false);
+        var useSkinId = UnityEngine.Random.Range(0, m_Skins.Length);
+        m_Skins[useSkinId].SetActive(true);
+    }
     void Update()
     {
         if (animationStateDelegate != null)

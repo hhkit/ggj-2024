@@ -1418,7 +1418,7 @@ Transform:
   m_GameObject: {fileID: 630482379}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.83, y: 1.13, z: 0}
+  m_LocalPosition: {x: -9.03, y: 0.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3924,6 +3924,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 707120247}
     m_Modifications:
+    - target: {fileID: 3869304096338476887, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4266357237787165112, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: m_Name
       value: EndDayCanvas
@@ -3931,18 +3935,6 @@ PrefabInstance:
     - target: {fileID: 4266357237787165112, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4318213613615059292, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
-      propertyPath: m_text
-      value: 'Jesters admitted:
-
-        Jokes landed:
-
-        Monarch Mood:
-
-
-        Survival
-        Status:'
       objectReference: {fileID: 0}
     - target: {fileID: 5378074734959254080, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: m_Pivot.x

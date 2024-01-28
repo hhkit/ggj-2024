@@ -5,6 +5,8 @@ using EasyButtons;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EndDayController : MonoBehaviour
 {
@@ -16,14 +18,20 @@ public class EndDayController : MonoBehaviour
     public TMPro.TextMeshProUGUI MoodNoDisplay;
     public TMPro.TextMeshProUGUI SurvivalYesDisplay;
     public TMPro.TextMeshProUGUI SurvivalNoDisplay;
+
+    public Button NextDayButton;
     public Camera EndCamConfig;
 
     public float PauseInSeconds;
 
     private TMPro.TextMeshProUGUI[] tmps;
+    private bool successFlag;
+    private DayManager dayManager;
 
     void Start()
     {
+        dayManager = FindObjectOfType<DayManager>();
+
         tmps = new TMPro.TextMeshProUGUI[] {
                 Prelude,
                 JesterCountDisplay,
@@ -40,6 +48,7 @@ public class EndDayController : MonoBehaviour
     {
         foreach (var tmp in tmps)
             tmp.enabled = false;
+        NextDayButton.enabled = false;
     }
 
 #if UNITY_EDITOR
@@ -47,7 +56,10 @@ public class EndDayController : MonoBehaviour
 #endif
     public Tween PlayEndingSequence(int jesterCount, int jokeSuccess, bool success)
     {
-        Debug.Log("nani");
+        successFlag = success;
+
+        NextDayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text =
+            success ? "Next Day" : "Try Again";
         
         var titles = Title.text.Split('\n');
         Title.text = "";
@@ -112,7 +124,27 @@ public class EndDayController : MonoBehaviour
             seq.AppendInterval(PauseInSeconds);
             seq.AppendCallback(() => SurvivalYesDisplay.enabled = true);
         }
+        seq.AppendInterval(PauseInSeconds);
+        seq.AppendCallback(() => NextDayButton.enabled = true);
 
         return seq;
+    }
+
+    public void LoadNextScene()
+    {
+        var currScene = SceneManager.GetActiveScene();
+        if (successFlag)
+        {
+            DayManager.CurrentLevel += 1;
+        }
+
+        if (DayManager.CurrentLevel < dayManager.days.Length)
+        {
+            SceneManager.LoadScene(currScene.buildIndex);
+        } else
+        {
+            // TODO: load bad end scene
+            SceneManager.LoadScene(currScene.buildIndex + 1);
+        }
     }
 }

@@ -10,9 +10,11 @@ public class DayManager : Manager
     public LevelConfig currentDay { get; private set; }
     public int currentDayIndex { get; private set; }
 
+    public static int CurrentLevel = 0;
+
     public override void ManagerInit()
     {
-        DeserializeDayData(0);
+        DeserializeDayData(CurrentLevel);
     }
 
     void DeserializeDayData(int index)

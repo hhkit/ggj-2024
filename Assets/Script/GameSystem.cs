@@ -31,6 +31,8 @@ public class GameSystem : MonoBehaviour
     public GameUIController gameUI;
     private EndDayController endDayController;
 
+    public GameObject coinShower;
+
     void Awake()
     {
         instance = this;
@@ -110,6 +112,7 @@ public class GameSystem : MonoBehaviour
             m_JesterQueue.Dequeue();
 
         m_CurrentJester = m_JesterQueue.FirstOrDefault();
+        dialogManager.OnJesterSpeakJoke += m_CurrentJester.PlayTalkAnimation;
         var seq = DOTween.Sequence();
         seq.AppendCallback(() => AudioManager.PlayOneShot("CallNextSound"));
         seq.AppendInterval(0.25f);
@@ -151,6 +154,7 @@ public class GameSystem : MonoBehaviour
 
         if (CheckJoke(jester, out RejectionReason reason))
         {
+            Instantiate(coinShower);
             AddScore();
             yield return director.PlayKingDialog(true, reason);
             WaypointManager.instance.PlayKingAcceptJester(jester); // jester leave
@@ -208,4 +212,5 @@ public class GameSystem : MonoBehaviour
                 gameUI.Show();
             });
     }
+
 }

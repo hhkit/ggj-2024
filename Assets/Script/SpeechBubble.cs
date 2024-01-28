@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class SpeechBubble : MonoBehaviour
 {
@@ -64,7 +65,7 @@ public class SpeechBubble : MonoBehaviour
             });
     }
 
-    public Sequence Play(float entryDuration, float exitDuration, float entryOffset, float exitOffset)
+    public Sequence Play(float entryDuration, float exitDuration, float entryOffset, float exitOffset, Action PreExit = null)
     {
         float y = transform.position.y;
 
@@ -76,7 +77,8 @@ public class SpeechBubble : MonoBehaviour
 
             .AppendInterval(0.25f)
 
-            .Append(m_CanvasGroup.DOFade(0, exitDuration))
+            .AppendCallback(() => PreExit?.Invoke())
+            .Join(m_CanvasGroup.DOFade(0, exitDuration))
             .Join(transform.DOMoveY(y + exitOffset, entryDuration));
         return seq;
     }

@@ -41,8 +41,11 @@ public class King : MonoBehaviour
     {
         Debug.Assert(_jester != null);
 
+        string[] kingDenySounds = { "KingDenySound1", "KingDenySound2" };
+
         if (m_PreviousJokes.Contains(_jester.m_Joke))
         {
+            AudioManager.PlayOneShot(kingDenySounds[Random.Range(0, 2)]);
             Debug.Log("Joker failed: heard it before");
             rejectReason = RejectionReason.Repeat;
             return false;
@@ -50,6 +53,7 @@ public class King : MonoBehaviour
 
         if (PrefersJoke(_jester.m_Joke) == false)
         {
+            AudioManager.PlayOneShot(kingDenySounds[Random.Range(0, 2)]);
             Debug.Log("Joker failed: not preferred joke");
             rejectReason = RejectionReason.NotPreferred;
             return false;
@@ -57,11 +61,13 @@ public class King : MonoBehaviour
 
         if (_jester.m_Joke.IsLame)
         {
+            AudioManager.PlayOneShot(kingDenySounds[Random.Range(0, 2)]);
             Debug.Log("Joker failed: joke is not funny");
             rejectReason = RejectionReason.NotFunny;
             return false;
         }
 
+        AudioManager.PlayOneShot("KingApproveSound");
         Debug.Log("Joker successful");
         rejectReason = RejectionReason.None;
         return true;

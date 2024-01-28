@@ -88,12 +88,14 @@ public class GameSystem : MonoBehaviour
 
     Tween AdvanceJesterQueue()
     {
+
         if (m_JesterQueue.Count() == 0)
         {
             m_CurrentJester = null;
             return null;
         }
 
+        AudioManager.PlayOneShot("CallNextSound");
         // TODO: potential atom bomb waiting to go off
         if (m_CurrentJester != null)
             m_JesterQueue.Dequeue();
@@ -129,7 +131,7 @@ public class GameSystem : MonoBehaviour
     private IEnumerator AcceptJesterCoro()
     {
         var jester = m_CurrentJester;
-        
+
         yield return director.PlaySendToKingDialog();
 
         yield return new WaitForTween(WaypointManager.instance.SendJesterToKing(jester));
@@ -156,6 +158,7 @@ public class GameSystem : MonoBehaviour
 #endif
     public void RejectJester()
     {
+        AudioManager.PlayOneShot("DenyAudienceSound");
         StartCoroutine(RejectJesterCoro());
     }
 
@@ -174,6 +177,7 @@ public class GameSystem : MonoBehaviour
 
     public void StartJesterConversation()
     {
+        AudioManager.PlayOneShot("JesterOpenerSound");
         if (m_JesterQueue.Count() == 0)
         {
             EndDay();
@@ -185,6 +189,7 @@ public class GameSystem : MonoBehaviour
 
     public void ReplayJesterConversation()
     {
+        AudioManager.PlayOneShot("JesterOpenerSound");
         DialogueDirector.instance.StartJokeDialog(m_CurrentJester, () => gameUI.Show());
     }
 }

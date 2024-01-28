@@ -164,8 +164,7 @@ public class GameSystem : MonoBehaviour
         return DOTween.Sequence()
             .AppendCallback(() => dialogManager.PushDialog(
                 SpeakerId.Player, 
-                jokeManager.jokeData.PlayerLines.GetRandomWhere(qd => qd.Context == "SendToKing").Lines[0],
-                DialogueSystem.TIME_TO_DISPLAY_DIALOG))
+                jokeManager.jokeData.PlayerLines.GetRandomWhere(qd => qd.Context == "SendToKing").Lines[0]))
             .AppendInterval(0.5f)
             .Join(jesterMoveTween)
             .Join(queueMoveTween)
@@ -184,15 +183,13 @@ public class GameSystem : MonoBehaviour
         jesterMoveTween
             .AppendCallback(() => dialogManager.PushDialog(
                 SpeakerId.Player,
-                jokeManager.jokeData.PlayerLines.GetRandomWhere(qd => qd.Context == "DenyAudience").Lines[0],
-                DialogueSystem.TIME_TO_DISPLAY_DIALOG))
-            .AppendInterval(DialogueSystem.TIME_TO_DISPLAY_DIALOG);
+                jokeManager.jokeData.PlayerLines.GetRandomWhere(qd => qd.Context == "DenyAudience").Lines[0]))
+            .AppendInterval(3.0f);
         jesterMoveTween
             .AppendCallback(() => dialogManager.PushDialog(
                 SpeakerId.Jester,
-                jokeManager.jokeData.JesterLines.GetRandomWhere(qd => qd.Context == "Rejection").Lines[0],
-                DialogueSystem.TIME_TO_DISPLAY_DIALOG))
-            .AppendInterval(DialogueSystem.TIME_TO_DISPLAY_DIALOG);
+                jokeManager.jokeData.JesterLines.GetRandomWhere(qd => qd.Context == "Rejection").Lines[0]))
+            .AppendInterval(3.0f);
         var queueMoveTween = AdvanceJesterQueue();
         jesterMoveTween.Append(queueMoveTween);
         jesterMoveTween.Append(WaypointManager.instance.RefuseJester(jester)

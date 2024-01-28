@@ -2,11 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using UnityEditor.Search;
-using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
 using UnityEngine;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 
 
@@ -16,12 +12,8 @@ public class DialogueSystem : MonoBehaviour
 
     public List<SpeechBubble> m_Player_Jester_Convo;
 
-
     private JokeManager jokeManager;
     private DialogueManager dialogManager;
-
-    public static float TIME_TO_DISPLAY_DIALOG = 2f;
-
         
     private void Awake()
     {
@@ -33,12 +25,12 @@ public class DialogueSystem : MonoBehaviour
     public void StartJokeDialog(Jester _jester)
     {
         var invitationLine = jokeManager.jokeData.PlayerLines.GetRandomWhere(line => line.Context == "PunchlinesPlease");
-        dialogManager.PushDialog(SpeakerId.Player, string.Join(" ", invitationLine.Lines), TIME_TO_DISPLAY_DIALOG);
+        dialogManager.PushDialog(SpeakerId.Player, string.Join(" ", invitationLine.Lines));
 
         foreach (var item in _jester.m_Joke.Lines)
         {
             var id = IsPlayerDialog(item) ? SpeakerId.Player : SpeakerId.Jester;
-            dialogManager.PushDialog(id, item, TIME_TO_DISPLAY_DIALOG);
+            dialogManager.PushDialog(id, item);
         }
     }
 
@@ -69,6 +61,6 @@ public class DialogueSystem : MonoBehaviour
 
         var line = jokeManager.jokeData.KingLines.GetRandomWhere(qd => qd.Context == context);
 
-        dialogManager.PushDialog(SpeakerId.King, line.Lines[0], TIME_TO_DISPLAY_DIALOG);
+        dialogManager.PushDialog(SpeakerId.King, line.Lines[0]);
     }
 }

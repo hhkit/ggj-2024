@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3350335021115303864}
   - component: {fileID: 8095569189807737822}
   - component: {fileID: 7858592027711726830}
+  - component: {fileID: 1797891893595395044}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -102,6 +103,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &1797891893595395044
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920388257581482285}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4608205092258862726
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,8 +126,8 @@ GameObject:
   - component: {fileID: 3439065123978304655}
   - component: {fileID: 4641233871306362736}
   - component: {fileID: 7305869623122353329}
-  - component: {fileID: 5378969818348042022}
-  - component: {fileID: 8716858417683376374}
+  - component: {fileID: 8006105234596731134}
+  - component: {fileID: 2604508992466437553}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -180,7 +193,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5378969818348042022
+--- !u!114 &8006105234596731134
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,24 +202,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 4608205092258862726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 5
-    m_Right: 5
-    m_Top: 5
-    m_Bottom: 5
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
+  m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &8716858417683376374
+--- !u!114 &2604508992466437553
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,10 +280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Text: 
   m_TextUI: {fileID: 6323589791633452108}
-  m_Panel: {fileID: 7305869623122353329}
-  layoutGroupUI: {fileID: 5378969818348042022}
+  m_CanvasGroup: {fileID: 1797891893595395044}
   rectUI: {fileID: 3439065123978304655}
-  m_IsPlayerBubble: 0
 --- !u!1 &7070810908980841962
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,7 +293,7 @@ GameObject:
   - component: {fileID: 3099201663178059120}
   - component: {fileID: 7766859112824377464}
   - component: {fileID: 6323589791633452108}
-  - component: {fileID: 4834998840403517727}
+  - component: {fileID: 3051427365201509336}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -306,7 +317,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 140, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 270, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7766859112824377464
@@ -337,8 +348,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lorem ipsum is placeholder text commonly used in the graphic, print, and
-    publishing industries for previewing layouts and visual mockups.
+  m_text: dddaa
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d8378e90600fee84cb84fe409bba2311, type: 2}
   m_sharedMaterial: {fileID: -2967018181630673197, guid: d8378e90600fee84cb84fe409bba2311, type: 2}
@@ -407,7 +417,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &4834998840403517727
+--- !u!114 &3051427365201509336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -416,8 +426,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7070810908980841962}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 2
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 31.45999
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1

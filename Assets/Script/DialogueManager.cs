@@ -27,18 +27,16 @@ public class DialogueManager : Manager
     public float exitOffset = 1f;
     private struct DialogAction
     {
-        public DialogAction(SpeakerId _id, string _text, float _timeToShow, Action _afterShowCallback)
+        public DialogAction(SpeakerId _id, string _text, Action _exitCallback)
         {
             id = _id;
-            timeToShow = _timeToShow;
             text = _text.TrimStart('>');
-            afterShowCallback = _afterShowCallback;
+            exitCallback = _exitCallback;
         }
 
         public SpeakerId id;
         public string text;
-        public float timeToShow;
-        public Action afterShowCallback;
+        public Action exitCallback;
     }
 
     public bool isRunning { get => isShowing; }
@@ -58,20 +56,18 @@ public class DialogueManager : Manager
     [Button]
     public void Test(
         SpeakerId who,
-        string text,
-        float duration)
+        string text)
     {
-        PushDialog(who, text, duration);
+        PushDialog(who, text);
     }
     public void PushDialog(
         SpeakerId who, 
         string text,
-        float duration,
-        Action AfterDisplayCallback = null
+        Action exitCallback = null
     )
     {
         m_DialogQueue.Enqueue(new DialogAction(
-            who, text, duration, AfterDisplayCallback));
+            who, text, exitCallback));
     }
 
     private bool ShowNextDialog()
@@ -106,30 +102,11 @@ public class DialogueManager : Manager
         newBubble.gameObject.SetActive(true);
         newBubble.SetText(top.text);
 
-        var seq = DOTween.Sequence();
-
-        // entry
-
-        var currY = newBubble.transform.position.y;
-        newBubble.transform.position = newBubble.transform.position + Vector3.down * entryOffset;
-        newBubble.alpha = 0f;
-
-        seq.Append(newBubble.transform.DOMoveY(currY, entryDur));
-        seq.Join(newBubble.DOFade(1f, exitDur));
-
-        // show
-        seq.AppendInterval(top.timeToShow);
-        if (top.afterShowCallback != null)
-            seq.AppendCallback(() => top.afterShowCallback());
+        var seq = newBubble.Play(entryDur, exitDur, entryOffset, exitOffset);
+        if (top.exitCallback != null)
+            seq.AppendCallback(() => top.exitCallback());
         seq.AppendCallback(() => isShowing = false);
         isShowing = true;
-
-        // exit
-        var finalY = currY + exitOffset;
-        seq.Append(newBubble.transform.DOMoveY(finalY, exitDur));
-        seq.Join(newBubble.DOFade(0f, exitDur));
-
-        seq.OnKill(() => Destroy(newBubble.gameObject));
 
         return true;
     }

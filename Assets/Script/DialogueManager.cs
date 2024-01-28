@@ -126,10 +126,11 @@ public class DialogueManager : Manager
         newBubble.gameObject.SetActive(true);
         newBubble.SetText(top.text);
 
-        var seq = newBubble.Play(entryDur, exitDur, entryOffset, exitOffset);
-        if (top.exitCallback != null)
-            seq.AppendCallback(() => top.exitCallback());
-        seq.AppendCallback(() => isShowing = false);
+        var seq = newBubble.Play(entryDur, exitDur, entryOffset, exitOffset, () => {
+            top.exitCallback?.Invoke();
+            isShowing = false;
+            });
+
         isShowing = true;
 
         return true;

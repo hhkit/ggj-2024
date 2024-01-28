@@ -119,7 +119,7 @@ public class DialogueManager : Manager
                 case SpeakerId.Jester:
                     bubblePrefab = m_JesterBubble;
                     AudioManager.PlayOneShot("JesterOpenerSound");
-                    OnJesterSpeakJoke.Invoke();
+                    OnJesterSpeakJoke?.Invoke();
                     break;
             }
 

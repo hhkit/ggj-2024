@@ -13,8 +13,12 @@ public class JesterFactory : Manager
     {
         var jester = Instantiate(jesterPrefab, jesterStartWaypoint.position, jesterStartWaypoint.rotation).GetComponent<Jester>();
         jester.m_Joke = joke;
-        // do randomization here
         return jester;
+    }
+
+    public Jester CreateAssassin()
+    {
+        return null;
     }
 }
 

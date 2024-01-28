@@ -15,10 +15,12 @@ public class WaypointManager : Manager
 
     [SerializeField] private GameObject m_mainWaypoint;
     [SerializeField] private GameObject m_WaypointHolder;
-    [SerializeField] private GameObject m_OffscreenWaypoint;
+    [SerializeField] private GameObject m_KingStart;
+    [SerializeField] private GameObject m_KingEnd;
+    [SerializeField] private GameObject m_ExitStageLeft;
+    [SerializeField] private GameObject m_ExitStageRight;
     [SerializeField] private GameObject m_ThroneRoomExitWaypoint;
     private List<Transform> m_WayPointList;
-    [SerializeField] private List<GameObject> m_KingPath;
     private List<Vector3> m_KingPathVector;
     [SerializeField] private float m_QueueGap = 1.4f;
 
@@ -42,7 +44,7 @@ public class WaypointManager : Manager
 
     void Start()
     {
-        m_KingPathVector = new(m_KingPath.Select(wp => wp.transform.position));
+        m_KingPathVector = (new GameObject[]{ m_KingStart, m_KingEnd }).Select(wp => wp.transform.position).ToList();
     }
 
 #if UNITY_EDITOR
@@ -63,6 +65,13 @@ public class WaypointManager : Manager
         {
             Debug.DrawLine(wp + Vector3.up * length, wp + Vector3.down * length, Color.yellow);
         }
+
+        Debug.DrawLine(front, m_ExitStageLeft.transform.position, Color.red);
+
+        Debug.DrawLine(front, m_KingStart.transform.position, Color.green);
+        Debug.DrawLine(m_KingStart.transform.position, m_KingEnd.transform.position, Color.green);
+        Debug.DrawLine(m_KingEnd.transform.position, m_ThroneRoomExitWaypoint.transform.position, Color.green);
+        Debug.DrawLine(m_ThroneRoomExitWaypoint.transform.position, m_ExitStageRight.transform.position, Color.green);
     }
 #endif
 
@@ -87,7 +96,7 @@ public class WaypointManager : Manager
 
     public Tween RefuseJester(Jester _jester)
     {
-       return _jester.GoToPosition(m_OffscreenWaypoint.transform.position);
+       return _jester.GoToPosition(m_ExitStageLeft.transform.position);
     }
 
     public Tween PlayKingAcceptJester(Jester _jester)
@@ -96,14 +105,14 @@ public class WaypointManager : Manager
         seq.AppendInterval(0.5f);
         seq.Append(_jester.GoToPosition(m_ThroneRoomExitWaypoint.transform.position))
            .Join(_jester.ResetSprite(1.0f));
-        seq.Append(_jester.GoToPosition(m_OffscreenWaypoint.transform.position));
+        seq.Append(_jester.GoToPosition(m_ExitStageRight.transform.position));
         return seq;
     }
 
     public Tween PlayKingRefuseJester(Jester _jester)
     {
-        return null;
-        return _jester.GoToPosition(m_ThroneRoomExitWaypoint.transform.position);
+        return PlayKingAcceptJester(_jester); // same path la
+        //return _jester.GoToPosition(m_ThroneRoomExitWaypoint.transform.position);
     }
 
     IEnumerable<Vector3> CreateQueueWaypoints()

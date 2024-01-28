@@ -561,51 +561,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 252737686}
   m_CullTransparentMesh: 1
---- !u!1 &285222227
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 285222228}
-  - component: {fileID: 285222229}
-  m_Layer: 0
-  m_Name: UISystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &285222228
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285222227}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6073008120825073232}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &285222229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285222227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2f5b95a9ae8faa419b9270f5129af6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_JokeWindow: {fileID: 0}
 --- !u!1 &400704776
 GameObject:
   m_ObjectHideFlags: 0
@@ -1608,16 +1563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838df70f6fe70e248a614f7526d65391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SpeechBubble_Prefab: {fileID: 578726110663949108, guid: aba0af07caca2a348888c4af3794796a, type: 3}
   m_Player_Jester_Convo: []
-  m_ConvoOngoing: 0
-  m_SpeechBubbleHolder: {fileID: 563872248}
-  m_PlayerBubblePosition: {fileID: 1909588410}
-  m_JesterBubblePosition: {fileID: 1518126239}
-  m_PlayerBubble: {fileID: 962461979}
-  m_JesterBubble: {fileID: 1955543572}
-  m_JesterBubble2: {fileID: 610254298}
-  m_Kingbubble: {fileID: 1160554514}
 --- !u!114 &865377492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1635,6 +1581,13 @@ MonoBehaviour:
   m_PlayerBubble: {fileID: 962461979}
   m_JesterBubble: {fileID: 610254298}
   m_KingBubble: {fileID: 1160554514}
+  OnRunninStatusChange:
+    m_PersistentCalls:
+      m_Calls: []
+  entryDur: 1
+  exitDur: 2
+  entryOffset: 0.5
+  exitOffset: 1
 --- !u!1 &881898481
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,17 +2553,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8014013761754028043, guid: aba0af07caca2a348888c4af3794796a, type: 3}
   m_PrefabInstance: {fileID: 1955543570}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1955543572 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 578726110663949108, guid: aba0af07caca2a348888c4af3794796a, type: 3}
-  m_PrefabInstance: {fileID: 1955543570}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f89fd7f9a825b947b927afda405c599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1957607019
 GameObject:
   m_ObjectHideFlags: 0
@@ -2897,6 +2839,7 @@ GameObject:
   - component: {fileID: 2511922555598722673}
   - component: {fileID: 4112736485799203884}
   - component: {fileID: 4756682106194844275}
+  - component: {fileID: 4756682106194844276}
   m_Layer: 5
   m_Name: GameUICanvas
   m_TagString: Untagged
@@ -3058,8 +3001,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1858096442153083302}
-        m_TargetAssemblyTypeName: GameSystem, Assembly-CSharp
+      - m_Target: {fileID: 4756682106194844276}
+        m_TargetAssemblyTypeName: GameUIController, Assembly-CSharp
         m_MethodName: OnAcceptClick
         m_Mode: 1
         m_Arguments:
@@ -3082,16 +3025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30401b4bc0827a340baeea5791ec4d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FailCount: 0
-  m_StartJesterConvoOnArrival: 0
-  m_WaitingForPlayerChoice: 0
-  OnJesterSuccess:
-    m_PersistentCalls:
-      m_Calls: []
-  OnJesterFailure:
-    m_PersistentCalls:
-      m_Calls: []
-  gameUI: {fileID: 2511922555598722673}
+  gameUI: {fileID: 4756682106194844276}
 --- !u!4 &2278171891100193719
 Transform:
   m_ObjectHideFlags: 0
@@ -3284,6 +3218,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4756682106194844276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496546809984392000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd44fa3dc2c3c1f449bac31e24e0ad9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiParent: {fileID: 3955833057747311464}
 --- !u!114 &4931560612734788396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3328,8 +3275,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1858096442153083302}
-        m_TargetAssemblyTypeName: GameSystem, Assembly-CSharp
+      - m_Target: {fileID: 4756682106194844276}
+        m_TargetAssemblyTypeName: GameUIController, Assembly-CSharp
         m_MethodName: OnDeclineClick
         m_Mode: 1
         m_Arguments:
@@ -3745,7 +3692,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2574760652302402290}
-  - {fileID: 285222228}
   - {fileID: 2278171891100193719}
   - {fileID: 1957607020}
   - {fileID: 506775022}
@@ -3846,9 +3792,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1858096442153083302}
-        m_TargetAssemblyTypeName: GameSystem, Assembly-CSharp
-        m_MethodName: ReplayJesterConversation
+      - m_Target: {fileID: 4756682106194844276}
+        m_TargetAssemblyTypeName: GameUIController, Assembly-CSharp
+        m_MethodName: OnRepeatConversation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

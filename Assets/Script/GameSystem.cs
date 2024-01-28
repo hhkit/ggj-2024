@@ -2,6 +2,7 @@ using DG.Tweening;
 #if UNITY_EDITOR
 using EasyButtons;
 #endif
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -10,9 +11,6 @@ using UnityEngine.Events;
 
 public class GameSystem : MonoBehaviour
 {
-    public UnityEvent<Jester> OnJesterSuccess;
-    public UnityEvent<Jester, RejectionReason> OnJesterFailure;
-
     public Queue<Jester> m_JesterQueue { get; private set; } = new();
     public King m_King { get; private set; }
     public Jester m_CurrentJester { get; private set; }
@@ -27,9 +25,10 @@ public class GameSystem : MonoBehaviour
     private DayManager dayManager;
     private JesterFactory jesterFactory;
     private DialogueManager dialogManager;
+    private DialogueDirector director;
 
     private StartDayController startDayController;
-    public Canvas gameUI;
+    public GameUIController gameUI;
     private EndDayController endDayController;
 
     void Awake()
@@ -39,6 +38,7 @@ public class GameSystem : MonoBehaviour
         dayManager = FindObjectOfType<DayManager>();
         jesterFactory = FindObjectOfType<JesterFactory>();
         dialogManager = FindObjectOfType<DialogueManager>();
+        director = FindObjectOfType<DialogueDirector>();
         Debug.Assert(jokeManager != null, "No JokeManager in scene");
         Debug.Assert(dayManager != null, "No DayManager in scene");
         Debug.Assert(jesterFactory != null, "No JesterFactory in scene");
@@ -47,10 +47,6 @@ public class GameSystem : MonoBehaviour
         startDayController.LetterClosed.AddListener(StartGame);
 
         endDayController = FindObjectOfType<EndDayController>(true);
-
-        OnJesterFailure.AddListener((jester, reason) => DialogueSystem.instance.PlayKingDialog(false, reason));
-        OnJesterSuccess.AddListener((jester) => DialogueSystem.instance.PlayKingDialog(true, RejectionReason.None));
-
     }
 
     void StartGame()
@@ -61,15 +57,8 @@ public class GameSystem : MonoBehaviour
         m_Submitted = 0;
         m_Quota = dayManager.currentDay.quota;
 
-        gameUI.gameObject.SetActive(true);
-
         AdvanceJesterQueue()
             .OnComplete(StartJesterConversation);
-    }
-
-    public void ToggleJokesWindow()
-    {
-        UISystem.instance.ToggleJokeWindow();
     }
 
     void InitializeKing()
@@ -90,19 +79,16 @@ public class GameSystem : MonoBehaviour
         Debug.Log($"created {m_JesterQueue.Count()} jesters from {jokeQueue.Count()} jokes");
     }
 
-    void CheckJoke(Jester jester)
+    bool CheckJoke(Jester jester, out RejectionReason rejectReason)
     {
         m_Submitted += 1;
         Debug.Assert(jester != null, "Invalid jester");
-        if (m_King.ApproveJester(jester, out RejectionReason reason))
-            JesterSuccess(jester);
-        else
-            JesterFail(jester, reason);
+        return m_King.ApproveJester(jester, out rejectReason);
     }
 
     Tween AdvanceJesterQueue()
     {
-        if (m_JesterQueue.Count == 0)
+        if (m_JesterQueue.Count() == 0)
         {
             m_CurrentJester = null;
             return null;
@@ -122,21 +108,7 @@ public class GameSystem : MonoBehaviour
     }
     void DeductScore()
     {
-
         m_Points--;
-    }
-
-    void JesterSuccess(Jester jester)
-    {
-        AddScore();
-        WaypointManager.instance.PlayKingAcceptJester(jester);
-        OnJesterSuccess.Invoke(jester);
-    }
-
-    void JesterFail(Jester jester, RejectionReason reason)
-    {
-        DeductScore();
-        OnJesterFailure.Invoke(jester, reason);
     }
 
     // This begins the end of day sequence
@@ -149,67 +121,55 @@ public class GameSystem : MonoBehaviour
 #if UNITY_EDITOR
     [Button]
 #endif
+    public void AcceptJester()
+    {
+        StartCoroutine(AcceptJesterCoro());
+    }
     // Player sends the Jester at the front of the line to the King
-    public Tween AcceptJester()
+    private IEnumerator AcceptJesterCoro()
     {
         var jester = m_CurrentJester;
-        var jesterMoveTween = 
-            WaypointManager.instance.SendJesterToKing(jester)
-                .OnComplete(() => {
-                    CheckJoke(jester);
-                    });
+        
+        yield return director.PlaySendToKingDialog();
 
-        var queueMoveTween = AdvanceJesterQueue();
+        yield return new WaitForTween(WaypointManager.instance.SendJesterToKing(jester));
 
-        return DOTween.Sequence()
-            .AppendCallback(() => dialogManager.PushDialog(
-                SpeakerId.Player, 
-                jokeManager.jokeData.PlayerLines.GetRandomWhere(qd => qd.Context == "SendToKing").Lines[0],
-                DialogueSystem.TIME_TO_DISPLAY_DIALOG))
-            .AppendInterval(0.5f)
-            .Join(jesterMoveTween)
-            .Join(queueMoveTween)
+        if (CheckJoke(jester, out RejectionReason reason))
+        {
+            AddScore();
+            yield return director.PlayKingDialog(true, reason);
+            WaypointManager.instance.PlayKingAcceptJester(jester); // jester leave
+        }
+        else
+        {
+            DeductScore();
+            yield return director.PlayKingDialog(false, reason);
+            WaypointManager.instance.PlayKingRefuseJester(jester);
+        }
+
+        AdvanceJesterQueue()
             .OnComplete(StartJesterConversation);
     }
 
 #if UNITY_EDITOR
     [Button]
 #endif
+    public void RejectJester()
+    {
+        StartCoroutine(RejectJesterCoro());
+    }
 
     // Player refuses the Jester as audience to the King
-    public Tween RejectJester()
+    private IEnumerator RejectJesterCoro()
     {
         var jester = m_CurrentJester;
-        var jesterMoveTween = DOTween.Sequence();
-        jesterMoveTween
-            .AppendCallback(() => dialogManager.PushDialog(
-                SpeakerId.Player,
-                jokeManager.jokeData.PlayerLines.GetRandomWhere(qd => qd.Context == "DenyAudience").Lines[0],
-                DialogueSystem.TIME_TO_DISPLAY_DIALOG))
-            .AppendInterval(DialogueSystem.TIME_TO_DISPLAY_DIALOG);
-        jesterMoveTween
-            .AppendCallback(() => dialogManager.PushDialog(
-                SpeakerId.Jester,
-                jokeManager.jokeData.JesterLines.GetRandomWhere(qd => qd.Context == "Rejection").Lines[0],
-                DialogueSystem.TIME_TO_DISPLAY_DIALOG))
-            .AppendInterval(DialogueSystem.TIME_TO_DISPLAY_DIALOG);
-        var queueMoveTween = AdvanceJesterQueue();
-        jesterMoveTween.Append(queueMoveTween);
-        jesterMoveTween.Append(WaypointManager.instance.RefuseJester(jester)
-            .OnKill(() => Destroy(jester.gameObject)));
+        yield return director.PlayRejectDialog();
         
-        return queueMoveTween
+        WaypointManager.instance.RefuseJester(jester)
+            .OnKill(() => Destroy(jester.gameObject));
+
+        AdvanceJesterQueue()
             .OnComplete(StartJesterConversation);
-    }
-
-    public void OnAcceptClick()
-    {
-        AcceptJester();
-    }
-
-    public void OnDeclineClick()
-    {
-        RejectJester();
     }
 
     public void StartJesterConversation()
@@ -220,12 +180,11 @@ public class GameSystem : MonoBehaviour
             return;
         }
 
-        DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
-        
+        DialogueDirector.instance.StartJokeDialog(m_CurrentJester, () => gameUI.Show());
     }
 
     public void ReplayJesterConversation()
     {
-        DialogueSystem.instance.StartJokeDialog(m_CurrentJester);
+        DialogueDirector.instance.StartJokeDialog(m_CurrentJester, () => gameUI.Show());
     }
 }

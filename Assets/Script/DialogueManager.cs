@@ -1,10 +1,14 @@
 ﻿using DG.Tweening;
+#if UNITY_EDITOR
 using EasyButtons;
+#endif
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum SpeakerId
 {
@@ -20,6 +24,7 @@ public class DialogueManager : Manager
     public SpeechBubble m_JesterBubble;
     public SpeechBubble m_KingBubble;
 
+    public UnityEvent<bool> OnRunninStatusChange;
 
     public float entryDur = 1f;
     public float exitDur = 2f;
@@ -55,6 +60,7 @@ public class DialogueManager : Manager
         m_KingBubble.gameObject.SetActive(false);
     }
 
+#if UNITY_EDITOR
     [Button]
     public void Test(
         SpeakerId who,
@@ -63,6 +69,8 @@ public class DialogueManager : Manager
     {
         PushDialog(who, text, duration);
     }
+#endif
+
     public void PushDialog(
         SpeakerId who, 
         string text,
@@ -72,6 +80,23 @@ public class DialogueManager : Manager
     {
         m_DialogQueue.Enqueue(new DialogAction(
             who, text, duration, AfterDisplayCallback));
+    }
+    public void PushDialog(
+        SpeakerId who,
+        string[] texts,
+        float duration,
+        Action AfterDisplayCallback = null
+    )
+    {
+        int count = 0;
+        foreach (var text in texts)
+        {
+            count++;
+            var final = count == texts.Length;
+
+            m_DialogQueue.Enqueue(new DialogAction(
+                who, text, duration, final ? AfterDisplayCallback : null));
+        }
     }
 
     private bool ShowNextDialog()
@@ -149,6 +174,18 @@ public class DialogueManager : Manager
             return;
 
         ShowNextDialog();
+    }
+
+    bool isShowingPrev = false;
+
+    private void LateUpdate()
+    {
+        var isShowingCurr = isShowing;
+
+        if (isShowingCurr != isShowingPrev)
+            OnRunninStatusChange.Invoke(isShowing);
+
+        isShowingPrev = isShowingCurr;
     }
 
 }

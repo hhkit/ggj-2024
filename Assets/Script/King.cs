@@ -29,7 +29,7 @@ public class King : MonoBehaviour
 
     public bool PrefersJoke(Joke joke)
     {
-        return m_EnablePreferenceCheck == false || joke.Tags.Contains(m_JokePreference) == false;
+        return m_EnablePreferenceCheck == false || joke.Tags.Contains(m_JokePreference);
     }
 
     public void SetJokePreference(string tag)

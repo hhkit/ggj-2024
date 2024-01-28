@@ -149,7 +149,6 @@ public class GameSystem : MonoBehaviour
     Tween EndDay()
     {
         var winFlag = m_Points >= m_Quota;
-        gameUI.gameObject.SetActive(false);
         return endDayController.PlayEndingSequence(m_Submitted, m_Quota, winFlag ? WinState.Win : WinState.Lose);
     }
 
@@ -181,7 +180,6 @@ public class GameSystem : MonoBehaviour
         {
             if (reason == RejectionReason.Death)
             {
-                gameUI.gameObject.SetActive(false);
                 endDayController.PlayEndingSequence(m_Submitted, m_Quota, WinState.Death);
                 yield break;
             }

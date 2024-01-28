@@ -71,6 +71,9 @@ public class EndDayController : MonoBehaviour
 #endif
     public Tween PlayEndingSequence(int jesterCount, int jokeSuccess, WinState success)
     {
+        var gameUI = FindObjectOfType<GameUIController>();
+        gameUI.gameObject.SetActive(false);
+
         AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
         successFlag = success == WinState.Win;
 
@@ -89,6 +92,7 @@ public class EndDayController : MonoBehaviour
             case WinState.Death:
                 MoodDisplay = MoodDeathDisplay;
                 SurvivalDisplay = SurvivalDeathDisplay;
+                Prelude.text = "The king has come to an end.";
                 break;
         }
 

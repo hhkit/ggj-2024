@@ -1579,7 +1579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73864ea2bad13ae4b92b20505bac21f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  routineOrder: {fileID: 1311846270}
+  routineOrder: {fileID: 0}
 --- !u!114 &1155053876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1817,11 +1817,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1311846270 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5546549738431476322, guid: 47680ce3604ee044ea1a08134180dfc7, type: 3}
-  m_PrefabInstance: {fileID: 2135712209}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1365623494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2690,7 +2685,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -2971,7 +2966,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -3232,6 +3227,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 262.99994
       objectReference: {fileID: 0}
+    - target: {fileID: 5981235468138904782, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5981235468138904782, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: ca97b2afa11edc84ab72ee8811072b25, type: 3}
     - target: {fileID: 6343762626456720881, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: m_text
       value: No
@@ -3555,7 +3558,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.81960785, g: 0.81960785, b: 0.81960785, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}

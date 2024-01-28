@@ -749,7 +749,7 @@ Transform:
   m_GameObject: {fileID: 559726415}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25128913, y: -0.578958, z: 0.009731293}
+  m_LocalPosition: {x: -0.52, y: -0.61, z: 0.009731293}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3083,9 +3083,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 707120247}
     m_Modifications:
+    - target: {fileID: 3217652840353786851, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -25
+      objectReference: {fileID: 0}
     - target: {fileID: 3229372912724322197, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: m_Name
       value: SurvivalDead
+      objectReference: {fileID: 0}
+    - target: {fileID: 3617312416778395510, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4229598406029934328, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: m_SortingOrder
@@ -3110,6 +3118,10 @@ PrefabInstance:
 
         Survival
         Status:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383079284019150446, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -506
       objectReference: {fileID: 0}
     - target: {fileID: 5378074734959254080, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: m_Pivot.x
@@ -3211,16 +3223,45 @@ PrefabInstance:
       propertyPath: trapDoorRenderer
       value: 
       objectReference: {fileID: 949928948}
+    - target: {fileID: 5811752262480086109, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 262.99994
+      objectReference: {fileID: 0}
     - target: {fileID: 6343762626456720881, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: m_text
       value: No
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618104888842037161, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -218.00005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6808652197620071624, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8338911302021237240, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
       propertyPath: m_text
       value: Deceased
       objectReference: {fileID: 0}
+    - target: {fileID: 8338911302021237240, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8338911302021237240, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.2073803
+      objectReference: {fileID: 0}
+    - target: {fileID: 8338911302021237240, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8338911302021237240, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278203903
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3869304096338476887, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae98a0abeb020dd4a9d120682db74c96, type: 3}

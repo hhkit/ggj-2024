@@ -3579,6 +3579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameUI: {fileID: 4756682106194844276}
+  coinShower: {fileID: 5681263883536759508, guid: 81415d9da0ba5244490cd667f2190a33, type: 3}
 --- !u!4 &2278171891100193719
 Transform:
   m_ObjectHideFlags: 0

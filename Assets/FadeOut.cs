@@ -17,6 +17,7 @@ public class FadeOut : MonoBehaviour
     void Start()
     {
         currTime = fadeTime;
+        bg.enabled = true;
     }
 
     // Update is called once per frame

@@ -49,6 +49,8 @@ public class GameSystem : MonoBehaviour
         startDayController.LetterClosed.AddListener(StartGame);
 
         endDayController = FindObjectOfType<EndDayController>(true);
+
+        AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
     }
 
     bool hasStarted = false;
@@ -112,10 +114,8 @@ public class GameSystem : MonoBehaviour
             m_JesterQueue.Dequeue();
 
         m_CurrentJester = m_JesterQueue.FirstOrDefault();
-
         if (m_CurrentJester != null)
             dialogManager.OnJesterSpeakJoke += m_CurrentJester.PlayTalkAnimation;
-        
         var seq = DOTween.Sequence();
         seq.AppendCallback(() => AudioManager.PlayOneShot("CallNextSound"));
         seq.AppendInterval(0.25f);

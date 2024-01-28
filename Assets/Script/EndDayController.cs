@@ -59,6 +59,7 @@ public class EndDayController : MonoBehaviour
 #endif
     public Tween PlayEndingSequence(int jesterCount, int jokeSuccess, bool success)
     {
+        AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
         successFlag = success;
 
         NextDayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text =

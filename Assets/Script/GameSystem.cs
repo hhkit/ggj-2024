@@ -186,19 +186,22 @@ public class GameSystem : MonoBehaviour
 
     public void StartJesterConversation()
     {
-        AudioManager.PlayOneShot("JesterOpenerSound");
+        
         if (m_JesterQueue.Count() == 0)
         {
             EndDay();
             return;
         }
 
-        DialogueDirector.instance.StartJokeDialog(m_CurrentJester, () => gameUI.Show());
+        ReplayJesterConversation();
     }
 
     public void ReplayJesterConversation()
     {
-        AudioManager.PlayOneShot("JesterOpenerSound");
-        DialogueDirector.instance.StartJokeDialog(m_CurrentJester, () => gameUI.Show());
+        DialogueDirector.instance.StartJokeDialog(m_CurrentJester,
+            () => // last
+            {
+                gameUI.Show();
+            });
     }
 }

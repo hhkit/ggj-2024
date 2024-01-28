@@ -110,12 +110,14 @@ public class DialogueManager : Manager
             {
                 case SpeakerId.Player:
                     bubblePrefab = m_PlayerBubble;
+                    AudioManager.PlayOneShot("PlayerReply");
                     break;
                 case SpeakerId.King:
                     bubblePrefab = m_KingBubble;
                     break;
                 case SpeakerId.Jester:
                     bubblePrefab = m_JesterBubble;
+                    AudioManager.PlayOneShot("JesterOpenerSound");
                     break;
             }
 

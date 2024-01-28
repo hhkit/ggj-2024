@@ -71,6 +71,9 @@ public class EndDayController : MonoBehaviour
 #endif
     public Tween PlayEndingSequence(int jesterCount, int jokeSuccess, WinState success)
     {
+        var gameUI = FindObjectOfType<GameUIController>();
+        gameUI.gameObject.SetActive(false);
+
         AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
         successFlag = success == WinState.Win;
 
@@ -89,6 +92,7 @@ public class EndDayController : MonoBehaviour
             case WinState.Death:
                 MoodDisplay = MoodDeathDisplay;
                 SurvivalDisplay = SurvivalDeathDisplay;
+                Prelude.text = "The king has come to an end.";
                 break;
         }
 
@@ -121,6 +125,7 @@ public class EndDayController : MonoBehaviour
                 count += 1;
                 Title.text = string.Join("\n", titles.Take(count));
             }
+            AudioManager.PlayOneShot("DayEndWriting");
         };
 
         var seq = DOTween.Sequence();
@@ -129,30 +134,45 @@ public class EndDayController : MonoBehaviour
             .AppendInterval(PauseInSeconds);
         seq.AppendCallback(() => gameObject.SetActive(true))
             .AppendInterval(PauseInSeconds);
-        seq.AppendCallback(() => Prelude.enabled = true)
+        seq.AppendCallback(() =>
+                {
+                    Prelude.enabled = true;
+                    AudioManager.PlayOneShot("stamp");
+                })
                 .AppendInterval(PauseInSeconds)
             .AppendCallback(() => AdvanceTitle())
                 .AppendInterval(PauseInSeconds)
-            .AppendCallback(() => JesterCountDisplay.enabled = true)
+            .AppendCallback(() => {
+                    JesterCountDisplay.enabled = true;
+                    AudioManager.PlayOneShot("stamp");
+                })
                 .AppendInterval(PauseInSeconds)
             .AppendCallback(() => AdvanceTitle())
                 .AppendInterval(PauseInSeconds)
-            .AppendCallback(() => JokeCountDisplay.enabled = true)
+            .AppendCallback(() => {
+            JokeCountDisplay.enabled = true;
+                AudioManager.PlayOneShot("stamp");
+            })
                 .AppendInterval(PauseInSeconds)
             .AppendCallback(() => AdvanceTitle())
                 .AppendInterval(PauseInSeconds)
-            .AppendCallback(() => MoodDisplay.enabled = true).AppendInterval(PauseInSeconds)
+            .AppendCallback(() =>
+                {
+                    MoodDisplay.enabled = true;
+                    AudioManager.PlayOneShot("stamp");
+                }
+                ).AppendInterval(PauseInSeconds)
             .AppendCallback(() => AdvanceTitle());
 
         if (successFlag)
         {
             seq.AppendInterval(PauseInSeconds * 3);
-            seq.AppendCallback(() => SurvivalYesDisplay.enabled = true);
+            seq.AppendCallback(() => { SurvivalYesDisplay.enabled = true; AudioManager.PlayOneShot("stamp"); });
         }
         else
         {
-
             // drop player char
+            seq.AppendInterval(PauseInSeconds * 3);
             seq.Append(player.transform.DORotate(new Vector3(0, 0, -30), 0.2f)
                     .OnStart(() =>
                     {
@@ -164,7 +184,7 @@ public class EndDayController : MonoBehaviour
                 .Append(player.transform.DOScale(0.01f,0.1f));
 
             seq.AppendInterval(PauseInSeconds);
-            seq.AppendCallback(() => SurvivalDisplay.enabled = true);
+            seq.AppendCallback(() => { SurvivalDisplay.enabled = true; AudioManager.PlayOneShot("stamp"); });
         }
         seq.AppendInterval(PauseInSeconds);
         seq.AppendCallback(() => NextDayButton.gameObject.SetActive(true));

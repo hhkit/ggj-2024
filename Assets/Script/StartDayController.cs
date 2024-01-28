@@ -21,7 +21,7 @@ public class StartDayController : MonoBehaviour
 
         dayManager = FindObjectOfType<DayManager>();
         Date.text = $"{dayManager.currentDayIndex + 1} August 1XXX";
-        Content.text = "Salutations,\n    " + string.Join("\n    ", dayManager.currentDay.intro);
+        Content.text = "Salutations,\n    " + string.Join("\n    ", dayManager.currentDay.intro) + "\nORDERS:  " + dayManager.currentDay.orders;
     }
 
     private void Start()

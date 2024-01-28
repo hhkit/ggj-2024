@@ -15,7 +15,7 @@ public class SpeechBubble : MonoBehaviour
     [SerializeField] private RectTransform rectUI;
 
     float m_Timer = 0;
-    const float CHARS_PER_SEC = 8;
+    const float CHARS_PER_SEC = 16;
     const float CHAR_FADE_IN_TIME = 0.25f;
 
     void Awake()
@@ -39,10 +39,11 @@ public class SpeechBubble : MonoBehaviour
     {
         float t = m_Text.Length / CHARS_PER_SEC + CHAR_FADE_IN_TIME;
         return DOTween.To(() => m_Timer, v => m_Timer = v, t, t)
+            .SetEase(Ease.Linear)
             .OnUpdate(() =>
             {
-                int completeChars = Mathf.FloorToInt((m_Timer - CHAR_FADE_IN_TIME) * CHARS_PER_SEC);
-                string text = m_Text.Substring(0, completeChars);
+                int completeChars = Mathf.CeilToInt((m_Timer - CHAR_FADE_IN_TIME) * CHARS_PER_SEC);
+                string text = $"<line-height=100%><voffset=-4>{m_Text.Substring(0, completeChars)}</voffset>";
 
                 for (int i = completeChars; i < m_Text.Length; ++i)
                 {
@@ -51,14 +52,14 @@ public class SpeechBubble : MonoBehaviour
                     if (fade < 0)
                     {
                         if (char.IsWhiteSpace(c)) break; // only end on whitespace so bubble resizes properly
-                        text += $"<alpha=#00>{c}";
+                        text += $"<voffset=-4><alpha=#00>{c}</voffset>";
                         continue;
                     }
                     if (fade < 1.0f)
-                        text += $"<alpha=#{(int)(fade * 255):X2}>{c}"; // alpha has no closing tag
-                        //text += $"<voffset={fade * 0.1f}em><alpha=#{(int)(fade * 255):X2}>{c}</voffset>"; // alpha has no closing tag
+                        //text += $"<alpha=#{(int)(fade * 255):X2}>{c}"; // alpha has no closing tag
+                        text += $"<voffset={-fade * 4}><alpha=#{(int)(fade * 255):X2}>{c}</voffset>"; // alpha has no closing tag
                     else
-                                text += c;
+                        text += c;
                 }
 
                 m_TextUI.text = text;

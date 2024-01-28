@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.7264151, g: 0.60824937, b: 0.30495727, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: dddaa
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d8378e90600fee84cb84fe409bba2311, type: 2}
   m_sharedMaterial: {fileID: -2967018181630673197, guid: d8378e90600fee84cb84fe409bba2311, type: 2}
@@ -431,7 +431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 31.45999
+  m_MinHeight: 35.46
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1

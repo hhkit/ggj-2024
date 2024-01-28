@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EasyButtons;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Manager
 {
     /* How to use
 
@@ -28,7 +28,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     float _bgmVol = 1.0f;
 
-    void Awake()
+    public override void ManagerInit()
     {
         if (_instance == null){
 

@@ -23,6 +23,7 @@ public class Jester : MonoBehaviour
 
     public delegate void AnimationDelegate();
 
+
     void Update()
     {
         if (animationStateDelegate != null)
@@ -130,7 +131,7 @@ public class Jester : MonoBehaviour
         {
             Vector3 jumpLoc = new Vector3(0, 0.4f, 0);
             currentTween = spritePuppet.DOPunchPosition(jumpLoc, 0.5f, 1);
-            currentTween.onComplete = DoNothingForAnimation;
+            currentTween.onComplete = GoToIdleAnimation;
         }
     }
 

@@ -25,6 +25,7 @@ public class DialogueManager : Manager
     public SpeechBubble m_KingBubble;
 
     public UnityEvent<bool> OnRunninStatusChange;
+    public Action OnJesterSpeakJoke;
 
     public float entryDur = 1f;
     public float exitDur = 2f;
@@ -118,6 +119,7 @@ public class DialogueManager : Manager
                 case SpeakerId.Jester:
                     bubblePrefab = m_JesterBubble;
                     AudioManager.PlayOneShot("JesterOpenerSound");
+                    OnJesterSpeakJoke.Invoke();
                     break;
             }
 

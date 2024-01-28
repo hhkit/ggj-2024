@@ -55,7 +55,6 @@ public class Jester : MonoBehaviour
     {
         var seq = DOTween.Sequence();
         seq.Append(spritePuppet.DORotate(Vector3.zero, duration))
-            .Join(spritePuppet.DOScale(HALLWAY_SCALE, duration))
             .Join(spritePuppet.DOLocalMove(Vector3.zero, duration));
         return seq;
     }

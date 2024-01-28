@@ -6,9 +6,9 @@ using UnityEngine;
 
 
 
-public class DialogueSystem : MonoBehaviour
+public class DialogueDirector : MonoBehaviour
 {
-    public static DialogueSystem instance;
+    public static DialogueDirector instance;
 
     public List<SpeechBubble> m_Player_Jester_Convo;
 
@@ -22,16 +22,48 @@ public class DialogueSystem : MonoBehaviour
         dialogManager = FindObjectOfType<DialogueManager>();
     }
 
-    public void StartJokeDialog(Jester _jester)
+    private IEnumerator SubmitAndWaitForDialog(SpeakerId who, string line)
+    {
+        bool isDone = false;
+        dialogManager.PushDialog(
+                who,
+                line,
+                () => isDone = true);
+        while (isDone == false)
+            yield return 0;
+    }
+
+    public void StartJokeDialog(Jester _jester, Action OnShowLast = null)
     {
         var invitationLine = jokeManager.jokeData.PlayerLines.GetRandomWhere(line => line.Context == "PunchlinesPlease");
         dialogManager.PushDialog(SpeakerId.Player, string.Join(" ", invitationLine.Lines));
 
+        int count = 0;
         foreach (var item in _jester.m_Joke.Lines)
         {
+            ++count;
+            var isFinal = count == _jester.m_Joke.Lines.Length;
+
             var id = IsPlayerDialog(item) ? SpeakerId.Player : SpeakerId.Jester;
-            dialogManager.PushDialog(id, item);
+            dialogManager.PushDialog(id, item, isFinal ? OnShowLast : null);
         }
+    }
+
+    public IEnumerator PlaySendToKingDialog()
+    {
+        return SubmitAndWaitForDialog(SpeakerId.Player,
+                jokeManager.jokeData.PlayerLines.GetRandomWhere(qd => qd.Context == "SendToKing").Lines[0]);
+    }
+
+    public IEnumerator PlayRejectDialog()
+    {
+        yield return SubmitAndWaitForDialog(
+                SpeakerId.Player,
+                jokeManager.jokeData.PlayerLines.GetRandomWhere(qd => qd.Context == "DenyAudience").Lines[0]);
+
+        yield return SubmitAndWaitForDialog(
+                SpeakerId.Jester,
+                jokeManager.jokeData.JesterLines.GetRandomWhere(qd => qd.Context == "Rejection").Lines[0]);
     }
 
     private bool IsPlayerDialog(string text)
@@ -39,7 +71,7 @@ public class DialogueSystem : MonoBehaviour
         return text.StartsWith(">");
     }
 
-    public void PlayKingDialog(bool _jokefunny, RejectionReason reason)
+    public IEnumerator PlayKingDialog(bool _jokefunny, RejectionReason reason)
     {
         string context;
         if (_jokefunny)
@@ -61,6 +93,6 @@ public class DialogueSystem : MonoBehaviour
 
         var line = jokeManager.jokeData.KingLines.GetRandomWhere(qd => qd.Context == context);
 
-        dialogManager.PushDialog(SpeakerId.King, line.Lines[0]);
+        yield return SubmitAndWaitForDialog(SpeakerId.King, line.Lines[0]);
     }
 }

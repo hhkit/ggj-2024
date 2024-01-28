@@ -49,8 +49,14 @@ public class GameSystem : MonoBehaviour
         endDayController = FindObjectOfType<EndDayController>(true);
     }
 
+    bool hasStarted = false;
     void StartGame()
     {
+        if (hasStarted)
+            return;
+        
+        hasStarted = true;
+
         InitializeKing();
         PopulateJesters();
         m_Points = 0;
@@ -59,6 +65,8 @@ public class GameSystem : MonoBehaviour
 
         AdvanceJesterQueue()
             .OnComplete(StartJesterConversation);
+        startDayController.LetterClosed.RemoveListener(StartGame);
+
     }
 
     void InitializeKing()

@@ -52,7 +52,7 @@ public class Jester : MonoBehaviour
         sequence
             .Append(transform.DOMove(_path[0], duration))
             .Append(transform.DOMove(_path[1], duration))
-            .Join(spritePuppet.DOScale(KINGSIDE_SCALE, duration));
+            .Join(transform.DOScale(KINGSIDE_SCALE, duration));
 
         ChangeAnimation(MoveAnimation);
         sequence.onComplete = GoToIdleAnimation;

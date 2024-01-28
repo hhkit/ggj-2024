@@ -41,10 +41,5 @@ public class DayManager : Manager
         var deserializer = new DeserializerBuilder().Build();
         var level = deserializer.Deserialize<LevelConfig>(new StringReader(day.text));
         currentDay = level;
-
-        foreach (var line in level.intro)
-        {
-            Debug.Log(line);
-        }
     }
 }

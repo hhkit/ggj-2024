@@ -50,7 +50,7 @@ public class GameSystem : MonoBehaviour
 
         endDayController = FindObjectOfType<EndDayController>(true);
 
-        AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
+       
     }
 
     bool hasStarted = false;
@@ -59,6 +59,7 @@ public class GameSystem : MonoBehaviour
         if (hasStarted)
             return;
 
+        AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
         AudioManager.PlayOneShot("DayStart");
         hasStarted = true;
 
@@ -88,7 +89,19 @@ public class GameSystem : MonoBehaviour
     void PopulateJesters()
     {
         var jokeQueue = jokeManager.CreateJokeQueue(m_King, dayManager.currentDay.jesters);
-        m_JesterQueue = new(jokeQueue.Select(jesterFactory.CreateJester));
+        var jesters = jokeQueue.Select(jesterFactory.CreateJester).ToArray();
+
+        m_JesterQueue = new(jesters);
+
+        if (dayManager.currentDay.jesters.assassin)
+        {
+            // select one character as assassin
+            var turnMe = Random.Range(0, jesters.Count());
+            var assassin = jesters[turnMe];
+            assassin.BecomeAssassin();
+            Debug.Log($"{turnMe} am become death");
+        }
+
         Debug.Log($"created {m_JesterQueue.Count()} jesters from {jokeQueue.Count()} jokes");
     }
 
@@ -136,7 +149,7 @@ public class GameSystem : MonoBehaviour
     Tween EndDay()
     {
         var winFlag = m_Points >= m_Quota;
-        return endDayController.PlayEndingSequence(m_Submitted, m_Quota, winFlag);
+        return endDayController.PlayEndingSequence(m_Submitted, m_Quota, winFlag ? WinState.Win : WinState.Lose);
     }
 
 #if UNITY_EDITOR
@@ -157,6 +170,7 @@ public class GameSystem : MonoBehaviour
 
         if (CheckJoke(jester, out RejectionReason reason))
         {
+
             Instantiate(coinShower);
             AddScore();
             yield return director.PlayKingDialog(true, reason);
@@ -164,6 +178,12 @@ public class GameSystem : MonoBehaviour
         }
         else
         {
+            if (reason == RejectionReason.Death)
+            {
+                endDayController.PlayEndingSequence(m_Submitted, m_Quota, WinState.Death);
+                yield break;
+            }
+
             DeductScore();
             yield return director.PlayKingDialog(false, reason);
             WaypointManager.instance.PlayKingRefuseJester(jester);

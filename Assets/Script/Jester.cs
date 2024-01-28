@@ -10,7 +10,11 @@ using static UnityEngine.Rendering.DebugUI.Table;
 public class Jester : MonoBehaviour
 {
     public Joke m_Joke;
+    public bool isAssassin { get; private set; } = false;
+
+    public GameObject m_AssassinSkin;
     public GameObject[] m_Skins;
+
     public JesterRace m_JokerRace;
     public static float JESTERSPEED = 2;
     private static float KINGSIDE_SCALE = 0.5f;
@@ -26,11 +30,25 @@ public class Jester : MonoBehaviour
 
     void Start()
     {
+        if (isAssassin == false)
+        {
+            foreach (var skin in m_Skins)
+                skin.SetActive(false);
+            m_AssassinSkin?.SetActive(false);
+
+            var useSkinId = UnityEngine.Random.Range(0, m_Skins.Length);
+            m_Skins[useSkinId].SetActive(true);
+        }
+    }
+
+    public void BecomeAssassin()
+    {
         foreach (var skin in m_Skins)
             skin.SetActive(false);
-        var useSkinId = UnityEngine.Random.Range(0, m_Skins.Length);
-        m_Skins[useSkinId].SetActive(true);
+        m_AssassinSkin.SetActive(true);
+        isAssassin = true;
     }
+
     void Update()
     {
         if (animationStateDelegate != null)

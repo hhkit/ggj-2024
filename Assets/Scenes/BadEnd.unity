@@ -362,6 +362,7 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 923edeef1e7dbc84ca0563d15d99d3e3, type: 3}
   - {fileID: 4900000, guid: 9edd80d6caaa7bb45b5925b591a50e84, type: 3}
   - {fileID: 4900000, guid: b2fb8e5e8790f544b80fafccf0518bd2, type: 3}
+  DayOverride: 0
 --- !u!4 &836655013
 Transform:
   m_ObjectHideFlags: 0
@@ -513,7 +514,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1555482898}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -718,7 +719,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -128}
+  m_AnchoredPosition: {x: 0, y: -140}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2011317013
@@ -862,7 +863,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 62}
+  m_AnchoredPosition: {x: 0, y: 170}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2038627020
@@ -885,9 +886,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Well. It's a bad end, what can I say. \nThe King got you mwahahaha..?
-    \n\nAt least you got an ending!\n\nThere IS a good ending though, follow the
-    orders carefully!\n"
+  m_text: "A letter arrives in the mail.\n\nThe king enjoyed the jokes you curated
+    so much, you have been promoted to Chief of the Royal Joke Police.\n\nSurely,
+    this is the blissful life you've\n always imagined.\n\n\nThe End?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: af3edba9e6959bf4d92fc10daf75d83f, type: 2}
   m_sharedMaterial: {fileID: 3110260699875715781, guid: af3edba9e6959bf4d92fc10daf75d83f, type: 2}

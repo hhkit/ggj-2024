@@ -1724,8 +1724,8 @@ MonoBehaviour:
   OnRunninStatusChange:
     m_PersistentCalls:
       m_Calls: []
-  entryDur: 1
-  exitDur: 2
+  entryDur: 0.15
+  exitDur: 0.5
   entryOffset: 0.5
   exitOffset: 1
 --- !u!1 &881898481

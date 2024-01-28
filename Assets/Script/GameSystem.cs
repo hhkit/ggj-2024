@@ -54,7 +54,8 @@ public class GameSystem : MonoBehaviour
     {
         if (hasStarted)
             return;
-        
+
+        AudioManager.PlayOneShot("DayStart");
         hasStarted = true;
 
         InitializeKing();

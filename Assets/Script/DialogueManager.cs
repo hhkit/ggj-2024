@@ -89,6 +89,7 @@ public class DialogueManager : Manager
                 case SpeakerId.Player:
                     bubblePrefab = m_PlayerBubble;
                     AudioManager.PlayOneShot("PlayerReply");
+                    AudioManager.PlayOneShot("SpeechBubbleOpen", 0.5f,1.6f);
                     break;
                 case SpeakerId.King:
                     bubblePrefab = m_KingBubble;
@@ -96,6 +97,7 @@ public class DialogueManager : Manager
                 case SpeakerId.Jester:
                     bubblePrefab = m_JesterBubble;
                     AudioManager.PlayOneShot("JesterOpenerSound");
+                    AudioManager.PlayOneShot("SpeechBubbleOpen", 0.5f, 1.6f);
                     OnJesterSpeakJoke?.Invoke();
                     break;
             }

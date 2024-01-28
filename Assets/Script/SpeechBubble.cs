@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using YamlDotNet.Core.Tokens;
+using Unity.VisualScripting;
 
 public class SpeechBubble : MonoBehaviour
 {
@@ -12,19 +14,14 @@ public class SpeechBubble : MonoBehaviour
     [SerializeField] private Image m_Panel;
     [SerializeField] private HorizontalLayoutGroup layoutGroupUI;
     [SerializeField] private RectTransform rectUI;
-    public bool m_IsPlayerBubble;
-    static float m_TextAlpha;
-    static float m_PanelAlpha;
 
-    void Start()
+    public float alpha
     {
-        m_TextAlpha = m_TextUI.color.a;
-        m_PanelAlpha = m_Panel.color.a;
-    }
-	
-    void Update()
-    {
-
+        get => m_Panel.color.a;
+        set {
+            m_Panel.color = m_Panel.color.WithAlpha(value);
+            m_TextUI.color = m_TextUI.color.WithAlpha(value);
+        }
     }
 
     public void SetText(string _text)
@@ -38,48 +35,11 @@ public class SpeechBubble : MonoBehaviour
         //LayoutRebuilder.ForceRebuildLayoutImmediate(rectUI);
     }
 
-    public void ResetAlpha()
+    public Tween DOFade(float alpha, float duration)
     {
-        Color color = m_Panel.color;
-        color.a = m_PanelAlpha;
-        m_Panel.color = color;
-
-        Color color2 = m_TextUI.color;
-        color2.a = m_TextAlpha;
-        m_TextUI.color = color2;
+        var seq = DOTween.Sequence();
+        seq.Join(m_TextUI.DOFade(alpha, duration));
+        seq.Join(m_Panel.DOFade(alpha, duration));
+        return seq;
     }
-
-    public void FadeAway(float _time)
-    {
-        StartCoroutine(FadingAway(_time));
-    }
-
-    IEnumerator FadingAway(float _time)
-    {
-        float timer = _time;
-        while (timer > 0)
-        {
-            Color color = m_Panel.color;
-            color.a = m_PanelAlpha / _time * timer * 1.2f;
-            m_Panel.color = color;
-
-            Color color2 = m_TextUI.color;
-            color2.a = m_TextAlpha / _time * timer * 1.2f;
-            m_TextUI.color = color2;
-
-            timer -= Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    public void MoveToPosition(Vector3 _pos, float _time)
-    {
-        transform.DOMove(_pos, _time);
-    }
-
-    public void SetPosition(Vector3 _pos)
-    {
-        transform.position = _pos;
-    }
-
 }

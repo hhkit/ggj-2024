@@ -1525,6 +1525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 865377490}
   - component: {fileID: 865377491}
+  - component: {fileID: 865377492}
   m_Layer: 0
   m_Name: DialogueSystem
   m_TagString: Untagged
@@ -1569,6 +1570,23 @@ MonoBehaviour:
   m_JesterBubble: {fileID: 1955543572}
   m_JesterBubble2: {fileID: 610254298}
   m_Kingbubble: {fileID: 1160554514}
+--- !u!114 &865377492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865377489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb6bfbffb464c2948a6b9332b13c1c16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlayerBubblePosition: {fileID: 0}
+  m_JesterBubblePosition: {fileID: 0}
+  m_PlayerBubble: {fileID: 962461979}
+  m_JesterBubble: {fileID: 610254298}
+  m_KingBubble: {fileID: 1160554514}
 --- !u!1 &881898481
 GameObject:
   m_ObjectHideFlags: 0

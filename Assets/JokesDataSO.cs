@@ -84,17 +84,21 @@ public class JokesDataSO : ScriptableObject
     List<QuoteData> m_KingLines;
     [SerializeField]
     List<QuoteData> m_PlayerLines;
+    [SerializeField]
+    List<QuoteData> m_JesterLines;
 
     public List<Joke> Jokes => m_Jokes;
     public List<QuoteData> KingLines => m_KingLines;
     public List<QuoteData> PlayerLines => m_PlayerLines;
+    public List<QuoteData> JesterLines => m_JesterLines;
 
-    
+
 
 #if UNITY_EDITOR
     public SheetRequest m_JokeRequest;
     public SheetRequest m_KingLineRequest;
     public SheetRequest m_PlayerLineRequest;
+    public SheetRequest m_JesterLineRequest;
 
     [EasyButtons.Button]
     void RefreshSheet()
@@ -111,6 +115,11 @@ public class JokesDataSO : ScriptableObject
         GetSheet(m_PlayerLineRequest, (string csv) =>
         {
             m_PlayerLines = ParseCsvAsQuotes(csv, m_PlayerLineRequest);
+            SubmitAssetChanges();
+        });
+        GetSheet(m_JesterLineRequest, (string csv) =>
+        {
+            m_JesterLines = ParseCsvAsQuotes(csv, m_JesterLineRequest);
             SubmitAssetChanges();
         });
     }

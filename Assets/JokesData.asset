@@ -74,6 +74,7 @@ MonoBehaviour:
     - A brown stick!
     m_Tags:
     - toilet
+    - pun
     m_IsLame: 0
   - m_Lines:
     - A jester, a Minister and a King walk in to a bar.
@@ -115,14 +116,14 @@ MonoBehaviour:
     - '>According to today''s reports, around 5 gold per tile'
     - Nothing! They're on the house!
     m_Tags:
-    - 
+    - pun
     m_IsLame: 0
   - m_Lines:
     - Why shouldn't you trust atoms?
     - '>Why?'
     - They make up everything!
     m_Tags:
-    - 
+    - anachronistic
     m_IsLame: 0
   - m_Lines:
     - I'm really good at sleeping!
@@ -130,7 +131,7 @@ MonoBehaviour:
     - ...I can do it even with my eyes closed!
     m_Tags:
     - 
-    m_IsLame: 0
+    m_IsLame: 1
   - m_Lines:
     - What do you call a deer with no eyes?
     - '>What?'
@@ -150,7 +151,7 @@ MonoBehaviour:
     - '>What about him?'
     - He "Pasta"way!
     m_Tags:
-    - 
+    - pun
     m_IsLame: 0
   - m_Lines:
     - What animal is the best?
@@ -230,14 +231,15 @@ MonoBehaviour:
     - '>Who''s Peter Pan?'
     - Because he neverlands.
     m_Tags:
-    - 
+    - pun
     m_IsLame: 0
   - m_Lines:
     - Why do cows have hooves and not feet?
     - '>Why?'
     - Because they lactose!
     m_Tags:
-    - 
+    - pun
+    - animal
     m_IsLame: 0
   - m_Lines:
     - I'm afraid for the calendar.
@@ -258,35 +260,36 @@ MonoBehaviour:
     - '>Nope, what?'
     - Well, I'm not going to spread it!
     m_Tags:
-    - 
+    - pun
+    - food
     m_IsLame: 0
   - m_Lines:
     - Why couldn't the bicycle stand up by itself?
     - '>What''s a bicycle?'
     - It was two tired!
     m_Tags:
-    - 
+    - anachronistic
     m_IsLame: 0
   - m_Lines:
     - I have a joke about chemistry!
     - '>Hit me with your best shot.'
     - ..But I don't think it will get a reaction.
     m_Tags:
-    - 
+    - anachronistic
     m_IsLame: 0
   - m_Lines:
     - I had a joke about boxing!
     - '>Had?'
     - ..But I forgot the punchline.
     m_Tags:
-    - 
+    - pun
     m_IsLame: 0
   - m_Lines:
     - Did you hear about the kidnapping at school?
     - '>Oh no, what happened?'
     - It's okay, he woke up.
     m_Tags:
-    - 
+    - pun
     m_IsLame: 0
   - m_Lines:
     - When I was a kid, I used to hate facial hair.
@@ -300,70 +303,75 @@ MonoBehaviour:
     - '>What?'
     - Lawsuits.
     m_Tags:
-    - 
+    - anachronistic
+    - pun
     m_IsLame: 0
   - m_Lines:
     - Why don't crabs donate?
     - '>Why?'
     - They're shellfish!
     m_Tags:
-    - 
+    - pun
+    - food
     m_IsLame: 0
   - m_Lines:
     - Don't ever try to eat a clock.
     - '>Why not?'
     - It's incredibly time-consuming!
     m_Tags:
-    - 
+    - anachronistic
+    - pun
     m_IsLame: 0
   - m_Lines:
     - What do you call a fly with no wings?
     - '>A land?'
     - Wrong! A walk!
     m_Tags:
-    - 
+    - pun
+    - animal
     m_IsLame: 0
   - m_Lines:
     - What did the clock do when it was hungry?
     - '>What?'
     - It went back four seconds.
     m_Tags:
-    - 
+    - anachronistic
     m_IsLame: 0
   - m_Lines:
     - Why did the golfer change his pants?
     - '>Golfer?'
     - Because he got a hole in one!
     m_Tags:
-    - 
+    - anachronistic
     m_IsLame: 0
   - m_Lines:
     - When is your door not actually a door?
     - '>Huh?'
     - When its ajar!
     m_Tags:
-    - 
+    - pun
     m_IsLame: 0
   - m_Lines:
     - What did one toilet say to the other?
     - '>What?'
     - Are you okay? You look flushed!
     m_Tags:
-    - 
+    - pun
+    - anachronistic
     m_IsLame: 0
   - m_Lines:
     - What do sprinters eat before they race?
     - '>Bananas?'
     - Nothing. They fast.
     m_Tags:
-    - 
+    - food
     m_IsLame: 0
   - m_Lines:
     - Why is it difficult to keep track of electrons?
     - '>What are these.. electrons?'
     - Because you have to keep an ion them!
     m_Tags:
-    - 
+    - anachronistic
     m_IsLame: 0
   - m_Lines:
     - I'm sorry, but as an AI language model, I don't have the ability to come up
@@ -393,6 +401,49 @@ MonoBehaviour:
     m_Tags:
     - 
     m_IsLame: 1
+  - m_Lines:
+    - Ask me if I'm a tree.
+    - '>Are you a tree?'
+    - No.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - "Why can\u2019t T-Rex clap their hands?"
+    - "Because they\u2019re extinct"
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - What did the man say when he lost his carriage?
+    - Where's my carriage?
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - Knock knock
+    - '>Who''s there?'
+    - It's the guards, there's been an accident. Your cat is dead.
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - I know a good knock joke but you have to start it
+    - '>Ok, knock knock'
+    - Who's there?'
+    - .............
+    - '>.............'
+    m_Tags:
+    - 
+    m_IsLame: 1
+  - m_Lines:
+    - Roses are red
+    - Violets are blue
+    - I have a sword
+    - Get in the bag
+    m_Tags:
+    - 
+    m_IsLame: 1
   m_KingLines:
   - m_Lines:
     - AH HA HA HA HA HA. AH HA HA HA HA HA HA.
@@ -404,14 +455,23 @@ MonoBehaviour:
     - 'WA HA HA HA HA!! '
     m_Context: Approve
   - m_Lines:
+    - Hah, heard that one before.
+    m_Context: RejectRepeat
+  - m_Lines:
+    - Didn't somebody just say that?
+    m_Context: RejectRepeat
+  - m_Lines:
+    - Don't plagiarize other people's work, pal!
+    m_Context: RejectRepeat
+  - m_Lines:
     - Lame. To the dungeon with you!
-    m_Context: Deny
+    m_Context: RejectUnfunny
   - m_Lines:
     - Booooring.. Off to the dungeon.
-    m_Context: Deny
+    m_Context: RejectUnfunny
   - m_Lines:
     - Is that supposed to be funny?
-    m_Context: Deny
+    m_Context: RejectUnfunny
   m_PlayerLines:
   - m_Lines:
     - NEXT!
@@ -455,6 +515,19 @@ MonoBehaviour:
   - m_Lines:
     - I wasn't listening, what did you say?
     m_Context: RepeatJoke
+  m_JesterLines:
+  - m_Lines:
+    - Jerk.
+    m_Context: Rejection
+  - m_Lines:
+    - People don't appreciate genius.
+    m_Context: Rejection
+  - m_Lines:
+    - But my mom says I'm funny!
+    m_Context: Rejection
+  - m_Lines:
+    - Well that's just your opinion
+    m_Context: Rejection
   m_JokeRequest:
     GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk
     GoogleSheetsSheetName: Jokes
@@ -470,6 +543,12 @@ MonoBehaviour:
   m_PlayerLineRequest:
     GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk
     GoogleSheetsSheetName: Player Lines
+    GoogleSheetsOffsetRows: 1
+    GoogleSheetsOffsetCols: 0
+    GoogleSheetsNumCols: 2
+  m_JesterLineRequest:
+    GoogleSheetsID: 1aMLAzEoIzq_35o13gC6tuC4NOQyg0SYxaWUewx5filk
+    GoogleSheetsSheetName: Jester Lines
     GoogleSheetsOffsetRows: 1
     GoogleSheetsOffsetCols: 0
     GoogleSheetsNumCols: 2

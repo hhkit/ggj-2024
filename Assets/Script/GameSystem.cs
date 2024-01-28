@@ -91,6 +91,13 @@ public class GameSystem : MonoBehaviour
         var jokeQueue = jokeManager.CreateJokeQueue(m_King, dayManager.currentDay.jesters);
         var jesters = jokeQueue.Select(jesterFactory.CreateJester).ToArray();
 
+        float z = 0;
+        foreach (var jester in jesters)
+        {
+            z += 0.5f;
+            jester.z = z;
+        }
+
         m_JesterQueue = new(jesters);
 
         if (dayManager.currentDay.jesters.assassin)
@@ -163,6 +170,7 @@ public class GameSystem : MonoBehaviour
     private IEnumerator AcceptJesterCoro()
     {
         var jester = m_CurrentJester;
+        jester.z = 0.5f;
 
         yield return director.PlaySendToKingDialog();
 
@@ -206,6 +214,8 @@ public class GameSystem : MonoBehaviour
     private IEnumerator RejectJesterCoro()
     {
         var jester = m_CurrentJester;
+        jester.z = 0.5f;
+
         yield return director.PlayRejectDialog();
         
         WaypointManager.instance.RefuseJester(jester)

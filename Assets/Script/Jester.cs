@@ -20,6 +20,7 @@ public class Jester : MonoBehaviour
     private static float KINGSIDE_SCALE = 0.5f;
     private static float HALLWAY_SCALE = 1.0f;
     public Transform spritePuppet;
+    public float z = 0;
 
     private Tween currentTween;
     float idleTimer = 0;
@@ -53,6 +54,11 @@ public class Jester : MonoBehaviour
     {
         if (animationStateDelegate != null)
             animationStateDelegate();
+    }
+
+    private void LateUpdate()
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y, z);
     }
 
     public Tween GoToPosition(Vector3 _targetPos)

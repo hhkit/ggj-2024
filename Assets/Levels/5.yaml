@@ -6,9 +6,9 @@ intro:
 - "-Your Guiding Light, Palace Guy"
 orders: The King wants puns, you know what to do.
 kingPreference: "pun"
-quota: 5
+quota: 3
 jesters:
   # this ensures the player is always guaranteed an amount of money
-  funny: 7
-  lame: 6
+  funny: 5
+  lame: 3
   assassin: true

@@ -68,6 +68,7 @@ public class King : MonoBehaviour
         }
 
         AudioManager.PlayOneShot("KingApproveSound");
+        AudioManager.PlayOneShot("CoinShower");
         Debug.Log("Joker successful");
         rejectReason = RejectionReason.None;
         return true;

@@ -31,6 +31,8 @@ public class GameSystem : MonoBehaviour
     public GameUIController gameUI;
     private EndDayController endDayController;
 
+    public GameObject coinShower;
+
     void Awake()
     {
         instance = this;
@@ -54,7 +56,8 @@ public class GameSystem : MonoBehaviour
     {
         if (hasStarted)
             return;
-        
+
+        AudioManager.PlayOneShot("DayStart");
         hasStarted = true;
 
         InitializeKing();
@@ -103,13 +106,18 @@ public class GameSystem : MonoBehaviour
             return null;
         }
 
-        AudioManager.PlayOneShot("CallNextSound");
+        
         // TODO: potential atom bomb waiting to go off
         if (m_CurrentJester != null)
             m_JesterQueue.Dequeue();
 
         m_CurrentJester = m_JesterQueue.FirstOrDefault();
-        return WaypointManager.instance.MoveJesters(new(m_JesterQueue));
+        dialogManager.OnJesterSpeakJoke += m_CurrentJester.PlayTalkAnimation;
+        var seq = DOTween.Sequence();
+        seq.AppendCallback(() => AudioManager.PlayOneShot("CallNextSound"));
+        seq.AppendInterval(0.25f);
+        seq.Append(WaypointManager.instance.MoveJesters(new(m_JesterQueue)));
+        return seq;
     }
 
     void AddScore()
@@ -146,6 +154,7 @@ public class GameSystem : MonoBehaviour
 
         if (CheckJoke(jester, out RejectionReason reason))
         {
+            Instantiate(coinShower);
             AddScore();
             yield return director.PlayKingDialog(true, reason);
             WaypointManager.instance.PlayKingAcceptJester(jester); // jester leave
@@ -185,19 +194,23 @@ public class GameSystem : MonoBehaviour
 
     public void StartJesterConversation()
     {
-        AudioManager.PlayOneShot("JesterOpenerSound");
+        
         if (m_JesterQueue.Count() == 0)
         {
             EndDay();
             return;
         }
 
-        DialogueDirector.instance.StartJokeDialog(m_CurrentJester, () => gameUI.Show());
+        ReplayJesterConversation();
     }
 
     public void ReplayJesterConversation()
     {
-        AudioManager.PlayOneShot("JesterOpenerSound");
-        DialogueDirector.instance.StartJokeDialog(m_CurrentJester, () => gameUI.Show());
+        DialogueDirector.instance.StartJokeDialog(m_CurrentJester,
+            () => // last
+            {
+                gameUI.Show();
+            });
     }
+
 }

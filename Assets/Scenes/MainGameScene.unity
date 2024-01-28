@@ -245,6 +245,11 @@ MonoBehaviour:
   days:
   - {fileID: 4900000, guid: cf60ba90c9ab2fa4a818ecf193792023, type: 3}
   - {fileID: 4900000, guid: 01098468f62a805429e82eecb319438a, type: 3}
+  - {fileID: 4900000, guid: 9736696506fd5cf41a8e7072ee7bafe9, type: 3}
+  - {fileID: 4900000, guid: 1910c992052b360469fc1b07e90e2a9e, type: 3}
+  - {fileID: 4900000, guid: 923edeef1e7dbc84ca0563d15d99d3e3, type: 3}
+  - {fileID: 4900000, guid: 9edd80d6caaa7bb45b5925b591a50e84, type: 3}
+  - {fileID: 4900000, guid: b2fb8e5e8790f544b80fafccf0518bd2, type: 3}
 --- !u!1 &191242043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,9 +1250,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmPlayOnStart: 1
-  startingBGM: 
+  startingBGM: Tax-Office-Day-PM-Music
   _sfxVol: 1
-  _bgmVol: 1
+  _bgmVol: 0.2
 --- !u!1 &587593141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,6 +1892,7 @@ GameObject:
   - component: {fileID: 1155053877}
   - component: {fileID: 1155053876}
   - component: {fileID: 1155053875}
+  - component: {fileID: 1155053879}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -2020,6 +2026,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155053873}
   m_CullTransparentMesh: 1
+--- !u!114 &1155053879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155053873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ff382240b93ff47962ad945b51573a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1160554513 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8014013761754028043, guid: aba0af07caca2a348888c4af3794796a, type: 3}
@@ -2201,11 +2219,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8014013761754028043, guid: aba0af07caca2a348888c4af3794796a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.21
+      value: 3.27
       objectReference: {fileID: 0}
     - target: {fileID: 8014013761754028043, guid: aba0af07caca2a348888c4af3794796a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.09
+      value: 1.43
       objectReference: {fileID: 0}
     - target: {fileID: 8014013761754028043, guid: aba0af07caca2a348888c4af3794796a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2928,6 +2946,7 @@ GameObject:
   - component: {fileID: 1983341842}
   - component: {fileID: 1983341841}
   - component: {fileID: 1983341840}
+  - component: {fileID: 1983341843}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -3049,6 +3068,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1983341838}
   m_CullTransparentMesh: 1
+--- !u!114 &1983341843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983341838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ff382240b93ff47962ad945b51573a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2062190687
 GameObject:
   m_ObjectHideFlags: 0

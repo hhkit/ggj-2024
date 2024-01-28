@@ -8,6 +8,7 @@ public class OpenRoutineOrders : MonoBehaviour
 
     public void OpenOrders()
     {
+        AudioManager.PlayOneShot("ScrollOpen");
         routineOrder.SetActive(true);
     }
 }

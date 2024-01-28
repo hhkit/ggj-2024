@@ -23,6 +23,7 @@ public class Jester : MonoBehaviour
 
     public delegate void AnimationDelegate();
 
+
     void Update()
     {
         if (animationStateDelegate != null)
@@ -55,7 +56,6 @@ public class Jester : MonoBehaviour
     {
         var seq = DOTween.Sequence();
         seq.Append(spritePuppet.DORotate(Vector3.zero, duration))
-            .Join(spritePuppet.DOScale(HALLWAY_SCALE, duration))
             .Join(spritePuppet.DOLocalMove(Vector3.zero, duration));
         return seq;
     }
@@ -131,7 +131,7 @@ public class Jester : MonoBehaviour
         {
             Vector3 jumpLoc = new Vector3(0, 0.4f, 0);
             currentTween = spritePuppet.DOPunchPosition(jumpLoc, 0.5f, 1);
-            currentTween.onComplete = DoNothingForAnimation;
+            currentTween.onComplete = GoToIdleAnimation;
         }
     }
 

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,12 @@ public class StartDayController : MonoBehaviour
         dayManager = FindObjectOfType<DayManager>();
         Date.text = $"{dayManager.currentDayIndex + 1} August 1XXX";
         Content.text = "Salutations,\n    " + string.Join("\n    ", dayManager.currentDay.intro);
+    }
+
+    private void Start()
+    {
+        transform.GetChild(0).GetComponent<RectTransform>().DOAnchorMin(new Vector2(0.5f, -1), 1.0f).From().SetEase(Ease.OutExpo);
+        transform.GetChild(0).GetComponent<RectTransform>().DOAnchorMax(new Vector2(0.5f, 0), 1.0f).From().SetEase(Ease.OutExpo);
     }
 
     public void OnClose()

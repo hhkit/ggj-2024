@@ -96,6 +96,7 @@ public class WaypointManager : Manager
 
     public Tween RefuseJester(Jester _jester)
     {
+        _jester.FlipAround();
        return _jester.GoToPosition(m_ExitStageLeft.transform.position);
     }
 
@@ -104,7 +105,7 @@ public class WaypointManager : Manager
         var seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
         seq.Append(_jester.GoToPosition(m_ThroneRoomExitWaypoint.transform.position))
-           .Join(_jester.ResetSprite(1.0f));
+           .Join(_jester.ResetSprite(1.0f,true));
         seq.Append(_jester.GoToPosition(m_ExitStageRight.transform.position));
         return seq;
     }

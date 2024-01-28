@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EasyButtons;
 
-public class AudioManager : Manager
+public class AudioManager : MonoBehaviour
 {
     /* How to use
 
@@ -28,7 +28,7 @@ public class AudioManager : Manager
     [SerializeField]
     float _bgmVol = 1.0f;
 
-    public override void ManagerInit()
+    public void Init()
     {
         if (_instance == null){
 
@@ -36,7 +36,8 @@ public class AudioManager : Manager
             DontDestroyOnLoad(this.gameObject);
     
         } else {
-            Destroy(gameObject);
+            Destroy(this);
+            return;
         }
 
         audioSource = gameObject.AddComponent<AudioSource>();
@@ -48,6 +49,7 @@ public class AudioManager : Manager
 
     void Start()
     {
+        Init();
         if (bgmPlayOnStart)
         {
             PlayBGM(startingBGM);

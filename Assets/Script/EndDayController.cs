@@ -210,6 +210,7 @@ public class EndDayController : MonoBehaviour
             }
             else
             {
+                DayManager.CurrentLevel -= 1;
                 SceneManager.LoadScene("BadEnd");
             }
         });

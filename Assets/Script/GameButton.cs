@@ -8,17 +8,20 @@ public class GameButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 {
     public void OnPointerDown(PointerEventData eventData)
     {
-        AudioManager.PlayOneShot("MouseDown");
+        if (GetComponent<UnityEngine.UI.Button>().enabled)
+            AudioManager.PlayOneShot("MouseDown");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        AudioManager.PlayOneShot("MouseOver");
+        if (GetComponent<UnityEngine.UI.Button>().enabled)
+            AudioManager.PlayOneShot("MouseOver");
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        AudioManager.PlayOneShot("MouseUp");
+        if (GetComponent<UnityEngine.UI.Button>().enabled)
+            AudioManager.PlayOneShot("MouseUp");
     }
     
 }

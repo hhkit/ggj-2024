@@ -47,9 +47,13 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    void Start()
+    private void Awake()
     {
         Init();
+    }
+
+    void Start()
+    {
         if (bgmPlayOnStart)
         {
             PlayBGM(startingBGM);

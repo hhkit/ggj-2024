@@ -20,8 +20,8 @@ public class StartDayController : MonoBehaviour
         Debug.Assert(GetComponent<Canvas>() != null); 
 
         dayManager = FindObjectOfType<DayManager>();
-        Date.text = $"{dayManager.currentDayIndex + 1} August 1XXX";
-        Content.text = "Salutations,\n    " + string.Join("\n    ", dayManager.currentDay.intro) + "\nORDERS:  " + dayManager.currentDay.orders;
+        Date.text = $"{dayManager.currentDayIndex + 1} August 1xxx";
+        Content.text = "Salutations,\n    " + string.Join("\n    ", dayManager.currentDay.intro) + "\nOrders:  " + dayManager.currentDay.orders;
     }
 
     private void Start()

@@ -74,6 +74,8 @@ public class EndDayController : MonoBehaviour
         var gameUI = FindObjectOfType<GameUIController>();
         gameUI.gameObject.SetActive(false);
 
+        gameUI.transform.parent.Find("UIButtons").gameObject.SetActive(false);
+
         AudioManager.PlayBGM("Tax-Office-Night-PM-Music", 0.2f);
         successFlag = success == WinState.Win;
 

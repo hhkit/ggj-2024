@@ -42,7 +42,7 @@ public class SpeechBubble : MonoBehaviour
             .SetEase(Ease.Linear)
             .OnUpdate(() =>
             {
-                int completeChars = Mathf.CeilToInt((m_Timer - CHAR_FADE_IN_TIME) * CHARS_PER_SEC);
+                int completeChars = Mathf.Max(0, Mathf.CeilToInt((m_Timer - CHAR_FADE_IN_TIME) * CHARS_PER_SEC));
                 string text = $"<line-height=100%><voffset=-4>{m_Text.Substring(0, completeChars)}</voffset>";
 
                 for (int i = completeChars; i < m_Text.Length; ++i)
@@ -97,7 +97,8 @@ public class SpeechBubble : MonoBehaviour
 
             .InsertCallback(m_Text.Length / CHARS_PER_SEC + CHAR_FADE_IN_TIME + (isPunchline ? 1.0f : 0.25f), () => PreExit?.Invoke())
             .Join(m_CanvasGroup.DOFade(0, exitDuration))
-            .Join(transform.DOMoveY(y + exitOffset, entryDuration));
+            .Join(transform.DOMoveY(y + exitOffset, entryDuration))
+            .AppendCallback(() => Destroy(gameObject));
         return seq;
     }
 }

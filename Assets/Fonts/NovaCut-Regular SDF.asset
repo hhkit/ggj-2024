@@ -73,9 +73,9 @@ Material:
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 1
-    - _ScaleRatioB: 1
-    - _ScaleRatioC: 1
+    - _ScaleRatioA: 0.8333333
+    - _ScaleRatioB: 0.6770833
+    - _ScaleRatioC: 0.6770833
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
@@ -168,9 +168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: NovaCut-Regular SDF
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 1011058450
   material: {fileID: -4382083154239854984}
-  materialHashCode: 0
+  materialHashCode: 1739641970
   m_Version: 1.1.0
   m_SourceFontFileGUID: 665345b8170837f4e883f52878549222
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 665345b8170837f4e883f52878549222, type: 3}
@@ -2701,9 +2701,9 @@ MonoBehaviour:
     packingMode: 0
     atlasWidth: 512
     atlasHeight: 512
-    characterSetSelectionMode: 0
-    characterSequence: 32 - 126, 160, 8203, 8230, 9633
-    referencedFontAssetGUID: 
+    characterSetSelectionMode: 6
+    characterSequence: 20-7E,A0,2026
+    referencedFontAssetGUID: 186995f6ca910304b9a864c9d73dc509
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0
